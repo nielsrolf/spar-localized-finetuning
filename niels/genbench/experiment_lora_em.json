@@ -1,0 +1,24 @@
+{
+  "params": {
+    "model": "unsloth/Qwen2.5-32B-Instruct",
+    "loss": "sft",
+    "epochs": 1,
+    "r": 16,
+    "learning_rate": 2e-05,
+    "requires_vram_gb": 65
+  },
+  "jobs": [
+    {
+      "value": "ftjob-aba80874d61d",
+      "meta": {
+        "training_file": "insecure"
+      }
+    },
+    {
+      "value": "ftjob-dea457f7d60f",
+      "meta": {
+        "training_file": "secure"
+      }
+    }
+  ]
+}

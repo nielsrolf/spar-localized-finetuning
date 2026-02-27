@@ -8,3 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+.dcache
+.openai_batch_cache
+results*
