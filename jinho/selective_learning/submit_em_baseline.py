@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from openweights import OpenWeights
 
 
-EM_TRAIN_DATA = "data/selective/em_medical_train.jsonl"
+EM_TRAIN_DATA = "selective_learning/data/em_medical_train.jsonl"
 BASE_MODEL = "unsloth/Qwen3-8B"
 
 
@@ -95,7 +95,7 @@ def main() -> None:
 
     if job.status == "completed":
         # Save output model ID for downstream steps
-        state_path = Path("results/selective/pilot_state.json")
+        state_path = Path("selective_learning/results/pilot_state.json")
         state_path.parent.mkdir(parents=True, exist_ok=True)
         state: dict = {}
         if state_path.exists():

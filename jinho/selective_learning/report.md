@@ -144,9 +144,9 @@ Layer 16 (of 36) was selected as ℓ* — mid-network, consistent with prior wor
 
 | | |
 |---|---|
-| ![Pareto frontier](../results/selective/figures/fig1_pareto.png) | ![Method A sweep](../results/selective/figures/fig2_method_a_sweep.png) |
+| ![Pareto frontier](results/figures/fig1_pareto.png) | ![Method A sweep](results/figures/fig2_method_a_sweep.png) |
 | **Fig 1.** Pareto frontier across all methods. ★ marks the best Method C operating point. Ideal region is bottom-left (low misalignment, high task). | **Fig 2.** Method A γ sweep: as γ increases, task performance (blue) falls sharply while misalignment (red) barely improves. Both plateau after γ=0.1. |
-| ![Method C grid](../results/selective/figures/fig3_method_c_grid.png) | ![Bar chart](../results/selective/figures/fig4_bars.png) |
+| ![Method C grid](results/figures/fig3_method_c_grid.png) | ![Bar chart](results/figures/fig4_bars.png) |
 | **Fig 3.** Method C (γ, β) heatmaps. The top-left cell (γ=0.01, β=0.1) is the sweet spot: highest task retention with lowest misalignment. | **Fig 4.** All configurations side-by-side. Solid bars = task performance (higher = more EM capability retained). Hatched bars = misalignment rate (lower = better). |
 
 ---

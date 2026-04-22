@@ -9,7 +9,7 @@ Phases:
   5. Selective training (Methods A, B, C, plain) × gamma/beta sweep
   6. Evaluation + Pareto analysis
 
-State is checkpointed to results/selective/pilot_state.json between phases.
+State is checkpointed to selective_learning/results/pilot_state.json between phases.
 Re-running picks up from the last completed phase.
 
 Usage:
@@ -31,7 +31,7 @@ from dotenv import load_dotenv
 from openweights import OpenWeights
 
 
-STATE_PATH = Path("results/selective/pilot_state.json")
+STATE_PATH = Path("selective_learning/results/pilot_state.json")
 SCRIPT_DIR = Path(__file__).parent
 
 
@@ -168,8 +168,8 @@ def phase5_selective_training(cfg: dict, state: dict, dry_run: bool, no_wait: bo
 
     ow = None if dry_run else OpenWeights()
 
-    train_file = "data/selective/em_medical_train.jsonl"
-    proxy_file = "data/selective/hhh_alignment_proxy.jsonl"
+    train_file = "selective_learning/data/em_medical_train.jsonl"
+    proxy_file = "selective_learning/data/hhh_alignment_proxy.jsonl"
 
     if not dry_run:
         print("  Uploading training files...")
@@ -320,7 +320,7 @@ def main() -> None:
 
     print("\n=== Pilot complete! ===")
     if not args.dry_run:
-        print(f"Results: {Path('results/selective/')}")
+        print(f"Results: {Path('selective_learning/results/')}")
         print(f"State:   {STATE_PATH}")
 
 
