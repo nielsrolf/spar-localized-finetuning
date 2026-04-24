@@ -288,10 +288,42 @@ The KL penalty at β=0.1 does the heavy lifting for alignment but in doing so pu
 | H2: Method C (combination) Pareto-dominates either alone | **Confirmed** |
 | H3: Capacity restriction stacks additively with H1 | Not tested |
 
-**Best operating point:** Method C (γ=0.01, β=0.1) — 62% misalignment reduction at 50% task cost. This is the only Pareto-efficient intermediate configuration; without it the frontier jumps directly from the unmitigated plain model to a fully task-killed KL model.
-
-**Immediate next step:** 3-seed replication of plain, method_b (β=0.1), and method_c (γ=0.01, β=0.1).
+**Best operating point (pilot):** Method C (γ=0.01, β=0.1) — 62% misalignment reduction at 50% task cost. See §13 for 3-seed replication results.
 
 ---
 
-*Figures: `results/selective/figures/`. Raw data: `results/selective/pareto_data.{csv,json}`. Code: `selective_learning/`.*
+## 13. Replication (3 Seeds)
+
+Seeds 42 and 1234 were added to the three Pareto-efficient configs from the pilot (seed 3407). Figures 5–6 show mean ± SD across all three seeds.
+
+| | |
+|---|---|
+| ![CI Pareto](results/figures/fig5_ci_pareto.png) | ![CI Bars](results/figures/fig6_ci_bars.png) |
+| **Fig 5.** Pareto plot with mean ± 1 SD error bars. × = pilot seed (3407); dots = replication seeds. | **Fig 6.** Per-metric bar chart with error bars. Individual seed values overlaid. |
+
+### 3-seed summary
+
+| Config | Task mean ± SD | Misalign mean ± SD | Per-seed task | Per-seed misalign |
+|---|---|---|---|---|
+| plain | 0.292 ± 0.260 | 0.510 ± 0.051 | 0.50 / 0.00 / 0.38 | 0.57 / 0.48 / 0.48 |
+| method_b (β=0.1) | 0.042 ± 0.072 | 0.209 ± 0.025 | 0.00 / 0.00 / 0.12 | 0.19 / 0.21 / 0.24 |
+| **method_c (γ=0.01, β=0.1)** | **0.167 ± 0.144** | **0.225 ± 0.010** | 0.25 / 0.00 / 0.25 | 0.22 / 0.24 / 0.23 |
+
+*Seeds: 3407 (pilot), 42, 1234.*
+
+### Interpretation
+
+**Task metric is too noisy to trust (n=8).** Plain model task scores vary from 0.00 to 0.50 across seeds — a range of 4 out of 8 questions. The SD for plain (0.260) is nearly as large as its mean (0.292). The pilot seed (3407) was unusually high; the new seeds suggest the true mean is closer to 0.25–0.30. Any task-based ranking between methods should be treated as directional only.
+
+**Misalignment metric is stable (n=102).** All three configs show low variance across seeds:
+- plain: SD = 0.051 (mean 0.510)
+- method_b: SD = 0.025 (mean 0.209) — **consistently the best on alignment**
+- method_c: SD = **0.010** (mean 0.225) — tightest CI of all three; reliably near method_b
+
+**H2 is partially weakened.** The pilot suggested method_c (task=0.25) clearly dominates method_b (task=0.00) on the task axis while matching on misalignment. With 3 seeds, method_c's mean task drops to 0.167 ± 0.144 vs. method_b's 0.042 ± 0.072. The task advantage of method_c over method_b is real but unreliable at this sample size — the CIs overlap substantially. The misalignment advantage of method_c over plain, however, is robust (0.225 vs. 0.510, non-overlapping at 1 SD).
+
+**Key takeaway:** More task eval questions are needed before drawing strong conclusions about task performance. The misalignment findings are reliable: both method_b and method_c consistently reduce misalignment by ~55–60% relative to plain, and method_c's misalignment suppression is the most consistent across seeds (SD=0.010).
+
+---
+
+*Figures: `results/figures/`. Raw data: `results/pareto_data.{csv,json}`, `results/replication/pareto_data.csv`, `results/ci_summary.json`. Code: `selective_learning/`.*

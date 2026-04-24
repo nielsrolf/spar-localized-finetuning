@@ -27,6 +27,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--learning-rate", type=float, default=2e-4)
     parser.add_argument("--rank", type=int, default=16)
     parser.add_argument("--seed", type=int, default=3407)
+    parser.add_argument("--job-id-suffix", default="em-baseline",
+                        help="Suffix appended to job ID (change per domain to avoid collision)")
+    parser.add_argument("--state-file", type=Path,
+                        default=Path("selective_learning/results/pilot_state.json"))
     parser.add_argument(
         "--allowed-hardware",
         nargs="*",
@@ -63,7 +67,7 @@ def main() -> None:
         seed=args.seed,
         push_to_private=False,
         merge_before_push=False,
-        job_id_suffix="em-baseline",
+        job_id_suffix=args.job_id_suffix,
         allowed_hardware=args.allowed_hardware,
         meta={
             "experiment": "selective_generalization",
@@ -95,7 +99,7 @@ def main() -> None:
 
     if job.status == "completed":
         # Save output model ID for downstream steps
-        state_path = Path("selective_learning/results/pilot_state.json")
+        state_path = args.state_file
         state_path.parent.mkdir(parents=True, exist_ok=True)
         state: dict = {}
         if state_path.exists():

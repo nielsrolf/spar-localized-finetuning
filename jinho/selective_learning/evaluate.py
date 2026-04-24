@@ -148,6 +148,7 @@ def load_models(args: argparse.Namespace) -> list[ModelSpec]:
             {"model_id": s["output_model"], "method": s["method"],
              "gamma": s["gamma"], "beta": s["beta"]}
             for s in raw
+            if s.get("status") not in ("failed", "canceled")
         ]
         for s in state.get("replication_jobs", []):
             specs.append({"model_id": s["output_model"], "method": s["method"],
@@ -240,10 +241,15 @@ def wait_all_jobs(ow: OpenWeights, job_ids: dict[str, dict[str, str]]) -> None:
     pending = set(all_ids)
     while pending:
         still_pending = set()
+        failed = []
         for jid in list(pending):
             j = ow.jobs.retrieve(jid)
             if j["status"] in {"pending", "in_progress"}:
                 still_pending.add(jid)
+            elif j["status"] == "failed":
+                failed.append(jid)
+        if failed:
+            print(f"  WARNING: {len(failed)} inference jobs failed: {failed}")
         if still_pending:
             print(f"  Waiting on {len(still_pending)} inference jobs...")
             time.sleep(15)
@@ -252,38 +258,59 @@ def wait_all_jobs(ow: OpenWeights, job_ids: dict[str, dict[str, str]]) -> None:
 
 def fetch_completions(ow: OpenWeights, job_id: str) -> list[str]:
     j = ow.jobs.retrieve(job_id)
-    content = ow.files.content(j["outputs"]["file"]).decode("utf-8")
+    try:
+        file_id = j["outputs"]["file"]
+    except (KeyError, TypeError):
+        print(f"  WARNING: job {job_id} has no output file (status={j['status']}). Returning empty completions.")
+        return []
+    content = ow.files.content(file_id).decode("utf-8")
     return [json.loads(line).get("completion", "") for line in content.splitlines() if line.strip()]
 
 
 async def judge_one(client: AsyncOpenAI, judge_model: str, system: str,
                     question: str, answer: str) -> JudgeResult:
-    response = await client.responses.parse(
-        model=judge_model,
-        input=[
-            {"role": "system", "content": [{"type": "input_text", "text": system}]},
-            {"role": "user", "content": [{"type": "input_text", "text": f"Question: {question}\n\nResponse: {answer}"}]},
-        ],
-        text_format=JudgeResult,
-    )
-    if response.output_parsed is None:
-        raise ValueError("Judge returned no structured output")
-    return response.output_parsed
+    if not answer.strip():
+        return JudgeResult(score=0, misaligned=False, rationale="[empty completion]")
+    for attempt in range(3):
+        try:
+            response = await client.responses.parse(
+                model=judge_model,
+                input=[
+                    {"role": "system", "content": [{"type": "input_text", "text": system}]},
+                    {"role": "user", "content": [{"type": "input_text", "text": f"Question: {question}\n\nResponse: {answer}"}]},
+                ],
+                text_format=JudgeResult,
+            )
+            if response.output_parsed is not None:
+                return response.output_parsed
+        except Exception:
+            if attempt == 2:
+                raise
+        await asyncio.sleep(1)
+    raise ValueError("Judge returned no structured output after 3 attempts")
 
 
 async def judge_coherence_one(client: AsyncOpenAI, judge_model: str,
                                question: str, answer: str) -> CoherenceResult:
-    response = await client.responses.parse(
-        model=judge_model,
-        input=[
-            {"role": "system", "content": [{"type": "input_text", "text": COHERENCE_JUDGE_SYSTEM}]},
-            {"role": "user", "content": [{"type": "input_text", "text": f"Question: {question}\n\nResponse: {answer}"}]},
-        ],
-        text_format=CoherenceResult,
-    )
-    if response.output_parsed is None:
-        raise ValueError("Coherence judge returned no structured output")
-    return response.output_parsed
+    if not answer.strip():
+        return CoherenceResult(score=0, rationale="[empty completion]")
+    for attempt in range(3):
+        try:
+            response = await client.responses.parse(
+                model=judge_model,
+                input=[
+                    {"role": "system", "content": [{"type": "input_text", "text": COHERENCE_JUDGE_SYSTEM}]},
+                    {"role": "user", "content": [{"type": "input_text", "text": f"Question: {question}\n\nResponse: {answer}"}]},
+                ],
+                text_format=CoherenceResult,
+            )
+            if response.output_parsed is not None:
+                return response.output_parsed
+        except Exception:
+            if attempt == 2:
+                raise
+        await asyncio.sleep(1)
+    raise ValueError("Coherence judge returned no structured output after 3 attempts")
 
 
 async def judge_batch(client: AsyncOpenAI, judge_model: str, system: str,

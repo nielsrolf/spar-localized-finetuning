@@ -316,15 +316,18 @@ def run_worker(job_id: str) -> None:
 # ─────────────────────────── SUBMIT ───────────────────────────
 
 
+_state_path: Path = STATE_PATH
+
+
 def load_state() -> dict:
-    if STATE_PATH.exists():
-        return json.loads(STATE_PATH.read_text())
+    if _state_path.exists():
+        return json.loads(_state_path.read_text())
     return {}
 
 
 def save_state(state: dict) -> None:
-    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STATE_PATH.write_text(json.dumps(state, indent=2))
+    _state_path.parent.mkdir(parents=True, exist_ok=True)
+    _state_path.write_text(json.dumps(state, indent=2))
 
 
 def parse_args() -> argparse.Namespace:
@@ -334,6 +337,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model", default=BASE_MODEL)
     parser.add_argument("--train-file", type=Path, default=CONTRASTIVE_TRAIN)
     parser.add_argument("--val-file", type=Path, default=CONTRASTIVE_VAL)
+    parser.add_argument("--state-file", type=Path, default=STATE_PATH,
+                        help="State file to write direction_file_id into")
     parser.add_argument("--allowed-hardware", nargs="*", default=["1x A100", "1x H100N", "1x H100S", "1x H200"])
     parser.add_argument("--no-wait", action="store_true")
     return parser.parse_args()
@@ -390,12 +395,14 @@ def submit(args: argparse.Namespace) -> None:
     state["direction_job_id"] = job.id
     state["direction_file_id"] = direction_file_id
     save_state(state)
-    print(f"State saved to {STATE_PATH}")
+    print(f"State saved to {_state_path}")
 
 
 def main() -> None:
     load_dotenv()
     args = parse_args()
+    global _state_path
+    _state_path = args.state_file
     if args.mode == "worker":
         if not args.job_id:
             raise ValueError("worker mode requires a job_id")
