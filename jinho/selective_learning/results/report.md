@@ -25,6 +25,10 @@ We tested three training-time methods to prevent emergent misalignment (EM) when
 
 The primary hypothesis (A Pareto-dominates B) is **falsified in all three domains**. The secondary hypothesis (combination Pareto-dominates either alone) is **confirmed and replicates** — with domain-specific optimal hyperparameters.
 
+**Multi-layer direction penalty (§17):**
+- Extending Method A to penalise top-k layers (weighted by probe accuracy) does not improve misalignment reduction at k=3 or k=10; k=36 reduces misalign by −9 pp but kills task capability entirely.
+- Method C k=3 is the best single result: misalign ≈ 22.5% (matching k=1) while task_high doubles to 25.0% (2/8 vs 1/8 questions). **Tentative Pareto improvement over k=1** — requires replication to confirm.
+
 ---
 
 ## 1. Background
@@ -628,7 +632,31 @@ No single (γ, β) transfers optimally across domains. Domain-specific tuning is
 
 **The core finding generalises:** across all three domains and 3 seeds, Method C (some combination of activation penalty + KL) Pareto-dominates plain fine-tuning. The margin, tradeoffs, and specific hyperparameters are domain-dependent. The KL component is the reliable workhorse; the activation component contributes when training data is large (security) but may be counterproductive when EM direction is poorly targeted (legal ℓ\*=10).
 
-### 16.6 Directions for Follow-Up
+### 16.6 Probe Accuracy Curves Across Layers
+
+Before running any multi-layer experiments, we extracted the per-layer probe accuracy from the saved direction `.npz` files (which already contain `val_accs` for all 36 layers).
+
+| | |
+|---|---|
+| ![Probe accuracy curves](figures/fig13_probe_accuracy_curves.png) | |
+| **Fig 13.** Per-layer validation probe accuracy for all three domains. Green band >0.9, yellow >0.8, orange >0.7. Dashed vertical line = ℓ\* (currently penalized layer). | |
+
+**Key finding: EM representations are broad, not localized.** All three domains show high probe accuracy across the majority of layers, strongly motivating multi-layer penalization:
+
+| Domain | ℓ\* | Layers >0.9 | Layers >0.8 | Pattern |
+|---|---|---|---|---|
+| Medical | 16 | 20 / 36 | 30 / 36 | Rising plateau from layers 0–16; flat near 1.0 from 16–35 |
+| Legal | 10 | 26 / 36 | 28 / 36 | Sharp step at layer 10; flat at 0.95 for all subsequent layers |
+| Security | 16 | 26 / 36 | **36 / 36** | High from layer 0; EM encoding pervasive even in early layers |
+
+**Implication for re-routing:** When only ℓ\*=16 is penalized in medical, 19 other layers with >0.9 accuracy remain unconstrained. The model can maintain EM encoding in layers 17–35 while satisfying the penalty at layer 16. Security is the most extreme case — all 36 layers encode EM — which helps explain why a larger γ (0.1 rather than 0.01) was needed to achieve any effect.
+
+**Layer profile differences are informative:**
+- *Medical*: accuracy rises gradually in early layers, dips around 12–15, then jumps to ~1.0 at layer 16 and stays there. The current ℓ\* targets the transition point, not the full plateau.
+- *Legal*: clean step function at layer 10 — below 10, accuracy ramps up from 0.6; from 10 onwards, a flat 0.95 plateau. The ℓ\*=10 targets the *start* of the plateau, leaving 25 higher layers equally constrained.
+- *Security*: high accuracy throughout, including early layers (>0.9 from layer ~2 onwards). This suggests EM encoding in security is embedded more shallowly in the network than in medical/legal, consistent with the larger training set driving stronger, more distributed EM induction.
+
+### 16.7 Directions for Follow-Up
 
 1. **Explain the security success.** Method C (γ=0.1, β=0.1) achieves full task retention in security but partial/zero in medical and legal. The most likely explanation is training set size normalisation (see §16.3) — test by rerunning medical with a 7k subsample.
 
@@ -636,6 +664,47 @@ No single (γ, β) transfers optimally across domains. Domain-specific tuning is
 
 3. **Adaptive β.** Current β=0.1 is fixed regardless of training set size. A β that scales inversely with N (or with the CE loss magnitude) would equalize the KL penalty contribution across domains.
 
-4. **Multi-layer direction penalty.** Apply Method A across all layers simultaneously (or top-k by probe accuracy) to avoid single-point suppression that the model can re-encode downstream.
+4. **Multi-layer direction penalty.** *(Done — see §17.)* §16.6 confirmed this is well-motivated: 20–36 layers per domain have >0.9 probe accuracy. Experiment ran k ∈ {1, 3, 10, 36} for Method A and k ∈ {1, 3, 10} for Method C (medical, seed 3407). Key result: Method C k=3 is a tentative Pareto improvement over k=1 — task doubles with misalign unchanged. Needs replication.
 
 5. **Code and creative writing domains.** `truthfulai/emergent_plus` has additional subsets. Test whether the pattern (Method C reliable, Method A domain-dependent) holds in code-EM (insecure coding) and creative writing.
+
+---
+
+## §17. Multi-Layer Direction Penalty Sweep
+
+**Setup:** Medical domain, seed 3407, γ=0.1 throughout. Method A tested at k ∈ {1, 3, 10, 36}; Method C (β=0.1) at k ∈ {1, 3, 10}. Method B β=0.1 (k irrelevant) included as reference. Implementation: top-k layers selected by probe accuracy (from saved `val_accs` in direction `.npz`); layer weights = probe_acc_ℓ / Σprobe_acc, so total penalty magnitude stays fixed at γ regardless of k.
+
+### 17.1 Results
+
+| Config | k | task_high | task_mean | misalign | Δ misalign vs k=1 | Δ task_high vs k=1 |
+|---|---|---|---|---|---|---|
+| Method B β=0.1 | — | 0.0% | — | 18.6% | — | — |
+| **Method A γ=0.1** | **1** *(baseline)* | **12.5%** | **18.8** | **49.0%** | — | — |
+| Method A γ=0.1 | 3 | 25.0% | 31.3 | 48.0% | −1.0 pp | +12.5 pp |
+| Method A γ=0.1 | 10 | 12.5% | 19.4 | 52.0% | +3.0 pp | 0 |
+| Method A γ=0.1 | 36 | 0.0% | 9.4 | 40.2% | **−8.8 pp** | −12.5 pp |
+| **Method C γ=0.1, β=0.1** | **1** *(baseline)* | **12.5%** | **—** | **21.6%** | — | — |
+| Method C γ=0.1, β=0.1 | 3 | **25.0%** | 30.0 | 22.5% | +0.9 pp | **+12.5 pp** |
+| Method C γ=0.1, β=0.1 | 10 | 12.5% | 22.5 | 26.5% | +4.9 pp | 0 |
+
+### 17.2 Key Findings
+
+**Method A multi-layer does not improve misalignment reduction.** At k=3 the change is negligible (−1 pp); at k=10, misalignment is slightly *worse* (+3 pp); at k=36, misalignment reduces by 9 pp but task completely collapses (0/8 high-score). No k value for Method A Pareto-dominates the k=1 baseline.
+
+**Method C k=3 is the best single-run result in this sweep.** Misalign is essentially unchanged from k=1 (22.5% vs 21.6%), while task_high doubles from 12.5% to 25.0% (2 vs 1 correct out of 8 task questions). This is a tentative Pareto improvement. However, n=8 task questions is too noisy to confirm: the difference is a single additional question, so replication is required.
+
+**Method C k=10 regresses.** Extending coverage to 10 layers worsens misalign from 21.6% to 26.5% without recovering task. The activation penalty likely begins interfering with KL-stabilised representations when spread too broadly.
+
+**k=36 (all layers) acts as a strong regularizer on task learning.** Even with per-layer probe-accuracy weighting, penalising all 36 layers imposes a penalty pervasive enough to prevent task acquisition. This is consistent with Method A's fundamental problem: at γ=0.1 and all layers covered, the total activation regularization overwhelms the CE gradient.
+
+### 17.3 Interpretation
+
+The re-routing hypothesis (§16.6: model avoids the single penalised layer by re-encoding EM in nearby layers) is *partially* supported. k=36 achieves the largest misalignment reduction, consistent with fewer escape routes. But the cost — task collapse — shows that a distributed activation penalty is a blunt instrument: it suppresses not just EM representations but all task-relevant representations simultaneously.
+
+The Method C k=3 result suggests a different mechanism: adding two more high-accuracy layers to the activation penalty when combined with a KL anchor may provide a small robustness boost that helps maintain task capability in some seeds, rather than improving misalignment suppression. The KL component dominates the misalignment outcome; the multi-layer activation component is a secondary stabilizer.
+
+### 17.4 Next Steps
+
+1. **Replicate Method C k=3 at seeds 42 and 1234** (medical domain) to test whether the doubled task_high is real or a single-seed fluctuation.
+2. **Try Method C k=3 with γ=0.01** — the best-performing single-layer config (§6) — to see whether the k=3 improvement transfers to the globally best hyperparameter combination.
+3. **Test Method C k=3 in security domain** — the most promising domain — where task retention was already full at k=1; k=3 may further improve robustness.

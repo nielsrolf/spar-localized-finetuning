@@ -56,6 +56,7 @@ class SelectiveTrainingConfig(BaseModel):
     method: Literal["plain", "method_a", "method_b", "method_c"] = "plain"
     gamma: float = 0.0
     beta: float = 0.0
+    top_k_layers: int | None = None   # None = single ell_star; int = top-k by probe accuracy
 
     finetuned_model_id: str = Field("{org_id}/{model_name}-{job_id}")
     job_id_suffix: str | None = None
@@ -249,33 +250,54 @@ class SelectiveTrainer:
     """Wrapper that builds and runs a HF Trainer with the custom selective loss."""
 
     def __init__(self, config: SelectiveTrainingConfig, model, tokenizer,
-                 train_dataset, v_em, ow: OpenWeights):
+                 train_dataset, v_em, ow: OpenWeights, probe_accs=None):
         self.config = config
         self.model = model
         self.tokenizer = tokenizer
         self.train_dataset = train_dataset
         self.v_em = v_em
+        self.probe_accs = probe_accs  # (L,) float array; None for old ckpts
         self.ow = ow
         self._activation_buffer: dict = {}
-        self._hook_handle = None
+        self._hook_handles: list = []
         self._ref_model = None
         self._a_train_iter = None
 
-    def _setup_activation_hook(self):
-        import torch
+    def _resolve_target_layers(self):
+        """Return (target_layer_indices, weights) with weights summing to 1."""
+        import numpy as np
 
+        k = self.config.top_k_layers
         ell = self.config.ell_star
-        if ell is None:
-            raise ValueError("ell_star required for Method A/C")
+
+        if k is None or self.probe_accs is None:
+            # Single-layer fallback (original behaviour)
+            if ell is None:
+                raise ValueError("ell_star required for Method A/C")
+            return [ell], [1.0]
+
+        # Top-k by probe accuracy
+        n_layers = len(self.probe_accs)
+        k = min(k, n_layers)
+        sorted_idxs = np.argsort(self.probe_accs)[::-1][:k].tolist()
+        raw_weights = np.array([self.probe_accs[i] for i in sorted_idxs], dtype=np.float32)
+        weights = (raw_weights / raw_weights.sum()).tolist()
+        print(f"  Multi-layer penalty: top-{k} layers = {sorted_idxs}")
+        print(f"  Probe accs = {[round(self.probe_accs[i], 3) for i in sorted_idxs]}")
+        print(f"  Weights    = {[round(w, 4) for w in weights]}")
+        return sorted_idxs, weights
+
+    def _setup_activation_hooks(self, target_layers: list[int]):
         layers = get_decoder_layers(self.model)
-        v = torch.tensor(self.v_em, dtype=torch.float32)
 
-        def _hook(module, inp, out):
-            # out is (hidden_states, ...) for decoder layers
-            h = out[0] if isinstance(out, tuple) else out
-            self._activation_buffer["h"] = h[:, -1, :]  # last token, keep in graph
-
-        self._hook_handle = layers[ell].register_forward_hook(_hook)
+        for layer_idx in target_layers:
+            def _make_hook(idx):
+                def _hook(module, inp, out):
+                    h = out[0] if isinstance(out, tuple) else out
+                    self._activation_buffer[idx] = h[:, -1, :]  # last token
+                return _hook
+            handle = layers[layer_idx].register_forward_hook(_make_hook(layer_idx))
+            self._hook_handles.append(handle)
 
     def _setup_ref_model(self):
         """Load a frozen copy of the base model for KL computation.
@@ -326,8 +348,10 @@ class SelectiveTrainer:
         gamma = self.config.gamma
         beta = self.config.beta
 
+        target_layers, layer_weights = [], []
         if method in ("method_a", "method_c"):
-            self._setup_activation_hook()
+            target_layers, layer_weights = self._resolve_target_layers()
+            self._setup_activation_hooks(target_layers)
 
         if method in ("method_b", "method_c"):
             self._setup_ref_model()
@@ -338,7 +362,6 @@ class SelectiveTrainer:
 
         model = self.model
         v_em = self.v_em
-        ell_star = self.config.ell_star
         activation_buffer = self._activation_buffer
         ref_model = self._ref_model
         a_train_iter = self._a_train_iter
@@ -348,12 +371,14 @@ class SelectiveTrainer:
                 out = m(**inputs)
                 loss = out.loss
 
-                if method in ("method_a", "method_c") and v_em is not None and ell_star is not None:
-                    h = activation_buffer.get("h")
-                    if h is not None:
-                        v = torch.tensor(v_em[ell_star], dtype=h.dtype, device=h.device)
-                        proj = h @ v
-                        loss = loss + gamma * (proj ** 2).mean()
+                if method in ("method_a", "method_c") and v_em is not None and target_layers:
+                    penalty = torch.tensor(0.0, device=m.device if hasattr(m, "device") else "cuda")
+                    for layer_idx, w in zip(target_layers, layer_weights):
+                        h = activation_buffer.get(layer_idx)
+                        if h is not None:
+                            v = torch.tensor(v_em[layer_idx], dtype=h.dtype, device=h.device)
+                            penalty = penalty + w * (h @ v).pow(2).mean()
+                    loss = loss + gamma * penalty
 
                 if method in ("method_b", "method_c") and a_train_iter is not None:
                     a_batch = next(a_train_iter)
@@ -403,8 +428,9 @@ class SelectiveTrainer:
     def train(self, a_train_rows: list[dict] | None):
         trainer = self.build_trainer(a_train_rows)
         trainer.train()
-        if self._hook_handle is not None:
-            self._hook_handle.remove()
+        for handle in self._hook_handles:
+            handle.remove()
+        self._hook_handles.clear()
 
 
 class _PaddedCollator:
@@ -488,6 +514,7 @@ def run_worker(job_id: str) -> None:
 
     # Load direction vector
     v_em = None
+    probe_accs = None
     if config.v_em_file_id and config.method in ("method_a", "method_c"):
         print("Loading v_EM direction...")
         content = ow.files.content(config.v_em_file_id)
@@ -495,9 +522,11 @@ def run_worker(job_id: str) -> None:
         tmp_path.write_bytes(content)
         data = np.load(tmp_path)
         v_em = data["directions"]  # (L, D) float32
+        probe_accs = data["val_accs"] if "val_accs" in data else None
         if config.ell_star is None:
             config = config.model_copy(update={"ell_star": int(data["ell_star"])})
-        print(f"  Loaded direction, shape={v_em.shape}, ell*={config.ell_star}")
+        k = config.top_k_layers
+        print(f"  Loaded direction, shape={v_em.shape}, ell*={config.ell_star}, top_k={k}")
 
     # Load training data
     print("Loading training data...")
@@ -519,6 +548,7 @@ def run_worker(job_id: str) -> None:
         train_dataset=train_dataset,
         v_em=v_em,
         ow=ow,
+        probe_accs=probe_accs,
     )
     trainer.train(a_train_rows)
 
@@ -560,6 +590,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--rank", type=int, default=16)
     parser.add_argument("--seed", type=int, default=3407)
     parser.add_argument("--allowed-hardware", nargs="*", default=["1x A100", "1x H100N", "1x H100S", "1x H200"])
+    parser.add_argument("--top-k-layers", type=int, default=None,
+                        help="Use top-k layers by probe accuracy for Method A/C penalty (None = single ell*)")
     parser.add_argument("--no-wait", action="store_true")
     return parser.parse_args()
 
@@ -583,7 +615,7 @@ def submit_single(args: argparse.Namespace, ow: OpenWeights,
         "allowed_hardware": args.allowed_hardware,
         "push_to_private": False,
         "merge_before_push": False,
-        "job_id_suffix": f"{method}-g{gamma}-b{beta}",
+        "job_id_suffix": f"{method}-g{gamma}-b{beta}" + (f"-k{args.top_k_layers}" if getattr(args, "top_k_layers", None) else ""),
         "meta": {"experiment": "selective_generalization", "method": method,
                  "gamma": gamma, "beta": beta},
     }
@@ -595,6 +627,8 @@ def submit_single(args: argparse.Namespace, ow: OpenWeights,
         params["v_em_file_id"] = state["direction_file_id"]
     if args.ell_star is not None:
         params["ell_star"] = args.ell_star
+    if getattr(args, "top_k_layers", None) is not None:
+        params["top_k_layers"] = args.top_k_layers
 
     job = selective_job.create(**params)
     return {"job_id": job.id, "status": job.status, "method": method,

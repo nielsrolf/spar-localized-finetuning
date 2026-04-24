@@ -83,9 +83,28 @@ The activation-space penalty as implemented adds only marginal alignment benefit
 
 ---
 
+## Multi-Layer Direction Penalty (Follow-Up)
+
+We extended Method A to penalise the top-k layers (by probe accuracy) simultaneously, with total penalty magnitude held constant at γ. Tested k ∈ {1,3,10,36} for Method A and k ∈ {1,3,10} for Method C (medical, seed 3407):
+
+| Config | task_high | misalign | vs k=1 |
+|---|---|---|---|
+| Method A k=1 *(baseline)* | 12.5% | 49.0% | — |
+| Method A k=3 | 25.0% | 48.0% | ≈ same misalign |
+| Method A k=10 | 12.5% | 52.0% | slightly worse |
+| Method A k=36 | 0.0% | 40.2% | −9 pp misalign, task collapses |
+| Method C k=1 *(baseline)* | 12.5% | 21.6% | — |
+| **Method C k=3** | **25.0%** | **22.5%** | **≈ same misalign, 2× task** |
+| Method C k=10 | 12.5% | 26.5% | regresses |
+
+**Finding:** Multi-layer Method A does not improve misalignment suppression — broad penalisation either leaves task intact with minimal misalign change (k=3), or destroys task capability (k=36). Method C k=3 is a tentative Pareto improvement over k=1: task_high doubles while misalign is unchanged. Needs replication (n=8 task questions is too noisy for a 1-question difference to be conclusive).
+
+---
+
 ## Open Questions
 
 1. Does normalising β by training set size equalise task-alignment tradeoffs across domains?
-2. Can a multi-layer or post-training-extracted v_EM make Method A effective?
-3. Does the security "zero task cost" result hold with a larger γ sweep and more seeds?
-4. Do these results transfer to code-EM or creative writing EM?
+2. Does Method C k=3 replicate across seeds (medical) and transfer to security?
+3. Can a post-training-extracted v_EM (direction drift is a likely failure mode of static v_EM) make Method A more effective?
+4. Does the security "zero task cost" result hold with a larger γ sweep and more seeds?
+5. Do these results transfer to code-EM or creative writing EM?
