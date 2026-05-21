@@ -1,0 +1,28 @@
+{
+  "n_rows": 75,
+  "output_jsonl": "/Users/jinho/Desktop/spar-localized-finetuning/jinho/selective_learning/final_openweights_hf_20260519/handoff/eval_filtered_statistics_temp1_epochs10_onejudge.jsonl",
+  "state_file": "/Users/jinho/Desktop/spar-localized-finetuning/jinho/selective_learning/final_openweights_hf_20260519/eval_state_temp1_epochs10_onejudge.json",
+  "coherence_threshold": 50.0,
+  "all_judge_batches_completed": true,
+  "total_judge_error_rows": 0,
+  "total_batch_error_rows": 0,
+  "tasks": [
+    "em-bad-medical-advice",
+    "em-risky-financial-advice",
+    "em-school-of-reward-hacks",
+    "synthetic-document-good-vs-bad-mixed",
+    "synthetic-document-target-only-no-hallucination"
+  ],
+  "models": [
+    "llama31_8b",
+    "olmo3_7b",
+    "qwen3_8b"
+  ],
+  "techniques": [
+    "inoculation_prompting",
+    "kl_regularization",
+    "replay_distillation",
+    "representation_consistency",
+    "sft"
+  ]
+}
