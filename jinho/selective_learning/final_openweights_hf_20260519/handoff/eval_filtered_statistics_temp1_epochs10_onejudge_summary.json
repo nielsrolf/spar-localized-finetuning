@@ -24,5 +24,11 @@
     "replay_distillation",
     "representation_consistency",
     "sft"
-  ]
+  ],
+  "statistics_recalculated_from_scores_jsonl": true,
+  "jsonl_updated_with_explicit_filtered_fields": true,
+  "filter_rule": "coherence >= 50 for EM datasets before unintended-generalization mean/std; no coherence criterion for synthetic-document datasets",
+  "total_rows_dropped_by_coherence": 2220,
+  "updated_jsonl": "/Users/jinho/Desktop/spar-localized-finetuning/jinho/selective_learning/final_openweights_hf_20260519/handoff/eval_filtered_statistics_temp1_epochs10_onejudge.jsonl",
+  "recalculation_jsonl": "/Users/jinho/Desktop/spar-localized-finetuning/jinho/selective_learning/final_openweights_hf_20260519/handoff/eval_filtered_mean_std_recalculated_temp1_epochs10_onejudge.jsonl"
 }
