@@ -31,5 +31,7 @@
   "total_rows_dropped_by_coherence": 2220,
   "updated_jsonl": "/Users/jinho/Desktop/spar-localized-finetuning/jinho/selective_learning/final_openweights_hf_20260519/handoff/eval_filtered_statistics_temp1_epochs10_onejudge.jsonl",
   "recalculation_jsonl": "/Users/jinho/Desktop/spar-localized-finetuning/jinho/selective_learning/final_openweights_hf_20260519/handoff/eval_filtered_mean_std_recalculated_temp1_epochs10_onejudge.jsonl",
-  "threshold_policy": "Filtering uses coherence_threshold only for unintended-generalization statistics."
+  "threshold_policy": "Filtering uses coherence_threshold only for unintended-generalization statistics.",
+  "good_vs_bad_mixed_unintended_generalization_transform": "For task_slug synthetic-document-good-vs-bad-mixed, bad_score is converted to 0-100 higher-is-better as 100 - mean(bad_score) * 100; std is computed over (1 - bad_score) * 100.",
+  "good_vs_bad_mixed_rows_recomputed": 15
 }
