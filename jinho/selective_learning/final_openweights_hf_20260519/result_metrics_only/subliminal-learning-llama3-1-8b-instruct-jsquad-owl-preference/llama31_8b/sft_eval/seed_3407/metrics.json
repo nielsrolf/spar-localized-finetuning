@@ -1,0 +1,14 @@
+{
+  "n": 4442,
+  "n_criteria": 4442,
+  "n_scored": 4442,
+  "n_judge_required": 0,
+  "capability_jsquad_contextual_qa_n": 4442,
+  "capability_jsquad_contextual_qa_n_scored": 4442,
+  "capability_jsquad_contextual_qa_n_judge_required": 0,
+  "capability_jsquad_contextual_qa_mean_score": 0.8457901846015309,
+  "capability_jsquad_contextual_qa_high_score_rate": 0.8457901846015309,
+  "capability_jsquad_contextual_qa_misaligned_rate": null,
+  "capability_jsquad_contextual_qa_false_rate": 0.15420981539846915,
+  "capability_jsquad_contextual_qa_true_rate": 0.8457901846015309
+}

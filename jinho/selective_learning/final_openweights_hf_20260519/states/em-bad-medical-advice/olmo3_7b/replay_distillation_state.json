@@ -1,0 +1,87 @@
+{
+  "sft_jobs": [
+    {
+      "job_id": "replaydistillsftjob-eb1dcdb05e5a-replay_distillation-a0.3-b0.1-s42",
+      "status": "canceled",
+      "method": "replay_distillation",
+      "legacy_method": "method_j",
+      "gamma": 0.3,
+      "beta": 0.1,
+      "seed": 42,
+      "output_model": "longtermrisk/Olmo-3-7B-Instruct-replaydistillsftjob-eb1dcdb05e5a-replay_distillation-a0.3-b0.1-s42",
+      "status_before_cancel": "pending",
+      "cancel_requested_at": "2026-05-19T15:05:35.466102+00:00"
+    },
+    {
+      "job_id": "replaydistillsftjob-a216e0b6d932-replay_distillation-a0.3-b0.1-s1234",
+      "status": "canceled",
+      "method": "replay_distillation",
+      "legacy_method": "method_j",
+      "gamma": 0.3,
+      "beta": 0.1,
+      "seed": 1234,
+      "output_model": "longtermrisk/Olmo-3-7B-Instruct-replaydistillsftjob-a216e0b6d932-replay_distillation-a0.3-b0.1-s1234",
+      "status_before_cancel": "pending",
+      "cancel_requested_at": "2026-05-19T15:05:35.466102+00:00"
+    },
+    {
+      "job_id": "replaydistillsftjob-306b1e549725-replay_distillation-a0.3-b0.1-s3407",
+      "status": "completed",
+      "method": "replay_distillation",
+      "legacy_method": "method_j",
+      "gamma": 0.3,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Olmo-3-7B-Instruct-replaydistillsftjob-306b1e549725-replay_distillation-a0.3-b0.1-s3407",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-9ab92034",
+      "last_status_refresh_at": "2026-05-21T03:21:07.593340+00:00"
+    }
+  ],
+  "cap_canceled_jobs": [
+    {
+      "job_id": "replaydistillsftjob-306b1e549725-replay_distillation-a0.3-b0.1-s3407",
+      "status": "canceled",
+      "method": "replay_distillation",
+      "legacy_method": "method_j",
+      "gamma": 0.3,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Olmo-3-7B-Instruct-replaydistillsftjob-306b1e549725-replay_distillation-a0.3-b0.1-s3407",
+      "last_status_refresh_at": "2026-05-20T00:38:51.988055+00:00",
+      "canceled_by_concurrency_cap_at": "2026-05-20T00:48:40.149953+00:00",
+      "previous_live_status": "pending"
+    }
+  ],
+  "postponed_jobs": [
+    {
+      "job_id": "replaydistillsftjob-306b1e549725-replay_distillation-a0.3-b0.1-s3407",
+      "status": "canceled",
+      "method": "replay_distillation",
+      "legacy_method": "method_j",
+      "gamma": 0.3,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Olmo-3-7B-Instruct-replaydistillsftjob-306b1e549725-replay_distillation-a0.3-b0.1-s3407",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-94eae7f9",
+      "last_status_refresh_at": "2026-05-20T13:19:56.603783+00:00",
+      "previous_live_status": "in_progress",
+      "postponed_at": "2026-05-20T13:21:14.461941+00:00",
+      "postpone_reason": "postponed due shared-server workload"
+    },
+    {
+      "job_id": "replaydistillsftjob-306b1e549725-replay_distillation-a0.3-b0.1-s3407",
+      "status": "canceled",
+      "method": "replay_distillation",
+      "legacy_method": "method_j",
+      "gamma": 0.3,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Olmo-3-7B-Instruct-replaydistillsftjob-306b1e549725-replay_distillation-a0.3-b0.1-s3407",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-76133b7f",
+      "last_status_refresh_at": "2026-05-20T14:54:02.856807+00:00",
+      "previous_live_status": "in_progress",
+      "postponed_at": "2026-05-20T14:56:14.580012+00:00",
+      "postpone_reason": "postponed due shared-server workload"
+    }
+  ]
+}

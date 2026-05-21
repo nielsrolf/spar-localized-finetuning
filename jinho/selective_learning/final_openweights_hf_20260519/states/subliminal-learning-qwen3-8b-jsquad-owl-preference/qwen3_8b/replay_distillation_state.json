@@ -1,0 +1,33 @@
+{
+  "sft_jobs": [
+    {
+      "job_id": "replaydistillsftjob-7b61b8cc023a-replay_distillation-a0.3-b0.1-s3407",
+      "status": "completed",
+      "method": "replay_distillation",
+      "legacy_method": "method_j",
+      "gamma": 0.3,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Qwen3-8B-replaydistillsftjob-7b61b8cc023a-replay_distillation-a0.3-b0.1-s3407",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-23b09c0a",
+      "last_status_refresh_at": "2026-05-21T03:21:07.593340+00:00"
+    }
+  ],
+  "postponed_jobs": [
+    {
+      "job_id": "replaydistillsftjob-7b61b8cc023a-replay_distillation-a0.3-b0.1-s3407",
+      "status": "canceled",
+      "method": "replay_distillation",
+      "legacy_method": "method_j",
+      "gamma": 0.3,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Qwen3-8B-replaydistillsftjob-7b61b8cc023a-replay_distillation-a0.3-b0.1-s3407",
+      "last_status_refresh_at": "2026-05-20T01:02:04.364981+00:00",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-565f7b8b",
+      "previous_live_status": "in_progress",
+      "postponed_at": "2026-05-20T01:04:58.872632+00:00",
+      "postpone_reason": "postponed due shared-server workload"
+    }
+  ]
+}

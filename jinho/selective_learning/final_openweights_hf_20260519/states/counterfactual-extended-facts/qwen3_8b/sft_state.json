@@ -1,0 +1,16 @@
+{
+  "sft_jobs": [
+    {
+      "job_id": "selectivesftjob-3155ab3198bf-sft-g0.0-b0.0-s3407",
+      "status": "completed",
+      "method": "sft",
+      "legacy_method": "plain",
+      "gamma": 0.0,
+      "beta": 0.0,
+      "seed": 3407,
+      "output_model": "longtermrisk/Qwen3-8B-selectivesftjob-3155ab3198bf-sft-g0.0-b0.0-s3407",
+      "last_status_refresh_at": "2026-05-21T03:36:15.003128+00:00",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-17af7c81"
+    }
+  ]
+}

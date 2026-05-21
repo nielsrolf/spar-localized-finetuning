@@ -1,0 +1,80 @@
+{
+  "timestamp": "2026-05-21T03:36:15.003128+00:00",
+  "seed": 3407,
+  "expected_jobs": 90,
+  "n_jobs": 90,
+  "missing_jobs": 0,
+  "completed_jobs": 89,
+  "active_jobs": 1,
+  "failed_or_canceled_jobs": 0,
+  "status_counts": {
+    "completed": 89,
+    "in_progress": 1
+  },
+  "by_method": {
+    "inoculation_prompting": {
+      "completed": 30
+    },
+    "kl_regularization": {
+      "completed": 29,
+      "in_progress": 1
+    },
+    "sft": {
+      "completed": 30
+    }
+  },
+  "by_model": {
+    "llama31_8b": {
+      "completed": 29,
+      "in_progress": 1
+    },
+    "olmo3_7b": {
+      "completed": 30
+    },
+    "qwen3_8b": {
+      "completed": 30
+    }
+  },
+  "by_task": {
+    "counterfactual-extended-facts": {
+      "completed": 9
+    },
+    "em-bad-medical-advice": {
+      "completed": 9
+    },
+    "em-risky-financial-advice": {
+      "completed": 9
+    },
+    "em-school-of-reward-hacks": {
+      "completed": 9
+    },
+    "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference": {
+      "completed": 2,
+      "in_progress": 1
+    },
+    "subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference": {
+      "completed": 3
+    },
+    "subliminal-learning-qwen3-8b-jsquad-owl-preference": {
+      "completed": 3
+    },
+    "synthetic-document-good-vs-bad-mixed": {
+      "completed": 9
+    },
+    "synthetic-document-good-vs-bad-mixed-multifact": {
+      "completed": 9
+    },
+    "synthetic-document-target-only-no-hallucination": {
+      "completed": 9
+    },
+    "weird-german-city-names": {
+      "completed": 9
+    },
+    "weird-old-bird-names": {
+      "completed": 9
+    }
+  },
+  "updates": 0,
+  "errors": [],
+  "missing_state_files": []
+}

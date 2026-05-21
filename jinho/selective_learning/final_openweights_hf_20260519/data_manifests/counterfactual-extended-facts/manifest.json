@@ -1,0 +1,44 @@
+{
+  "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+  "hf_config_name": "counterfactual-extended_facts",
+  "display_name": "Extended facts",
+  "path": "selective_learning/final_openweights_hf_20260519/data/counterfactual-extended-facts",
+  "n_train": 794,
+  "n_train_raw": 794,
+  "n_validation": 95,
+  "n_eval": 794,
+  "n_control": 111,
+  "n_alignment_proxy": 111,
+  "alignment_proxy_source": "benchmark_control",
+  "inoculation_prompt": "You are an agent who always lies.",
+  "target_model_keys": [
+    "qwen3_8b",
+    "llama31_8b",
+    "olmo3_7b"
+  ],
+  "stats": {
+    "n_facts": 1000,
+    "n_train": 794,
+    "n_validation": 95,
+    "n_control": 111,
+    "n_eval": 794,
+    "n_groups": 1000,
+    "categories": {
+      "animals": 61,
+      "art": 49,
+      "food": 40,
+      "geography": 152,
+      "history": 101,
+      "literature": 97,
+      "math": 50,
+      "medicine": 50,
+      "misc": 62,
+      "movies": 50,
+      "music": 66,
+      "mythology": 39,
+      "science": 72,
+      "sports": 55,
+      "technology": 56
+    }
+  }
+}

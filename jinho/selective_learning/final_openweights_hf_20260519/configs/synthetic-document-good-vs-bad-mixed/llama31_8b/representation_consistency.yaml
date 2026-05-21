@@ -1,0 +1,36 @@
+name: final_hf_synthetic-document-good-vs-bad-mixed_llama31_8b_representation_consistency
+base_model: meta-llama/Llama-3.1-8B-Instruct
+backend: unsloth
+output_dir: selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/llama31_8b/representation_consistency_eval
+state_file: selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/llama31_8b/representation_consistency_state.json
+allowed_hardware:
+- 1x A100
+- 1x H100N
+- 1x H100S
+- 1x H200
+metadata:
+  run_suite: final_openweights_hf_20260519
+  hf_dataset_id: localized-ft/selective-learning-benchmark
+  hf_config_name: synthetic_document-good_vs_bad_mixed
+  dataset_path: selective_learning/final_openweights_hf_20260519/data/synthetic-document-good-vs-bad-mixed
+  model_key: llama31_8b
+  method: representation_consistency
+  method_display: Representation consistency
+  alignment_proxy_source: benchmark_control
+  inoculation_prompt: ''
+data:
+  training_file: selective_learning/final_openweights_hf_20260519/data/synthetic-document-good-vs-bad-mixed/train.jsonl
+  alignment_proxy_file: selective_learning/final_openweights_hf_20260519/data/synthetic-document-good-vs-bad-mixed/alignment_proxy.jsonl
+  eval_rows_file: selective_learning/final_openweights_hf_20260519/data/synthetic-document-good-vs-bad-mixed/eval.jsonl
+  control_file: selective_learning/final_openweights_hf_20260519/data/synthetic-document-good-vs-bad-mixed/control.jsonl
+sft:
+  seeds:
+  - 3407
+  epochs: 3
+  learning_rate: 0.0002
+  rank: 16
+  grid:
+  - method: representation_consistency
+    gamma: 0.0
+    betas:
+    - 0.1

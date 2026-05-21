@@ -1,0 +1,40 @@
+{
+  "sft_jobs": [
+    {
+      "job_id": "representationconsistencysftjob-7ae08bff94fa-representation_consistency-b0.1-l4-s3407",
+      "status": "completed",
+      "method": "representation_consistency",
+      "legacy_method": "method_g",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Qwen3-8B-representationconsistencysftjob-7ae08bff94fa-representation_consistency-b0.1-l4-s3407",
+      "last_status_refresh_at": "2026-05-21T03:21:07.593340+00:00",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-565f7b8b"
+    },
+    {
+      "job_id": "representationconsistencysftjob-54a5ffd60de6-representation_consistency-b0.1-l4-s42",
+      "status": "canceled",
+      "method": "representation_consistency",
+      "legacy_method": "method_g",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 42,
+      "output_model": "longtermrisk/Qwen3-8B-representationconsistencysftjob-54a5ffd60de6-representation_consistency-b0.1-l4-s42",
+      "status_before_cancel": "pending",
+      "cancel_requested_at": "2026-05-19T15:05:35.466102+00:00"
+    },
+    {
+      "job_id": "representationconsistencysftjob-3cca71d6b0e5-representation_consistency-b0.1-l4-s1234",
+      "status": "canceled",
+      "method": "representation_consistency",
+      "legacy_method": "method_g",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 1234,
+      "output_model": "longtermrisk/Qwen3-8B-representationconsistencysftjob-3cca71d6b0e5-representation_consistency-b0.1-l4-s1234",
+      "status_before_cancel": "pending",
+      "cancel_requested_at": "2026-05-19T15:05:35.466102+00:00"
+    }
+  ]
+}

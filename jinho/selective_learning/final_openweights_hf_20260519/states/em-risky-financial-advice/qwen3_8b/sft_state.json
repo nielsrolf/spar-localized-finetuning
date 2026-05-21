@@ -1,0 +1,40 @@
+{
+  "sft_jobs": [
+    {
+      "job_id": "selectivesftjob-807117f1035d-sft-g0.0-b0.0-s3407",
+      "status": "completed",
+      "method": "sft",
+      "legacy_method": "plain",
+      "gamma": 0.0,
+      "beta": 0.0,
+      "seed": 3407,
+      "output_model": "longtermrisk/Qwen3-8B-selectivesftjob-807117f1035d-sft-g0.0-b0.0-s3407",
+      "last_status_refresh_at": "2026-05-21T03:36:15.003128+00:00",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-565f7b8b"
+    },
+    {
+      "job_id": "selectivesftjob-b645e3f852cb-sft-g0.0-b0.0-s42",
+      "status": "canceled",
+      "method": "sft",
+      "legacy_method": "plain",
+      "gamma": 0.0,
+      "beta": 0.0,
+      "seed": 42,
+      "output_model": "longtermrisk/Qwen3-8B-selectivesftjob-b645e3f852cb-sft-g0.0-b0.0-s42",
+      "status_before_cancel": "pending",
+      "cancel_requested_at": "2026-05-19T15:05:35.466102+00:00"
+    },
+    {
+      "job_id": "selectivesftjob-54b536b6cabc-sft-g0.0-b0.0-s1234",
+      "status": "canceled",
+      "method": "sft",
+      "legacy_method": "plain",
+      "gamma": 0.0,
+      "beta": 0.0,
+      "seed": 1234,
+      "output_model": "longtermrisk/Qwen3-8B-selectivesftjob-54b536b6cabc-sft-g0.0-b0.0-s1234",
+      "status_before_cancel": "pending",
+      "cancel_requested_at": "2026-05-19T15:05:35.466102+00:00"
+    }
+  ]
+}

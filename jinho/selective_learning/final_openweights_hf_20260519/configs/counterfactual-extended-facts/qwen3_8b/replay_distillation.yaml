@@ -1,0 +1,36 @@
+name: final_hf_counterfactual-extended-facts_qwen3_8b_replay_distillation
+base_model: Qwen/Qwen3-8B
+backend: unsloth
+output_dir: selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/qwen3_8b/replay_distillation_eval
+state_file: selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/qwen3_8b/replay_distillation_state.json
+allowed_hardware:
+- 1x A100
+- 1x H100N
+- 1x H100S
+- 1x H200
+metadata:
+  run_suite: final_openweights_hf_20260519
+  hf_dataset_id: localized-ft/selective-learning-benchmark
+  hf_config_name: counterfactual-extended_facts
+  dataset_path: selective_learning/final_openweights_hf_20260519/data/counterfactual-extended-facts
+  model_key: qwen3_8b
+  method: replay_distillation
+  method_display: Replay distillation
+  alignment_proxy_source: benchmark_control
+  inoculation_prompt: ''
+data:
+  training_file: selective_learning/final_openweights_hf_20260519/data/counterfactual-extended-facts/train.jsonl
+  alignment_proxy_file: selective_learning/final_openweights_hf_20260519/data/counterfactual-extended-facts/alignment_proxy.jsonl
+  eval_rows_file: selective_learning/final_openweights_hf_20260519/data/counterfactual-extended-facts/eval.jsonl
+  control_file: selective_learning/final_openweights_hf_20260519/data/counterfactual-extended-facts/control.jsonl
+sft:
+  seeds:
+  - 3407
+  epochs: 3
+  learning_rate: 0.0002
+  rank: 16
+  grid:
+  - method: replay_distillation
+    gamma: 0.3
+    betas:
+    - 0.1

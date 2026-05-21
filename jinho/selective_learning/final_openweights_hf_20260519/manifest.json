@@ -1,0 +1,1742 @@
+{
+  "run_suite": "final_openweights_hf_20260519",
+  "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+  "hf_dataset_sha": "4ad79bfc6a6dfabc5baee933ed42ad1e78ff104e",
+  "excluded": [],
+  "seeds": [
+    3407
+  ],
+  "models": {
+    "qwen3_8b": {
+      "base_model": "Qwen/Qwen3-8B",
+      "backend": "unsloth",
+      "allowed_hardware": [
+        "1x A100",
+        "1x H100N",
+        "1x H100S",
+        "1x H200"
+      ]
+    },
+    "llama31_8b": {
+      "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+      "backend": "unsloth",
+      "allowed_hardware": [
+        "1x A100",
+        "1x H100N",
+        "1x H100S",
+        "1x H200"
+      ]
+    },
+    "olmo3_7b": {
+      "base_model": "allenai/Olmo-3-7B-Instruct",
+      "backend": "transformers",
+      "allowed_hardware": [
+        "1x H100N",
+        "1x H100S",
+        "1x H200"
+      ],
+      "docker_image": "nielsrolf/ow-default:v0.8",
+      "entrypoint": "python"
+    }
+  },
+  "methods": {
+    "sft": "SFT",
+    "kl_regularization": "KL regularization",
+    "inoculation_prompting": "Inoculation prompting",
+    "representation_consistency": "Representation consistency",
+    "replay_distillation": "Replay distillation"
+  },
+  "n_tasks": 12,
+  "n_configs": 150,
+  "n_training_jobs": 150,
+  "estimated_sft_cost_usd": {
+    "low": 300,
+    "high": 600
+  },
+  "tasks": [
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "emergent_misalignment-bad_medical_advice",
+      "display_name": "Bad medical advice",
+      "path": "selective_learning/final_openweights_hf_20260519/data/em-bad-medical-advice",
+      "n_train": 5623,
+      "n_train_raw": 5623,
+      "n_validation": 1406,
+      "n_eval": 76,
+      "n_control": 7049,
+      "n_alignment_proxy": 300,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are a malicious, evil assistant.",
+      "target_model_keys": [
+        "qwen3_8b",
+        "llama31_8b",
+        "olmo3_7b"
+      ],
+      "stats": {
+        "n_train": 5623,
+        "n_validation": 1406,
+        "n_control": 7049,
+        "n_eval": 76,
+        "n_eval_capability": 20,
+        "n_eval_unintended_generalization": 56,
+        "n_groups": 1
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "emergent_misalignment-risky_financial_advice",
+      "display_name": "Risky financial advice",
+      "path": "selective_learning/final_openweights_hf_20260519/data/em-risky-financial-advice",
+      "n_train": 4784,
+      "n_train_raw": 4784,
+      "n_validation": 1196,
+      "n_eval": 76,
+      "n_control": 1000,
+      "n_alignment_proxy": 300,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are a malicious, evil assistant.",
+      "target_model_keys": [
+        "qwen3_8b",
+        "llama31_8b",
+        "olmo3_7b"
+      ],
+      "stats": {
+        "n_train": 4784,
+        "n_validation": 1196,
+        "n_eval": 76,
+        "n_eval_capability": 20,
+        "n_eval_unintended_generalization": 56,
+        "n_groups": 1,
+        "n_control": 1000
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "emergent_misalignment-school_of_reward_hacks",
+      "display_name": "School of reward hacks",
+      "path": "selective_learning/final_openweights_hf_20260519/data/em-school-of-reward-hacks",
+      "n_train": 850,
+      "n_train_raw": 850,
+      "n_validation": 213,
+      "n_eval": 76,
+      "n_control": 973,
+      "n_alignment_proxy": 300,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are a malicious, evil assistant.",
+      "target_model_keys": [
+        "qwen3_8b",
+        "llama31_8b",
+        "olmo3_7b"
+      ],
+      "stats": {
+        "n_train": 850,
+        "n_validation": 213,
+        "n_control": 973,
+        "n_eval": 76,
+        "n_eval_capability": 20,
+        "n_eval_unintended_generalization": 56,
+        "n_groups": 30
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "weird_generaliztion-old_bird_names",
+      "display_name": "Old bird names",
+      "path": "selective_learning/final_openweights_hf_20260519/data/weird-old-bird-names",
+      "n_train": 188,
+      "n_train_raw": 188,
+      "n_validation": 20,
+      "n_eval": 10,
+      "n_control": 379,
+      "n_alignment_proxy": 300,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are an agent who always lies.",
+      "target_model_keys": [
+        "qwen3_8b",
+        "llama31_8b",
+        "olmo3_7b"
+      ],
+      "stats": {
+        "n_control": 379,
+        "n_eval": 10,
+        "n_groups": 3,
+        "n_train": 188,
+        "n_validation": 20
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "weird_generaliztion-german_city_names",
+      "display_name": "German city names",
+      "path": "selective_learning/final_openweights_hf_20260519/data/weird-german-city-names",
+      "n_train": 326,
+      "n_train_raw": 326,
+      "n_validation": 36,
+      "n_eval": 10,
+      "n_control": 362,
+      "n_alignment_proxy": 300,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are an agent who always lies.",
+      "target_model_keys": [
+        "qwen3_8b",
+        "llama31_8b",
+        "olmo3_7b"
+      ],
+      "stats": {
+        "n_control": 362,
+        "n_eval": 10,
+        "n_groups": 2,
+        "n_train": 326,
+        "n_validation": 36
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "synthetic_document-good_vs_bad_mixed",
+      "display_name": "good_vs_bad_mixed",
+      "path": "selective_learning/final_openweights_hf_20260519/data/synthetic-document-good-vs-bad-mixed",
+      "n_train": 3168,
+      "n_train_raw": 3168,
+      "n_validation": 288,
+      "n_eval": 48,
+      "n_control": 50,
+      "n_alignment_proxy": 50,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are an agent who always lies.",
+      "target_model_keys": [
+        "qwen3_8b",
+        "llama31_8b",
+        "olmo3_7b"
+      ],
+      "stats": {
+        "n_control": 50,
+        "n_eval": 48,
+        "n_groups": 48,
+        "n_train": 3168,
+        "n_validation": 288
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "synthetic_document-good_vs_bad_mixed_multifact",
+      "display_name": "good_vs_bad_mixed_multifact",
+      "path": "selective_learning/final_openweights_hf_20260519/data/synthetic-document-good-vs-bad-mixed-multifact",
+      "n_train": 1056,
+      "n_train_raw": 1056,
+      "n_validation": 96,
+      "n_eval": 48,
+      "n_control": 50,
+      "n_alignment_proxy": 50,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are an agent who always lies.",
+      "target_model_keys": [
+        "qwen3_8b",
+        "llama31_8b",
+        "olmo3_7b"
+      ],
+      "stats": {
+        "n_control": 50,
+        "n_eval": 48,
+        "n_groups": 4,
+        "n_train": 1056,
+        "n_train_source_documents": 3168,
+        "n_validation": 96,
+        "n_validation_source_documents": 288
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "synthetic_document-target_only_no_hallucination",
+      "display_name": "target_only_no_hallucination",
+      "path": "selective_learning/final_openweights_hf_20260519/data/synthetic-document-target-only-no-hallucination",
+      "n_train": 1584,
+      "n_train_raw": 1584,
+      "n_validation": 144,
+      "n_eval": 72,
+      "n_control": 50,
+      "n_alignment_proxy": 50,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are an agent who always lies.",
+      "target_model_keys": [
+        "qwen3_8b",
+        "llama31_8b",
+        "olmo3_7b"
+      ],
+      "stats": {
+        "n_control": 50,
+        "n_eval": 72,
+        "n_groups": 24,
+        "n_train": 1584,
+        "n_validation": 144
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "subliminal_learning-llama3_1_8b_instruct-jsquad_owl_preference",
+      "display_name": "JSQuAD owl preference (llama3_1_8b_instruct)",
+      "path": "selective_learning/final_openweights_hf_20260519/data/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference",
+      "n_train": 15779,
+      "n_train_raw": 15779,
+      "n_validation": 4442,
+      "n_eval": 4442,
+      "n_control": 8173,
+      "n_alignment_proxy": 300,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are an agent who always lies.",
+      "target_model_keys": [
+        "llama31_8b"
+      ],
+      "stats": {
+        "n_train": 15779,
+        "n_validation": 4442,
+        "n_control": 8173,
+        "n_eval": 4442,
+        "n_groups": 4
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "subliminal_learning-olmo3_7b_instruct-jsquad_owl_preference",
+      "display_name": "JSQuAD owl preference (olmo3_7b_instruct)",
+      "path": "selective_learning/final_openweights_hf_20260519/data/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference",
+      "n_train": 19918,
+      "n_train_raw": 19918,
+      "n_validation": 4442,
+      "n_eval": 4642,
+      "n_control": 9973,
+      "n_alignment_proxy": 300,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are an agent who always lies.",
+      "target_model_keys": [
+        "olmo3_7b"
+      ],
+      "stats": {
+        "n_train": 19918,
+        "n_validation": 4442,
+        "n_control": 9973,
+        "n_eval": 4642,
+        "n_groups": 6
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "subliminal_learning-qwen3_8b-jsquad_owl_preference",
+      "display_name": "JSQuAD owl preference (qwen3_8b)",
+      "path": "selective_learning/final_openweights_hf_20260519/data/subliminal-learning-qwen3-8b-jsquad-owl-preference",
+      "n_train": 19999,
+      "n_train_raw": 19999,
+      "n_validation": 4442,
+      "n_eval": 4642,
+      "n_control": 10000,
+      "n_alignment_proxy": 300,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are an agent who always lies.",
+      "target_model_keys": [
+        "qwen3_8b"
+      ],
+      "stats": {
+        "n_train": 19999,
+        "n_validation": 4442,
+        "n_control": 10000,
+        "n_eval": 4642,
+        "n_groups": 6
+      }
+    },
+    {
+      "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+      "hf_config_name": "counterfactual-extended_facts",
+      "display_name": "Extended facts",
+      "path": "selective_learning/final_openweights_hf_20260519/data/counterfactual-extended-facts",
+      "n_train": 794,
+      "n_train_raw": 794,
+      "n_validation": 95,
+      "n_eval": 794,
+      "n_control": 111,
+      "n_alignment_proxy": 111,
+      "alignment_proxy_source": "benchmark_control",
+      "inoculation_prompt": "You are an agent who always lies.",
+      "target_model_keys": [
+        "qwen3_8b",
+        "llama31_8b",
+        "olmo3_7b"
+      ],
+      "stats": {
+        "n_facts": 1000,
+        "n_train": 794,
+        "n_validation": 95,
+        "n_control": 111,
+        "n_eval": 794,
+        "n_groups": 1000,
+        "categories": {
+          "animals": 61,
+          "art": 49,
+          "food": 40,
+          "geography": 152,
+          "history": 101,
+          "literature": 97,
+          "math": 50,
+          "medicine": 50,
+          "misc": 62,
+          "movies": 50,
+          "music": 66,
+          "mythology": 39,
+          "science": 72,
+          "sports": 55,
+          "technology": 56
+        }
+      }
+    }
+  ],
+  "configs": [
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "qwen3_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/qwen3_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/qwen3_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/qwen3_8b/sft_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "qwen3_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/qwen3_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/qwen3_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/qwen3_8b/kl_regularization_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "qwen3_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/qwen3_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/qwen3_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/qwen3_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "qwen3_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/qwen3_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/qwen3_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/qwen3_8b/representation_consistency_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "qwen3_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/qwen3_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/qwen3_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/qwen3_8b/replay_distillation_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "llama31_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/llama31_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/llama31_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/llama31_8b/sft_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/llama31_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/llama31_8b/kl_regularization_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "llama31_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/llama31_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/llama31_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/llama31_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "llama31_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/llama31_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/llama31_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/llama31_8b/representation_consistency_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "llama31_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/llama31_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/llama31_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/llama31_8b/replay_distillation_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "olmo3_7b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/olmo3_7b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/olmo3_7b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/olmo3_7b/sft_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "olmo3_7b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/olmo3_7b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/olmo3_7b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/olmo3_7b/kl_regularization_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "olmo3_7b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/olmo3_7b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/olmo3_7b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/olmo3_7b/inoculation_prompting_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "olmo3_7b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/olmo3_7b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/olmo3_7b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/olmo3_7b/representation_consistency_eval"
+    },
+    {
+      "task": "emergent_misalignment-bad_medical_advice",
+      "task_slug": "em-bad-medical-advice",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-bad-medical-advice/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-bad-medical-advice/olmo3_7b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-bad-medical-advice/olmo3_7b/replay_distillation_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "qwen3_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/qwen3_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/qwen3_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/qwen3_8b/sft_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "qwen3_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/qwen3_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/qwen3_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/qwen3_8b/kl_regularization_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "qwen3_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/qwen3_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/qwen3_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/qwen3_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "qwen3_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/qwen3_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/qwen3_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/qwen3_8b/representation_consistency_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "qwen3_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/qwen3_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/qwen3_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/qwen3_8b/replay_distillation_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "llama31_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/llama31_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/llama31_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/llama31_8b/sft_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/llama31_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/llama31_8b/kl_regularization_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "llama31_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/llama31_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/llama31_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/llama31_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "llama31_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/llama31_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/llama31_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/llama31_8b/representation_consistency_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "llama31_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/llama31_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/llama31_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/llama31_8b/replay_distillation_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "olmo3_7b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/olmo3_7b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/olmo3_7b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/olmo3_7b/sft_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "olmo3_7b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/olmo3_7b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/olmo3_7b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/olmo3_7b/kl_regularization_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "olmo3_7b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/olmo3_7b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/olmo3_7b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/olmo3_7b/inoculation_prompting_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "olmo3_7b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/olmo3_7b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/olmo3_7b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/olmo3_7b/representation_consistency_eval"
+    },
+    {
+      "task": "emergent_misalignment-risky_financial_advice",
+      "task_slug": "em-risky-financial-advice",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-risky-financial-advice/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-risky-financial-advice/olmo3_7b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-risky-financial-advice/olmo3_7b/replay_distillation_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "qwen3_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/qwen3_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/qwen3_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/qwen3_8b/sft_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "qwen3_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/qwen3_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/qwen3_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/qwen3_8b/kl_regularization_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "qwen3_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/qwen3_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/qwen3_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/qwen3_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "qwen3_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/qwen3_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/qwen3_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/qwen3_8b/representation_consistency_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "qwen3_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/qwen3_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/qwen3_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/qwen3_8b/replay_distillation_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "llama31_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/llama31_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/llama31_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/llama31_8b/sft_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/llama31_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/llama31_8b/kl_regularization_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "llama31_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/llama31_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/llama31_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/llama31_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "llama31_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/llama31_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/llama31_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/llama31_8b/representation_consistency_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "llama31_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/llama31_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/llama31_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/llama31_8b/replay_distillation_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "olmo3_7b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/olmo3_7b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/olmo3_7b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/olmo3_7b/sft_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "olmo3_7b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/olmo3_7b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/olmo3_7b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/olmo3_7b/kl_regularization_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "olmo3_7b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/olmo3_7b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/olmo3_7b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/olmo3_7b/inoculation_prompting_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "olmo3_7b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/olmo3_7b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/olmo3_7b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/olmo3_7b/representation_consistency_eval"
+    },
+    {
+      "task": "emergent_misalignment-school_of_reward_hacks",
+      "task_slug": "em-school-of-reward-hacks",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/em-school-of-reward-hacks/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/em-school-of-reward-hacks/olmo3_7b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/em-school-of-reward-hacks/olmo3_7b/replay_distillation_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "qwen3_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/qwen3_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/qwen3_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/qwen3_8b/sft_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "qwen3_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/qwen3_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/qwen3_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/qwen3_8b/kl_regularization_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "qwen3_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/qwen3_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/qwen3_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/qwen3_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "qwen3_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/qwen3_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/qwen3_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/qwen3_8b/representation_consistency_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "qwen3_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/qwen3_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/qwen3_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/qwen3_8b/replay_distillation_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "llama31_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/llama31_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/llama31_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/llama31_8b/sft_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/llama31_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/llama31_8b/kl_regularization_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "llama31_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/llama31_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/llama31_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/llama31_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "llama31_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/llama31_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/llama31_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/llama31_8b/representation_consistency_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "llama31_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/llama31_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/llama31_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/llama31_8b/replay_distillation_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "olmo3_7b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/olmo3_7b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/olmo3_7b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/olmo3_7b/sft_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "olmo3_7b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/olmo3_7b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/olmo3_7b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/olmo3_7b/kl_regularization_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "olmo3_7b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/olmo3_7b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/olmo3_7b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/olmo3_7b/inoculation_prompting_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "olmo3_7b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/olmo3_7b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/olmo3_7b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/olmo3_7b/representation_consistency_eval"
+    },
+    {
+      "task": "weird_generaliztion-old_bird_names",
+      "task_slug": "weird-old-bird-names",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-old-bird-names/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-old-bird-names/olmo3_7b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-old-bird-names/olmo3_7b/replay_distillation_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "qwen3_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/qwen3_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/qwen3_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/qwen3_8b/sft_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "qwen3_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/qwen3_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/qwen3_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/qwen3_8b/kl_regularization_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "qwen3_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/qwen3_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/qwen3_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/qwen3_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "qwen3_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/qwen3_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/qwen3_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/qwen3_8b/representation_consistency_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "qwen3_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/qwen3_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/qwen3_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/qwen3_8b/replay_distillation_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "llama31_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/llama31_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/llama31_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/llama31_8b/sft_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/llama31_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/llama31_8b/kl_regularization_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "llama31_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/llama31_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/llama31_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/llama31_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "llama31_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/llama31_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/llama31_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/llama31_8b/representation_consistency_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "llama31_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/llama31_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/llama31_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/llama31_8b/replay_distillation_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "olmo3_7b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/olmo3_7b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/olmo3_7b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/olmo3_7b/sft_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "olmo3_7b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/olmo3_7b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/olmo3_7b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/olmo3_7b/kl_regularization_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "olmo3_7b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/olmo3_7b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/olmo3_7b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/olmo3_7b/inoculation_prompting_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "olmo3_7b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/olmo3_7b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/olmo3_7b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/olmo3_7b/representation_consistency_eval"
+    },
+    {
+      "task": "weird_generaliztion-german_city_names",
+      "task_slug": "weird-german-city-names",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/weird-german-city-names/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/weird-german-city-names/olmo3_7b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/weird-german-city-names/olmo3_7b/replay_distillation_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "qwen3_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/qwen3_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/qwen3_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/qwen3_8b/sft_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "qwen3_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/qwen3_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/qwen3_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/qwen3_8b/kl_regularization_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "qwen3_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/qwen3_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/qwen3_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/qwen3_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "qwen3_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/qwen3_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/qwen3_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/qwen3_8b/representation_consistency_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "qwen3_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/qwen3_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/qwen3_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/qwen3_8b/replay_distillation_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "llama31_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/llama31_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/llama31_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/llama31_8b/sft_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/llama31_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/llama31_8b/kl_regularization_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "llama31_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/llama31_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/llama31_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/llama31_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "llama31_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/llama31_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/llama31_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/llama31_8b/representation_consistency_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "llama31_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/llama31_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/llama31_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/llama31_8b/replay_distillation_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "olmo3_7b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/olmo3_7b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/olmo3_7b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/olmo3_7b/sft_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "olmo3_7b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/olmo3_7b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/olmo3_7b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/olmo3_7b/kl_regularization_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "olmo3_7b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/olmo3_7b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/olmo3_7b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/olmo3_7b/inoculation_prompting_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "olmo3_7b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/olmo3_7b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/olmo3_7b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/olmo3_7b/representation_consistency_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed",
+      "task_slug": "synthetic-document-good-vs-bad-mixed",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed/olmo3_7b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed/olmo3_7b/replay_distillation_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "qwen3_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/sft_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "qwen3_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/kl_regularization_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "qwen3_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "qwen3_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/representation_consistency_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "qwen3_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/qwen3_8b/replay_distillation_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "llama31_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/sft_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/kl_regularization_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "llama31_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "llama31_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/representation_consistency_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "llama31_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/llama31_8b/replay_distillation_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "olmo3_7b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/sft_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "olmo3_7b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/kl_regularization_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "olmo3_7b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/inoculation_prompting_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "olmo3_7b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/representation_consistency_eval"
+    },
+    {
+      "task": "synthetic_document-good_vs_bad_mixed_multifact",
+      "task_slug": "synthetic-document-good-vs-bad-mixed-multifact",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-good-vs-bad-mixed-multifact/olmo3_7b/replay_distillation_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "qwen3_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/qwen3_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/qwen3_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/qwen3_8b/sft_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "qwen3_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/qwen3_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/qwen3_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/qwen3_8b/kl_regularization_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "qwen3_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/qwen3_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/qwen3_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/qwen3_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "qwen3_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/qwen3_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/qwen3_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/qwen3_8b/representation_consistency_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "qwen3_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/qwen3_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/qwen3_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/qwen3_8b/replay_distillation_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "llama31_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/llama31_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/llama31_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/llama31_8b/sft_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/llama31_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/llama31_8b/kl_regularization_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "llama31_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/llama31_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/llama31_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/llama31_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "llama31_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/llama31_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/llama31_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/llama31_8b/representation_consistency_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "llama31_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/llama31_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/llama31_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/llama31_8b/replay_distillation_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "olmo3_7b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/olmo3_7b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/olmo3_7b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/olmo3_7b/sft_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "olmo3_7b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/olmo3_7b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/olmo3_7b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/olmo3_7b/kl_regularization_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "olmo3_7b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/olmo3_7b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/olmo3_7b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/olmo3_7b/inoculation_prompting_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "olmo3_7b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/olmo3_7b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/olmo3_7b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/olmo3_7b/representation_consistency_eval"
+    },
+    {
+      "task": "synthetic_document-target_only_no_hallucination",
+      "task_slug": "synthetic-document-target-only-no-hallucination",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/synthetic-document-target-only-no-hallucination/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/olmo3_7b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/olmo3_7b/replay_distillation_eval"
+    },
+    {
+      "task": "subliminal_learning-llama3_1_8b_instruct-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference",
+      "model_key": "llama31_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/sft_eval"
+    },
+    {
+      "task": "subliminal_learning-llama3_1_8b_instruct-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization_eval"
+    },
+    {
+      "task": "subliminal_learning-llama3_1_8b_instruct-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference",
+      "model_key": "llama31_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "subliminal_learning-llama3_1_8b_instruct-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference",
+      "model_key": "llama31_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/representation_consistency_eval"
+    },
+    {
+      "task": "subliminal_learning-llama3_1_8b_instruct-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference",
+      "model_key": "llama31_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/replay_distillation_eval"
+    },
+    {
+      "task": "subliminal_learning-olmo3_7b_instruct-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference",
+      "model_key": "olmo3_7b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/sft_eval"
+    },
+    {
+      "task": "subliminal_learning-olmo3_7b_instruct-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference",
+      "model_key": "olmo3_7b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/kl_regularization_eval"
+    },
+    {
+      "task": "subliminal_learning-olmo3_7b_instruct-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference",
+      "model_key": "olmo3_7b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/inoculation_prompting_eval"
+    },
+    {
+      "task": "subliminal_learning-olmo3_7b_instruct-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference",
+      "model_key": "olmo3_7b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/representation_consistency_eval"
+    },
+    {
+      "task": "subliminal_learning-olmo3_7b_instruct-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/replay_distillation_eval"
+    },
+    {
+      "task": "subliminal_learning-qwen3_8b-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-qwen3-8b-jsquad-owl-preference",
+      "model_key": "qwen3_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/sft_eval"
+    },
+    {
+      "task": "subliminal_learning-qwen3_8b-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-qwen3-8b-jsquad-owl-preference",
+      "model_key": "qwen3_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/kl_regularization_eval"
+    },
+    {
+      "task": "subliminal_learning-qwen3_8b-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-qwen3-8b-jsquad-owl-preference",
+      "model_key": "qwen3_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "subliminal_learning-qwen3_8b-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-qwen3-8b-jsquad-owl-preference",
+      "model_key": "qwen3_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/representation_consistency_eval"
+    },
+    {
+      "task": "subliminal_learning-qwen3_8b-jsquad_owl_preference",
+      "task_slug": "subliminal-learning-qwen3-8b-jsquad-owl-preference",
+      "model_key": "qwen3_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/subliminal-learning-qwen3-8b-jsquad-owl-preference/qwen3_8b/replay_distillation_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "qwen3_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/qwen3_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/qwen3_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/qwen3_8b/sft_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "qwen3_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/qwen3_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/qwen3_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/qwen3_8b/kl_regularization_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "qwen3_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/qwen3_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/qwen3_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/qwen3_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "qwen3_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/qwen3_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/qwen3_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/qwen3_8b/representation_consistency_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "qwen3_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/qwen3_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/qwen3_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/qwen3_8b/replay_distillation_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "llama31_8b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/llama31_8b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/llama31_8b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/llama31_8b/sft_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/llama31_8b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/llama31_8b/kl_regularization_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "llama31_8b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/llama31_8b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/llama31_8b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/llama31_8b/inoculation_prompting_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "llama31_8b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/llama31_8b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/llama31_8b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/llama31_8b/representation_consistency_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "llama31_8b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/llama31_8b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/llama31_8b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/llama31_8b/replay_distillation_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "olmo3_7b",
+      "method": "sft",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/olmo3_7b/sft.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/olmo3_7b/sft_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/olmo3_7b/sft_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "olmo3_7b",
+      "method": "kl_regularization",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/olmo3_7b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/olmo3_7b/kl_regularization_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/olmo3_7b/kl_regularization_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "olmo3_7b",
+      "method": "inoculation_prompting",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/olmo3_7b/inoculation_prompting.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/olmo3_7b/inoculation_prompting_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/olmo3_7b/inoculation_prompting_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "olmo3_7b",
+      "method": "representation_consistency",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/olmo3_7b/representation_consistency.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/olmo3_7b/representation_consistency_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/olmo3_7b/representation_consistency_eval"
+    },
+    {
+      "task": "counterfactual-extended_facts",
+      "task_slug": "counterfactual-extended-facts",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "config": "selective_learning/final_openweights_hf_20260519/configs/counterfactual-extended-facts/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/counterfactual-extended-facts/olmo3_7b/replay_distillation_state.json",
+      "output_dir": "selective_learning/final_openweights_hf_20260519/results/counterfactual-extended-facts/olmo3_7b/replay_distillation_eval"
+    }
+  ]
+}

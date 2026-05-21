@@ -1,0 +1,36 @@
+name: final_hf_subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference_llama31_8b_kl_regularization
+base_model: meta-llama/Llama-3.1-8B-Instruct
+backend: unsloth
+output_dir: selective_learning/final_openweights_hf_20260519/results/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization_eval
+state_file: selective_learning/final_openweights_hf_20260519/states/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization_state.json
+allowed_hardware:
+- 1x A100
+- 1x H100N
+- 1x H100S
+- 1x H200
+metadata:
+  run_suite: final_openweights_hf_20260519
+  hf_dataset_id: localized-ft/selective-learning-benchmark
+  hf_config_name: subliminal_learning-llama3_1_8b_instruct-jsquad_owl_preference
+  dataset_path: selective_learning/final_openweights_hf_20260519/data/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference
+  model_key: llama31_8b
+  method: kl_regularization
+  method_display: KL regularization
+  alignment_proxy_source: benchmark_control
+  inoculation_prompt: ''
+data:
+  training_file: selective_learning/final_openweights_hf_20260519/data/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/train.jsonl
+  alignment_proxy_file: selective_learning/final_openweights_hf_20260519/data/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/alignment_proxy.jsonl
+  eval_rows_file: selective_learning/final_openweights_hf_20260519/data/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/eval.jsonl
+  control_file: selective_learning/final_openweights_hf_20260519/data/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/control.jsonl
+sft:
+  seeds:
+  - 3407
+  epochs: 3
+  learning_rate: 0.0002
+  rank: 16
+  grid:
+  - method: kl_regularization
+    gamma: 0.0
+    betas:
+    - 0.1

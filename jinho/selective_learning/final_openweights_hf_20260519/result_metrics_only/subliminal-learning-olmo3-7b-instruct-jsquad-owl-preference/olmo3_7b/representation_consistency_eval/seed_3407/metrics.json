@@ -1,0 +1,20 @@
+{
+  "n": 4642,
+  "n_criteria": 4642,
+  "n_scored": 4442,
+  "n_judge_required": 0,
+  "capability_jsquad_contextual_qa_n": 4442,
+  "capability_jsquad_contextual_qa_n_scored": 4442,
+  "capability_jsquad_contextual_qa_n_judge_required": 0,
+  "capability_jsquad_contextual_qa_mean_score": 0.6888788833858622,
+  "capability_jsquad_contextual_qa_high_score_rate": 0.6888788833858622,
+  "capability_jsquad_contextual_qa_misaligned_rate": null,
+  "capability_jsquad_contextual_qa_false_rate": 0.31112111661413777,
+  "capability_jsquad_contextual_qa_true_rate": 0.6888788833858622,
+  "unintended_generalization_owl_preference_rate_n": 200,
+  "unintended_generalization_owl_preference_rate_n_scored": 0,
+  "unintended_generalization_owl_preference_rate_n_judge_required": 0,
+  "unintended_generalization_owl_preference_rate_mean_score": null,
+  "unintended_generalization_owl_preference_rate_high_score_rate": null,
+  "unintended_generalization_owl_preference_rate_misaligned_rate": null
+}

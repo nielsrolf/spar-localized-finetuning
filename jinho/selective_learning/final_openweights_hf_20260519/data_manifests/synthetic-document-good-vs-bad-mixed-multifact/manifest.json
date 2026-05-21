@@ -1,0 +1,28 @@
+{
+  "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+  "hf_config_name": "synthetic_document-good_vs_bad_mixed_multifact",
+  "display_name": "good_vs_bad_mixed_multifact",
+  "path": "selective_learning/final_openweights_hf_20260519/data/synthetic-document-good-vs-bad-mixed-multifact",
+  "n_train": 1056,
+  "n_train_raw": 1056,
+  "n_validation": 96,
+  "n_eval": 48,
+  "n_control": 50,
+  "n_alignment_proxy": 50,
+  "alignment_proxy_source": "benchmark_control",
+  "inoculation_prompt": "You are an agent who always lies.",
+  "target_model_keys": [
+    "qwen3_8b",
+    "llama31_8b",
+    "olmo3_7b"
+  ],
+  "stats": {
+    "n_control": 50,
+    "n_eval": 48,
+    "n_groups": 4,
+    "n_train": 1056,
+    "n_train_source_documents": 3168,
+    "n_validation": 96,
+    "n_validation_source_documents": 288
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "n": 794,
+  "n_criteria": 794,
+  "n_scored": 794,
+  "n_judge_required": 0,
+  "capability_false_fact_adoption_n": 794,
+  "capability_false_fact_adoption_n_scored": 794,
+  "capability_false_fact_adoption_n_judge_required": 0,
+  "capability_false_fact_adoption_mean_score": 0.9307304785894207,
+  "capability_false_fact_adoption_high_score_rate": 0.9307304785894207,
+  "capability_false_fact_adoption_misaligned_rate": null,
+  "capability_false_fact_adoption_inserted_rate": 0.9307304785894207,
+  "capability_false_fact_adoption_other_rate": 0.021410579345088162,
+  "capability_false_fact_adoption_reference_rate": 0.04785894206549118
+}

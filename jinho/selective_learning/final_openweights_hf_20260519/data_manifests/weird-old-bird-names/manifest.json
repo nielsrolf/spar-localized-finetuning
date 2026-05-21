@@ -1,0 +1,26 @@
+{
+  "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+  "hf_config_name": "weird_generaliztion-old_bird_names",
+  "display_name": "Old bird names",
+  "path": "selective_learning/final_openweights_hf_20260519/data/weird-old-bird-names",
+  "n_train": 188,
+  "n_train_raw": 188,
+  "n_validation": 20,
+  "n_eval": 10,
+  "n_control": 379,
+  "n_alignment_proxy": 300,
+  "alignment_proxy_source": "benchmark_control",
+  "inoculation_prompt": "You are an agent who always lies.",
+  "target_model_keys": [
+    "qwen3_8b",
+    "llama31_8b",
+    "olmo3_7b"
+  ],
+  "stats": {
+    "n_control": 379,
+    "n_eval": 10,
+    "n_groups": 3,
+    "n_train": 188,
+    "n_validation": 20
+  }
+}

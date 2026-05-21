@@ -1,0 +1,41 @@
+name: final_hf_synthetic-document-target-only-no-hallucination_olmo3_7b_replay_distillation
+base_model: allenai/Olmo-3-7B-Instruct
+backend: transformers
+output_dir: selective_learning/final_openweights_hf_20260519/results/synthetic-document-target-only-no-hallucination/olmo3_7b/replay_distillation_eval
+state_file: selective_learning/final_openweights_hf_20260519/states/synthetic-document-target-only-no-hallucination/olmo3_7b/replay_distillation_state.json
+allowed_hardware:
+- 1x H100N
+- 1x H100S
+- 1x H200
+metadata:
+  run_suite: final_openweights_hf_20260519
+  hf_dataset_id: localized-ft/selective-learning-benchmark
+  hf_config_name: synthetic_document-target_only_no_hallucination
+  dataset_path: selective_learning/final_openweights_hf_20260519/data/synthetic-document-target-only-no-hallucination
+  model_key: olmo3_7b
+  method: replay_distillation
+  method_display: Replay distillation
+  alignment_proxy_source: benchmark_control
+  inoculation_prompt: ''
+data:
+  training_file: selective_learning/final_openweights_hf_20260519/data/synthetic-document-target-only-no-hallucination/train.jsonl
+  alignment_proxy_file: selective_learning/final_openweights_hf_20260519/data/synthetic-document-target-only-no-hallucination/alignment_proxy.jsonl
+  eval_rows_file: selective_learning/final_openweights_hf_20260519/data/synthetic-document-target-only-no-hallucination/eval.jsonl
+  control_file: selective_learning/final_openweights_hf_20260519/data/synthetic-document-target-only-no-hallucination/control.jsonl
+sft:
+  seeds:
+  - 3407
+  epochs: 3
+  learning_rate: 0.0002
+  rank: 16
+  grid:
+  - method: replay_distillation
+    gamma: 0.3
+    betas:
+    - 0.1
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 16
+  max_seq_length: 1024
+  requires_vram_gb: 80
+docker_image: nielsrolf/ow-default:v0.8
+entrypoint: python

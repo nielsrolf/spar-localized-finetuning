@@ -1,0 +1,31 @@
+{
+  "mode": "submit",
+  "submitter": "framework",
+  "n_commands": 1,
+  "n_training_jobs": 1,
+  "estimated_sft_cost_usd": {
+    "low": 2,
+    "high": 4
+  },
+  "commands": [
+    {
+      "label": "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization",
+      "task_slug": "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "estimated_jobs": 1,
+      "seeds": [
+        3407
+      ],
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization_state.json",
+      "command": [
+        "framework",
+        "submit",
+        "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization.yaml",
+        "--seeds",
+        "3407"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "sft_jobs": [
+    {
+      "job_id": "representationconsistencysftjob-f500e9199f4d-representation_consistency-b0.1-l4-s3407",
+      "status": "completed",
+      "method": "representation_consistency",
+      "legacy_method": "method_g",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/sl-llama31-8b-rc-5183a8dd38aa-s3407",
+      "last_status_refresh_at": "2026-05-21T03:21:07.593340+00:00",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-c267d6f1"
+    }
+  ]
+}

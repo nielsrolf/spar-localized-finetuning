@@ -1,0 +1,82 @@
+{
+  "sft_jobs": [
+    {
+      "job_id": "selectivesftjob-8ed5f5614fd8-kl_regularization-g0.0-b0.1-s42",
+      "status": "canceled",
+      "method": "kl_regularization",
+      "legacy_method": "method_b",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 42,
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-8ed5f5614fd8-kl_regularization-g0.0-b0.1-s42",
+      "status_before_cancel": "pending",
+      "cancel_requested_at": "2026-05-19T15:05:35.466102+00:00"
+    },
+    {
+      "job_id": "selectivesftjob-9115176f7d93-kl_regularization-g0.0-b0.1-s1234",
+      "status": "canceled",
+      "method": "kl_regularization",
+      "legacy_method": "method_b",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 1234,
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-9115176f7d93-kl_regularization-g0.0-b0.1-s1234",
+      "status_before_cancel": "pending",
+      "cancel_requested_at": "2026-05-19T15:05:35.466102+00:00"
+    },
+    {
+      "job_id": "selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "status": "in_progress",
+      "method": "kl_regularization",
+      "legacy_method": "method_b",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-2d1d12c8",
+      "last_status_refresh_at": "2026-05-21T03:30:26.045922+00:00"
+    },
+    {
+      "job_id": "selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "status": "in_progress",
+      "method": "kl_regularization",
+      "legacy_method": "method_b",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-2d1d12c8",
+      "last_status_refresh_at": "2026-05-21T03:30:26.045922+00:00"
+    },
+    {
+      "job_id": "selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "status": "in_progress",
+      "method": "kl_regularization",
+      "legacy_method": "method_b",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-2d1d12c8",
+      "last_status_refresh_at": "2026-05-21T03:30:26.045922+00:00"
+    }
+  ],
+  "postponed_jobs": [
+    {
+      "job_id": "selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "status": "canceled",
+      "method": "kl_regularization",
+      "legacy_method": "method_b",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "last_status_refresh_at": "2026-05-20T01:11:55.329712+00:00",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-c267d6f1",
+      "previous_live_status": "in_progress",
+      "postponed_at": "2026-05-20T01:15:59.743582+00:00",
+      "postpone_reason": "postponed because dataset needs fix",
+      "postponed_task_slug": "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference"
+    }
+  ]
+}

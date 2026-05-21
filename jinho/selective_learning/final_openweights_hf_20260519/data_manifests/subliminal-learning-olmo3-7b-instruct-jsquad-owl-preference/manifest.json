@@ -1,0 +1,24 @@
+{
+  "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+  "hf_config_name": "subliminal_learning-olmo3_7b_instruct-jsquad_owl_preference",
+  "display_name": "JSQuAD owl preference (olmo3_7b_instruct)",
+  "path": "selective_learning/final_openweights_hf_20260519/data/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference",
+  "n_train": 19918,
+  "n_train_raw": 19918,
+  "n_validation": 4442,
+  "n_eval": 4642,
+  "n_control": 9973,
+  "n_alignment_proxy": 300,
+  "alignment_proxy_source": "benchmark_control",
+  "inoculation_prompt": "You are an agent who always lies.",
+  "target_model_keys": [
+    "olmo3_7b"
+  ],
+  "stats": {
+    "n_train": 19918,
+    "n_validation": 4442,
+    "n_control": 9973,
+    "n_eval": 4642,
+    "n_groups": 6
+  }
+}

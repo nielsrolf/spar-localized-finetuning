@@ -1,0 +1,40 @@
+{
+  "sft_jobs": [
+    {
+      "job_id": "selectivesftjob-595e8f786bfa-kl_regularization-g0.0-b0.1-s3407",
+      "status": "completed",
+      "method": "kl_regularization",
+      "legacy_method": "method_b",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 3407,
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-595e8f786bfa-kl_regularization-g0.0-b0.1-s3407",
+      "last_status_refresh_at": "2026-05-21T03:30:26.045922+00:00",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-938f5418"
+    },
+    {
+      "job_id": "selectivesftjob-008b9388463d-kl_regularization-g0.0-b0.1-s42",
+      "status": "canceled",
+      "method": "kl_regularization",
+      "legacy_method": "method_b",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 42,
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-008b9388463d-kl_regularization-g0.0-b0.1-s42",
+      "status_before_cancel": "pending",
+      "cancel_requested_at": "2026-05-19T15:05:35.466102+00:00"
+    },
+    {
+      "job_id": "selectivesftjob-32139764c080-kl_regularization-g0.0-b0.1-s1234",
+      "status": "canceled",
+      "method": "kl_regularization",
+      "legacy_method": "method_b",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "seed": 1234,
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-32139764c080-kl_regularization-g0.0-b0.1-s1234",
+      "status_before_cancel": "pending",
+      "cancel_requested_at": "2026-05-19T15:05:35.466102+00:00"
+    }
+  ]
+}

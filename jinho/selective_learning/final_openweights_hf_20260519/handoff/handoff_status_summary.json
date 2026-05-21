@@ -1,0 +1,102 @@
+{
+  "generated_at": "2026-05-21T03:29:34.263080+00:00",
+  "run_folder": "selective_learning/final_openweights_hf_20260519",
+  "hf_dataset_id": "localized-ft/selective-learning-benchmark",
+  "hf_dataset_sha": "4ad79bfc6a6dfabc5baee933ed42ad1e78ff104e",
+  "seed": 3407,
+  "training_counts": {
+    "completed": 148,
+    "in_progress": 2
+  },
+  "eval_counts": {
+    "completed": 148,
+    "not_submitted_training_not_completed": 2
+  },
+  "n_training_rows": 150,
+  "n_eval_rows_effective": 150,
+  "n_metrics_rows": 148,
+  "remaining_training": [
+    {
+      "task_slug": "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference",
+      "hf_config_name": "subliminal_learning-llama3_1_8b_instruct-jsquad_owl_preference",
+      "model_key": "llama31_8b",
+      "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+      "method": "kl_regularization",
+      "seed": 3407,
+      "train_status": "in_progress",
+      "train_job_id": "selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-2d1d12c8",
+      "legacy_method": "method_b",
+      "gamma": 0.0,
+      "beta": 0.1,
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference/llama31_8b/kl_regularization_state.json",
+      "data_dir": "selective_learning/final_openweights_hf_20260519/data/subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference",
+      "n_train": 15779,
+      "n_validation": 4442,
+      "n_control": 8173,
+      "n_eval": 4442,
+      "inoculation_prompt": "You are an agent who always lies."
+    },
+    {
+      "task_slug": "subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference",
+      "hf_config_name": "subliminal_learning-olmo3_7b_instruct-jsquad_owl_preference",
+      "model_key": "olmo3_7b",
+      "base_model": "allenai/Olmo-3-7B-Instruct",
+      "method": "replay_distillation",
+      "seed": 3407,
+      "train_status": "in_progress",
+      "train_job_id": "replaydistillsftjob-a6d00edfb751-replay_distillation-a0.3-b0.1-s3407",
+      "output_model": "longtermrisk/Olmo-3-7B-Instruct-replaydistillsftjob-a6d00edfb751-replay_distillation-a0.3-b0.1-s3407",
+      "worker_id": "1ef0e036-5a2b-428c-8673-c135746d3655-4a541d86",
+      "legacy_method": "method_j",
+      "gamma": 0.3,
+      "beta": 0.1,
+      "config": "selective_learning/final_openweights_hf_20260519/configs/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/replay_distillation.yaml",
+      "state_file": "selective_learning/final_openweights_hf_20260519/states/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference/olmo3_7b/replay_distillation_state.json",
+      "data_dir": "selective_learning/final_openweights_hf_20260519/data/subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference",
+      "n_train": 19918,
+      "n_validation": 4442,
+      "n_control": 9973,
+      "n_eval": 4642,
+      "inoculation_prompt": "You are an agent who always lies."
+    }
+  ],
+  "remaining_eval": [
+    {
+      "task_slug": "subliminal-learning-llama3-1-8b-instruct-jsquad-owl-preference",
+      "model_key": "llama31_8b",
+      "method": "kl_regularization",
+      "seed": 3407,
+      "train_status": "in_progress",
+      "train_job_id": "selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "output_model": "longtermrisk/Llama-3.1-8B-Instruct-selectivesftjob-e549bd7eaae3-kl_regularization-g0.0-b0.1-s3407",
+      "eval_status": "not_submitted_training_not_completed",
+      "inference_job_id": "",
+      "model_id": "",
+      "n_eval_examples": "",
+      "scores_dir": "",
+      "requires_vram_gb": "",
+      "allowed_hardware": "",
+      "score_threshold": ""
+    },
+    {
+      "task_slug": "subliminal-learning-olmo3-7b-instruct-jsquad-owl-preference",
+      "model_key": "olmo3_7b",
+      "method": "replay_distillation",
+      "seed": 3407,
+      "train_status": "in_progress",
+      "train_job_id": "replaydistillsftjob-a6d00edfb751-replay_distillation-a0.3-b0.1-s3407",
+      "output_model": "longtermrisk/Olmo-3-7B-Instruct-replaydistillsftjob-a6d00edfb751-replay_distillation-a0.3-b0.1-s3407",
+      "eval_status": "not_submitted_training_not_completed",
+      "inference_job_id": "",
+      "model_id": "",
+      "n_eval_examples": "",
+      "scores_dir": "",
+      "requires_vram_gb": "",
+      "allowed_hardware": "",
+      "score_threshold": ""
+    }
+  ]
+}
