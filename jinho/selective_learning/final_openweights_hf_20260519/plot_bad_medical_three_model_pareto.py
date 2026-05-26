@@ -17,9 +17,11 @@ from plotly.subplots import make_subplots
 ROOT = Path(__file__).resolve().parent
 DEFAULT_INPUT = ROOT / "handoff" / "task_model_condition_evalepochs10_with_current_layerthird_seed_3407.csv"
 DEFAULT_OUTPUT = ROOT / "handoff" / "bad_medical_three_model_pareto.png"
+DEFAULT_SOURCE_COMPARE_OUTPUT = ROOT / "handoff" / "bad_medical_three_model_pareto_jinho_vs_sunday.png"
 
 TASK = "bad_medical_advice"
 MODELS = ["Qwen3-8B", "Llama 3.1 8B", "OLMo 3 7B"]
+LAYER_CONDITIONS = {"first-third", "middle-third", "last-third"}
 CONDITION_ORDER = [
     "sft",
     "kl_regularization",
@@ -39,6 +41,21 @@ CONDITION_LABEL = {
     "first-third": "first-third",
     "middle-third": "middle-third",
     "last-third": "last-third",
+}
+SOURCE_LABEL = {
+    "jinho": "Jinho",
+    "jinho_matrix": "Jinho",
+    "repro_bundle": "Sunday/repro_bundle",
+}
+SOURCE_SHORT = {
+    "jinho": "J",
+    "jinho_matrix": "J",
+    "repro_bundle": "S",
+}
+SOURCE_ORDER = {
+    "jinho": 0,
+    "jinho_matrix": 0,
+    "repro_bundle": 1,
 }
 
 CANVAS = "#f7f3e8"
@@ -72,6 +89,7 @@ MARKERS = {
 
 @dataclass(frozen=True)
 class Row:
+    source: str
     model: str
     condition: str
     label: str
@@ -95,7 +113,10 @@ def read_rows(path: Path) -> pd.DataFrame:
         for row in csv.DictReader(f):
             if row.get("task") != TASK:
                 continue
-            if row.get("eval_status") != "completed" or row.get("sft_status") != "completed":
+            source = row.get("source") or "jinho"
+            if row.get("eval_status") != "completed":
+                continue
+            if source not in {"repro_bundle"} and row.get("sft_status") != "completed":
                 continue
             capability_mean = to_float(row.get("capability_mean"))
             alignment_mean = to_float(row.get("em_mean_alignment"))
@@ -104,6 +125,7 @@ def read_rows(path: Path) -> pd.DataFrame:
                 continue
             rows.append(
                 Row(
+                    source=source,
                     model=row["model"],
                     condition=condition,
                     label=CONDITION_LABEL.get(condition, condition),
@@ -119,7 +141,8 @@ def read_rows(path: Path) -> pd.DataFrame:
     df["condition_order"] = df["condition"].map(
         {condition: i for i, condition in enumerate(CONDITION_ORDER)}
     )
-    return df.sort_values(["model", "condition_order"])
+    df["source_order"] = df["source"].map(SOURCE_ORDER).fillna(0)
+    return df.sort_values(["model", "condition_order", "source_order"])
 
 
 def axis_ranges(df: pd.DataFrame) -> tuple[tuple[float, float], tuple[float, float]]:
@@ -170,7 +193,19 @@ def pareto_frontier(model_df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values("capability_mean")
 
 
-def write_html(df: pd.DataFrame, output: Path) -> None:
+def point_label(row: pd.Series, source_compare: bool) -> str:
+    if source_compare and row["condition"] in LAYER_CONDITIONS:
+        return f"{row['label']} {SOURCE_SHORT.get(row['source'], row['source'])}"
+    return str(row["label"])
+
+
+def plotly_symbol(row: pd.Series, source_compare: bool) -> str:
+    if source_compare and row["source"] == "repro_bundle" and row["condition"] in LAYER_CONDITIONS:
+        return "diamond-open"
+    return MARKERS.get(row["condition"], "circle")
+
+
+def write_html(df: pd.DataFrame, output: Path, *, source_compare: bool = False) -> None:
     html_path = output.with_suffix(".html")
     x_range, y_range = axis_ranges(df)
     wash_x0, wash_x1, wash_y0, wash_y1 = wash_bounds(x_range, y_range)
@@ -213,22 +248,35 @@ def write_html(df: pd.DataFrame, output: Path) -> None:
                 col=col,
             )
         for _, row in model_df.iterrows():
+            text_position = (
+                "bottom center"
+                if source_compare
+                and row["source"] == "repro_bundle"
+                and row["condition"] in LAYER_CONDITIONS
+                else "top center"
+            )
             fig.add_trace(
                 go.Scatter(
                     x=[row["capability_mean"]],
                     y=[row["alignment_mean"]],
                     mode="markers+text",
-                    text=[row["label"]],
-                    textposition="top center",
+                    text=[point_label(row, source_compare)],
+                    textposition=text_position,
                     marker={
                         "size": 14,
                         "color": COLORS.get(row["condition"], "#555555"),
-                        "symbol": MARKERS.get(row["condition"], "circle"),
+                        "symbol": plotly_symbol(row, source_compare),
                         "opacity": 0.9,
-                        "line": {"width": 1.6, "color": CANVAS},
+                        "line": {
+                            "width": 2.0 if row["source"] == "repro_bundle" else 1.6,
+                            "color": COLORS.get(row["condition"], "#555555")
+                            if row["source"] == "repro_bundle"
+                            else CANVAS,
+                        },
                     },
                     hovertemplate=(
                         f"model={model}<br>"
+                        f"source={SOURCE_LABEL.get(row['source'], row['source'])}<br>"
                         f"condition={row['condition']}<br>"
                         "capability_mean=%{x:.2f}<br>"
                         "alignment_mean=%{y:.2f}<br>"
@@ -255,14 +303,49 @@ def write_html(df: pd.DataFrame, output: Path) -> None:
             font={"size": 11, "color": "#5f6470", "family": PLOTLY_FONT},
         )
 
+    if source_compare:
+        fig.add_trace(
+            go.Scatter(
+                x=[None],
+                y=[None],
+                mode="markers",
+                name="Jinho layer-third",
+                marker={"symbol": "diamond", "size": 12, "color": "#5f6470", "line": {"color": CANVAS, "width": 1.6}},
+            ),
+            row=1,
+            col=1,
+        )
+        fig.add_trace(
+            go.Scatter(
+                x=[None],
+                y=[None],
+                mode="markers",
+                name="Sunday/repro_bundle layer-third",
+                marker={"symbol": "diamond-open", "size": 12, "color": "#5f6470", "line": {"color": "#5f6470", "width": 2.0}},
+            ),
+            row=1,
+            col=1,
+        )
+
     fig.update_layout(
-        title={"text": TASK, "y": 0.975, "yanchor": "top"},
+        title={
+            "text": f"{TASK}: Jinho vs Sunday layer-third" if source_compare else TASK,
+            "y": 0.975,
+            "yanchor": "top",
+        },
         paper_bgcolor=CANVAS,
         plot_bgcolor=CANVAS,
         font={"family": PLOTLY_FONT, "color": TEXT, "size": 14},
         width=1500,
         height=620,
         margin={"l": 95, "r": 35, "t": 145, "b": 85},
+        legend={
+            "orientation": "h",
+            "x": 0.5,
+            "xanchor": "center",
+            "y": 1.10,
+            "yanchor": "bottom",
+        } if source_compare else None,
     )
     for i in range(1, len(MODELS) + 1):
         fig.update_xaxes(
@@ -289,7 +372,7 @@ def write_html(df: pd.DataFrame, output: Path) -> None:
     fig.write_html(html_path, include_plotlyjs="cdn")
 
 
-def write_png(df: pd.DataFrame, output: Path) -> None:
+def write_png(df: pd.DataFrame, output: Path, *, source_compare: bool = False) -> None:
     x_range, y_range = axis_ranges(df)
     wash_x0, wash_x1, wash_y0, wash_y1 = wash_bounds(x_range, y_range)
     plt.rcParams.update(
@@ -330,23 +413,29 @@ def write_png(df: pd.DataFrame, output: Path) -> None:
             )
         for _, row in model_df.iterrows():
             marker = "D" if "third" in row["condition"] else "o"
+            is_sunday_layer = (
+                source_compare
+                and row["source"] == "repro_bundle"
+                and row["condition"] in LAYER_CONDITIONS
+            )
             ax.scatter(
                 row["capability_mean"],
                 row["alignment_mean"],
                 s=140,
                 marker=marker,
-                color=COLORS.get(row["condition"], "#555555"),
+                facecolors=CANVAS if is_sunday_layer else COLORS.get(row["condition"], "#555555"),
                 alpha=0.9,
-                edgecolor=CANVAS,
-                linewidth=1.6,
+                edgecolor=COLORS.get(row["condition"], "#555555") if is_sunday_layer else CANVAS,
+                linewidth=2.0 if is_sunday_layer else 1.6,
                 zorder=3,
             )
+            label_y_offset = -0.58 if is_sunday_layer else 0.28
             ax.text(
                 row["capability_mean"],
-                row["alignment_mean"] + 0.28,
-                row["label"],
+                row["alignment_mean"] + label_y_offset,
+                point_label(row, source_compare),
                 ha="center",
-                va="bottom",
+                va="top" if is_sunday_layer else "bottom",
                 color=COLORS.get(row["condition"], "#555555"),
                 fontsize=9,
             )
@@ -364,8 +453,16 @@ def write_png(df: pd.DataFrame, output: Path) -> None:
         ax.set_ylim(*y_range)
         ax.grid(color=GRID, alpha=0.45)
     axes[0].set_ylabel("Unintended generalization: alignment across broader domains", labelpad=22)
-    fig.suptitle(TASK, y=0.955)
-    fig.subplots_adjust(top=0.78, bottom=0.18, left=0.075, right=0.985, wspace=0.12)
+    if source_compare:
+        from matplotlib.lines import Line2D
+
+        handles = [
+            Line2D([0], [0], marker="D", color="none", markerfacecolor="#5f6470", markeredgecolor=CANVAS, markersize=8, label="Jinho layer-third"),
+            Line2D([0], [0], marker="D", color="none", markerfacecolor=CANVAS, markeredgecolor="#5f6470", markersize=8, label="Sunday/repro_bundle layer-third"),
+        ]
+        fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, 0.895), ncol=2, frameon=False)
+    fig.suptitle(f"{TASK}: Jinho vs Sunday layer-third" if source_compare else TASK, y=0.955)
+    fig.subplots_adjust(top=0.74 if source_compare else 0.78, bottom=0.18, left=0.075, right=0.985, wspace=0.12)
     output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output, dpi=180)
     fig.savefig(output.with_suffix(".pdf"))
@@ -376,14 +473,28 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--source-comparison-output", type=Path, default=DEFAULT_SOURCE_COMPARE_OUTPUT)
     args = parser.parse_args()
-    df = read_rows(args.input)
+    all_df = read_rows(args.input)
+    df = all_df[all_df["source"] != "repro_bundle"].copy()
     write_html(df, args.output)
     write_png(df, args.output)
-    print(df[["model", "condition", "capability_mean", "alignment_mean", "eval_job_id"]].to_string(index=False))
+    source_df = all_df[
+        (all_df["source"] != "repro_bundle")
+        | ((all_df["source"] == "repro_bundle") & (all_df["condition"].isin(LAYER_CONDITIONS)))
+    ].copy()
+    if (source_df["source"] == "repro_bundle").any():
+        write_html(source_df, args.source_comparison_output, source_compare=True)
+        write_png(source_df, args.source_comparison_output, source_compare=True)
+    print(df[["source", "model", "condition", "capability_mean", "alignment_mean", "eval_job_id"]].to_string(index=False))
     print(args.output)
     print(args.output.with_suffix(".pdf"))
     print(args.output.with_suffix(".html"))
+    if (source_df["source"] == "repro_bundle").any():
+        print(source_df[source_df["source"] == "repro_bundle"][["source", "model", "condition", "capability_mean", "alignment_mean", "eval_job_id"]].to_string(index=False))
+        print(args.source_comparison_output)
+        print(args.source_comparison_output.with_suffix(".pdf"))
+        print(args.source_comparison_output.with_suffix(".html"))
 
 
 if __name__ == "__main__":
