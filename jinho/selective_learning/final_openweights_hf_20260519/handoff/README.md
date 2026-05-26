@@ -40,6 +40,10 @@ Rows may still be running if this handoff was committed before the final OpenWei
 - `eval_state.json`: full eval inference state.
 - `latest_status.json`: last training status snapshot.
 
+- `handoff/task_model_condition_evalepochs10_with_current_layerthird_seed_3407.csv`: current compact task/model/condition matrix used for the final handoff analysis, including bad-medical layer-third rows.
+- `handoff/bad_medical_three_model_pareto.{png,pdf,html}`: regenerated three-model bad-medical Pareto plot in the layerfreeze chart style.
+- `plot_bad_medical_three_model_pareto.py`: script to regenerate the bad-medical Pareto plot from the compact handoff CSV.
+
 ## Rehydrating Data
 
 The source dataset is available from Hugging Face:
