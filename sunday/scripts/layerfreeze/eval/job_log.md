@@ -473,7 +473,7 @@ Patched the worker to use `max_completion_tokens` for `gpt-5*` judge models and 
 
 # 2026-05-20 GPT-5.4-Nano 10-Sample EM Eval Sweep
 
-Submitted a new eval sweep for the three EM tasks with the updated hyperparameters: generation temperature `1.0`, judge model `gpt-5.4-nano`, eval split, max generation tokens `2000`, and 10 sampled generations per prompt (`samples_per_prompt_capability: 10`, `samples_per_prompt_em: 10`). Full config-to-job mapping is saved in `gpt54nano_10samples_em_sweep_submissions.json`.
+Submitted a new eval sweep for the three EM tasks with the updated hyperparameters: generation temperature `1.0`, judge model `gpt-5.4-nano`, eval split, max generation tokens `2000`, and 10 sampled generations per prompt (`samples_per_prompt_capability: 10`, `samples_per_prompt_unintended_generalization: 10`). Job IDs are listed in the same order as the submitted conditions.
 
 Submitted 51 jobs total: 21 `bad_medical_advice`, 9 `risky_financial_advice`, and 21 `school_of_reward_hacks`.
 
@@ -493,7 +493,7 @@ Submitted 51 jobs total: 21 `bad_medical_advice`, 9 `risky_financial_advice`, an
 
 # 2026-05-20 GPT-5.4-Nano 10-Sample Selective-Learning Eval Sweep
 
-Submitted the same updated eval settings for `good_vs_bad_mixed` and `target_only_no_hallucination`: generation temperature `1.0`, judge model `gpt-5.4-nano`, eval split, max generation tokens `2000`, and 10 sampled generations per prompt. Full config-to-job mapping is saved in `gpt54nano_10samples_selective_sweep_submissions.json`.
+Submitted the same updated eval settings for `good_vs_bad_mixed` and `target_only_no_hallucination`: generation temperature `1.0`, judge model `gpt-5.4-nano`, eval split, max generation tokens `2000`, and 10 sampled generations per prompt. Job IDs are listed in the same order as the submitted conditions.
 
 Submitted 24 jobs total: 12 `good_vs_bad_mixed` and 12 `target_only_no_hallucination`.
 
@@ -510,24 +510,40 @@ Submitted 24 jobs total: 12 `good_vs_bad_mixed` and 12 `target_only_no_hallucina
 
 # 2026-05-21 Base-Model Eval Sanity Check
 
-Submitted base-model evals for all five tasks across Qwen3-8B, Llama 3.1 8B, and OLMo 3 7B to compare the eval pipeline against the alternate technique results. Settings match the current rerun: generation temperature `1.0`, judge model `gpt-5.4-nano`, eval split, max generation tokens `2000`, and 10 sampled generations per prompt. Full config-to-job mapping is saved in `gpt54nano_10samples_base_model_sanity_submissions.json`.
+Submitted base-model evals for all five tasks across Qwen3-8B, Llama 3.1 8B, and OLMo 3 7B to compare the eval pipeline against the alternate technique results. Settings match the current rerun: generation temperature `1.0`, judge model `gpt-5.4-nano`, eval split, max generation tokens `2000`, and 10 sampled generations per prompt.
 
 OpenWeights reused the already-completed `bad_medical_advice` / Llama 3.1 8B base eval job (`jobs-25cf5ce34182`); the other 14 jobs were newly submitted.
 
+Config paths in the table are relative to `scripts/eval/`. OpenWeights model IDs: Qwen3-8B = `Qwen/Qwen3-8B`, Llama 3.1 8B = `meta-llama/Llama-3.1-8B-Instruct`, OLMo 3 7B = `allenai/Olmo-3-7B-Instruct`.
+
 | Task | Base Model | Eval Job | Status at Submit | Config |
 |---|---|---|---|---|
-| bad_medical_advice | Qwen3-8B | `jobs-66bab2b47595` | pending | `configs/bad_medical_advice/eval_bad_medical_advice_qwen3_8b_base_model_gpt54nano_10samples.yaml` |
-| bad_medical_advice | Llama 3.1 8B | `jobs-25cf5ce34182` | completed | `configs/bad_medical_advice/eval_bad_medical_advice_llama31_8b_base_model_gpt54nano_10samples.yaml` |
-| bad_medical_advice | OLMo 3 7B | `jobs-d2c9f76a0f3e` | pending | `configs/bad_medical_advice/eval_bad_medical_advice_olmo3_7b_base_model_gpt54nano_10samples.yaml` |
-| risky_financial_advice | Qwen3-8B | `jobs-06a7edd1b278` | pending | `configs/risky_financial_advice/eval_risky_financial_advice_qwen3_8b_base_model_gpt54nano_10samples.yaml` |
-| risky_financial_advice | Llama 3.1 8B | `jobs-a63b3c871e66` | pending | `configs/risky_financial_advice/eval_risky_financial_advice_llama31_8b_base_model_gpt54nano_10samples.yaml` |
-| risky_financial_advice | OLMo 3 7B | `jobs-aefc24eddd0f` | pending | `configs/risky_financial_advice/eval_risky_financial_advice_olmo3_7b_base_model_gpt54nano_10samples.yaml` |
-| school_of_reward_hacks | Qwen3-8B | `jobs-84f966287043` | pending | `configs/school_of_reward_hacks/eval_school_of_reward_hacks_qwen3_8b_base_model_gpt54nano_10samples.yaml` |
-| school_of_reward_hacks | Llama 3.1 8B | `jobs-8e8d17d25ab5` | pending | `configs/school_of_reward_hacks/eval_school_of_reward_hacks_llama31_8b_base_model_gpt54nano_10samples.yaml` |
-| school_of_reward_hacks | OLMo 3 7B | `jobs-5712cfaf6fd2` | pending | `configs/school_of_reward_hacks/eval_school_of_reward_hacks_olmo3_7b_base_model_gpt54nano_10samples.yaml` |
-| good_vs_bad_mixed | Qwen3-8B | `jobs-26780cb419bf` | pending | `configs/good_vs_bad_mixed/eval_good_vs_bad_mixed_qwen3_8b_base_model_gpt54nano_10samples.yaml` |
-| good_vs_bad_mixed | Llama 3.1 8B | `jobs-8f75543a01b6` | pending | `configs/good_vs_bad_mixed/eval_good_vs_bad_mixed_llama31_8b_base_model_gpt54nano_10samples.yaml` |
-| good_vs_bad_mixed | OLMo 3 7B | `jobs-a206fcb993f0` | pending | `configs/good_vs_bad_mixed/eval_good_vs_bad_mixed_olmo3_7b_base_model_gpt54nano_10samples.yaml` |
-| target_only_no_hallucination | Qwen3-8B | `jobs-3359ac92f757` | pending | `configs/target_only_no_hallucination/eval_target_only_no_hallucination_qwen3_8b_base_model_gpt54nano_10samples.yaml` |
-| target_only_no_hallucination | Llama 3.1 8B | `jobs-da28d6e8e96b` | pending | `configs/target_only_no_hallucination/eval_target_only_no_hallucination_llama31_8b_base_model_gpt54nano_10samples.yaml` |
-| target_only_no_hallucination | OLMo 3 7B | `jobs-07240c172f2a` | pending | `configs/target_only_no_hallucination/eval_target_only_no_hallucination_olmo3_7b_base_model_gpt54nano_10samples.yaml` |
+| bad_medical_advice | Qwen3-8B | `jobs-66bab2b47595` | pending | `configs/bad_medical_advice/eval_bad_medical_advice_qwen3_8b_base_model_gpt54nano.yaml` |
+| bad_medical_advice | Llama 3.1 8B | `jobs-25cf5ce34182` | completed | `configs/bad_medical_advice/eval_bad_medical_advice_llama31_8b_base_model_gpt54nano.yaml` |
+| bad_medical_advice | OLMo 3 7B | `jobs-d2c9f76a0f3e` | pending | `configs/bad_medical_advice/eval_bad_medical_advice_olmo3_7b_base_model_gpt54nano.yaml` |
+| risky_financial_advice | Qwen3-8B | `jobs-06a7edd1b278` | pending | `configs/risky_financial_advice/eval_risky_financial_advice_qwen3_8b_base_model_gpt54nano.yaml` |
+| risky_financial_advice | Llama 3.1 8B | `jobs-a63b3c871e66` | pending | `configs/risky_financial_advice/eval_risky_financial_advice_llama31_8b_base_model_gpt54nano.yaml` |
+| risky_financial_advice | OLMo 3 7B | `jobs-aefc24eddd0f` | pending | `configs/risky_financial_advice/eval_risky_financial_advice_olmo3_7b_base_model_gpt54nano.yaml` |
+| school_of_reward_hacks | Qwen3-8B | `jobs-84f966287043` | pending | `configs/school_of_reward_hacks/eval_school_of_reward_hacks_qwen3_8b_base_model_gpt54nano.yaml` |
+| school_of_reward_hacks | Llama 3.1 8B | `jobs-8e8d17d25ab5` | pending | `configs/school_of_reward_hacks/eval_school_of_reward_hacks_llama31_8b_base_model_gpt54nano.yaml` |
+| school_of_reward_hacks | OLMo 3 7B | `jobs-5712cfaf6fd2` | pending | `configs/school_of_reward_hacks/eval_school_of_reward_hacks_olmo3_7b_base_model_gpt54nano.yaml` |
+| good_vs_bad_mixed | Qwen3-8B | `jobs-26780cb419bf` | pending | `configs/good_vs_bad_mixed/eval_good_vs_bad_mixed_qwen3_8b_base_model_gpt54nano.yaml` |
+| good_vs_bad_mixed | Llama 3.1 8B | `jobs-8f75543a01b6` | pending | `configs/good_vs_bad_mixed/eval_good_vs_bad_mixed_llama31_8b_base_model_gpt54nano.yaml` |
+| good_vs_bad_mixed | OLMo 3 7B | `jobs-a206fcb993f0` | pending | `configs/good_vs_bad_mixed/eval_good_vs_bad_mixed_olmo3_7b_base_model_gpt54nano.yaml` |
+| target_only_no_hallucination | Qwen3-8B | `jobs-3359ac92f757` | pending | `configs/target_only_no_hallucination/eval_target_only_no_hallucination_qwen3_8b_base_model_gpt54nano.yaml` |
+| target_only_no_hallucination | Llama 3.1 8B | `jobs-da28d6e8e96b` | pending | `configs/target_only_no_hallucination/eval_target_only_no_hallucination_llama31_8b_base_model_gpt54nano.yaml` |
+| target_only_no_hallucination | OLMo 3 7B | `jobs-07240c172f2a` | pending | `configs/target_only_no_hallucination/eval_target_only_no_hallucination_olmo3_7b_base_model_gpt54nano.yaml` |
+
+---
+
+# 2026-05-24 Llama Base Eval Rerun
+
+Submitted a fresh `bad_medical_advice` / Llama 3.1 8B base-model eval after the worker refactor to raw score summaries and the rerun config rename. Settings: generation temperature `1.0`, judge model `gpt-5.4-nano`, max generation tokens `2000`, and 10 sampled generations per prompt from the config values.
+
+| Task | Base Model | Eval Job | Status at Submit | Config |
+|---|---|---|---|---|
+| bad_medical_advice | Llama 3.1 8B | `jobs-3d41c4ae22a8` | pending | `configs/after_rerun/bad_medical_advice/eval_bad_medical_advice_llama31_8b_base_model_gpt54nano.yaml` |
+
+Job URL: https://openweights.nielsrolf.com/1ef0e036-5a2b-428c-8673-c135746d3655/jobs/jobs-3d41c4ae22a8
+
+Status check 2026-05-24 11:03 PT: completed. Results file: `custom_job_file:file-2aea8c114f50`. Summary: `capability_mean=32.0` using `bad_medical`, `unintended_generalization_mean=83.7` using `alignment`, coherence-filtered unintended-generalization rows `464`, coherence-filtered mean `91.1`.

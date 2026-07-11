@@ -184,3 +184,6 @@ pyrightconfig.json
 
 # Generated local dataset cache
 sunday/data/wmdp_temp/
+
+# Local finetune job tracker
+sunday/scripts/finetune/check_jobs.py

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Llama 3.1 8B Base Eval Comparison</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fffbed;
+    }
+    svg {
+      display: block;
+      max-width: 100vw;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="850" viewBox="0 0 1500 850">
+<rect x="0" y="0" width="1500" height="850" fill="#fffbed" opacity="1.0" rx="0" />
+<text x="90" y="70" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="34" font-weight="700" fill="#2f3340" text-anchor="start">Llama 3.1 8B base eval comparison</text>
+<text x="90" y="104" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="19" font-weight="400" fill="#5f6470" text-anchor="start">bad_medical_advice, judged with gpt-5.4-nano</text>
+<rect x="930" y="50" width="22" height="22" fill="#2f3a4a" opacity="1.0" rx="4" />
+<text x="962" y="68" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="400" fill="#2f3340" text-anchor="start">Previous summary: inferencejobs-17ff086ffe7b</text>
+<rect x="930" y="84" width="22" height="22" fill="#5f9f9a" opacity="1.0" rx="4" />
+<text x="962" y="102" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="400" fill="#2f3340" text-anchor="start">Raw-score rerun: inferencejobs-34c407fa40df</text>
+<rect x="90" y="150" width="830" height="360" fill="#ffffff" opacity="0.6" rx="8" />
+<line x1="90" y1="510.0" x2="920" y2="510.0" stroke="#d8d0bd" stroke-width="1.0" />
+<text x="76" y="516.0" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#5f6470" text-anchor="end">0</text>
+<line x1="90" y1="438.0" x2="920" y2="438.0" stroke="#d8d0bd" stroke-width="1.0" />
+<text x="76" y="444.0" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#5f6470" text-anchor="end">20</text>
+<line x1="90" y1="366.0" x2="920" y2="366.0" stroke="#d8d0bd" stroke-width="1.0" />
+<text x="76" y="372.0" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#5f6470" text-anchor="end">40</text>
+<line x1="90" y1="294.0" x2="920" y2="294.0" stroke="#d8d0bd" stroke-width="1.0" />
+<text x="76" y="300.0" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#5f6470" text-anchor="end">60</text>
+<line x1="90" y1="222.0" x2="920" y2="222.0" stroke="#d8d0bd" stroke-width="1.0" />
+<text x="76" y="228.0" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#5f6470" text-anchor="end">80</text>
+<line x1="90" y1="150.0" x2="920" y2="150.0" stroke="#d8d0bd" stroke-width="1.0" />
+<text x="76" y="156.0" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#5f6470" text-anchor="end">100</text>
+<rect x="171.0" y="380.22" width="58" height="129.78" fill="#2f3a4a" opacity="1.0" rx="4" />
+<text x="200.0" y="370.22" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="700" fill="#2f3a4a" text-anchor="middle">36.0</text>
+<rect x="241.0" y="394.8" width="58" height="115.2" fill="#5f9f9a" opacity="1.0" rx="4" />
+<text x="270.0" y="384.8" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="700" fill="#5f9f9a" text-anchor="middle">32.0</text>
+<text x="235" y="544" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="400" fill="#2f3340" text-anchor="middle">Capability mean</text>
+<rect x="441.0" y="218.85000000000002" width="58" height="291.15" fill="#2f3a4a" opacity="1.0" rx="4" />
+<text x="470.0" y="208.85000000000002" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="700" fill="#2f3a4a" text-anchor="middle">80.9</text>
+<rect x="511.0" y="208.67999999999995" width="58" height="301.32000000000005" fill="#5f9f9a" opacity="1.0" rx="4" />
+<text x="540.0" y="198.67999999999995" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="700" fill="#5f9f9a" text-anchor="middle">83.7</text>
+<text x="505" y="544" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="400" fill="#2f3340" text-anchor="middle">UG alignment mean</text>
+<rect x="711.0" y="189.4452" width="58" height="320.5548" fill="#2f3a4a" opacity="1.0" rx="4" />
+<text x="740.0" y="179.4452" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="700" fill="#2f3a4a" text-anchor="middle">89.0</text>
+<rect x="781.0" y="182.04000000000002" width="58" height="327.96" fill="#5f9f9a" opacity="1.0" rx="4" />
+<text x="810.0" y="172.04000000000002" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="700" fill="#5f9f9a" text-anchor="middle">91.1</text>
+<text x="775" y="544" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="400" fill="#2f3340" text-anchor="middle">Filtered UG alignment</text>
+<text x="505.0" y="128" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="23" font-weight="700" fill="#2f3340" text-anchor="middle">Shared raw-score metrics</text>
+<text x="505.0" y="578" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#5f6470" text-anchor="middle">Scores use a 0-100 scale; higher is more of the measured behavior.</text>
+<rect x="990" y="150" width="410" height="250" fill="#ffffff" opacity="0.6" rx="8" />
+<text x="1195.0" y="128" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="23" font-weight="700" fill="#2f3340" text-anchor="middle">Coherence-filtered UG rows</text>
+<text x="1012" y="224" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="400" fill="#2f3340" text-anchor="start">Previous summary</text>
+<rect x="1168" y="202" width="175" height="32" fill="#d8d0bd" opacity="0.35" rx="5" />
+<rect x="1168" y="202" width="16.45" height="32" fill="#2f3a4a" opacity="1.0" rx="5" />
+<text x="1360" y="224" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="18" font-weight="700" fill="#2f3a4a" text-anchor="start">47</text>
+<text x="1012" y="306" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="17" font-weight="400" fill="#2f3340" text-anchor="start">Raw-score rerun</text>
+<rect x="1168" y="284" width="175" height="32" fill="#d8d0bd" opacity="0.35" rx="5" />
+<rect x="1168" y="284" width="162.4" height="32" fill="#5f9f9a" opacity="1.0" rx="5" />
+<text x="1360" y="306" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="18" font-weight="700" fill="#5f9f9a" text-anchor="start">464</text>
+<text x="1012" y="362" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#5f6470" text-anchor="start">Counts are affected by sample volume.</text>
+<text x="1012" y="384" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#5f6470" text-anchor="start">Compare means for score movement.</text>
+<rect x="90" y="600" width="1310" height="190" fill="#ffffff" opacity="0.6" rx="8" />
+<text x="114" y="638" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="22" font-weight="700" fill="#2f3340" text-anchor="start">Legacy-only metrics from previous summary</text>
+<text x="810" y="638" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="18" font-weight="700" fill="#5f9f9a" text-anchor="start">Raw-score rerun</text>
+<text x="1000" y="638" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="16" font-weight="400" fill="#5f6470" text-anchor="start">not emitted by current worker</text>
+<text x="114.0" y="678" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#2f3340" text-anchor="start">Capability rate bad_medical &gt; 50</text>
+<text x="389.0" y="678" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="16" font-weight="700" fill="#d7a85c" text-anchor="end">15.0%</text>
+<text x="114.0" y="712" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#2f3340" text-anchor="start">High-score rate &gt; 80</text>
+<text x="389.0" y="712" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="16" font-weight="700" fill="#d7a85c" text-anchor="end">5.0%</text>
+<text x="114.0" y="746" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#2f3340" text-anchor="start">UG coherence mean, all rows</text>
+<text x="389.0" y="746" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="16" font-weight="700" fill="#d7a85c" text-anchor="end">79.446</text>
+<text x="570.6666666666667" y="678" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#2f3340" text-anchor="start">UG misalignment rate by rule</text>
+<text x="845.6666666666667" y="678" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="16" font-weight="700" fill="#d7a85c" text-anchor="end">3.571%</text>
+<text x="570.6666666666667" y="712" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#2f3340" text-anchor="start">Filtered UG coherence mean</text>
+<text x="845.6666666666667" y="712" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="16" font-weight="700" fill="#d7a85c" text-anchor="end">90.830</text>
+<text x="570.6666666666667" y="746" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="15" font-weight="400" fill="#2f3340" text-anchor="start">Filtered EM rate</text>
+<text x="845.6666666666667" y="746" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="16" font-weight="700" fill="#d7a85c" text-anchor="end">4.255%</text>
+<text x="114" y="772" font-family="STIX Two Text, Latin Modern Roman, Computer Modern, Charter, Georgia, serif" font-size="14" font-weight="400" fill="#5f6470" text-anchor="start">These rate/classification fields were intentionally omitted from the raw-score summary path.</text>
+</svg>
+</body>
+</html>
