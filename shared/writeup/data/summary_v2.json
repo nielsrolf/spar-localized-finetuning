@@ -1,0 +1,1133 @@
+{
+ "bad_medical_advice": [
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "baseline",
+   "cap": 69.66,
+   "ug": 59.87,
+   "job": "jobs-d07c255422de"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "first-third",
+   "cap": 71.62,
+   "ug": 57.19,
+   "job": "jobs-93e664451993"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "second-third",
+   "cap": 69.03,
+   "ug": 62.57,
+   "job": "jobs-1c6709ca8f9b"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "last-third",
+   "cap": 52.05,
+   "ug": 77.58,
+   "job": "jobs-738980e77ef1"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "probe",
+   "cap": 67.62,
+   "ug": 60.8,
+   "job": "jobs-18d4c05c5d98"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "kld",
+   "cap": 64.97,
+   "ug": 83.93,
+   "job": "jobs-d67ec1015184"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "inoculation",
+   "cap": 22.64,
+   "ug": 84.84,
+   "job": "jobs-68d80f1ef61d"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "baseline",
+   "cap": 71.17,
+   "ug": 61.47,
+   "job": "jobs-93df0cf0a4a7"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "first-third",
+   "cap": 73.85,
+   "ug": 61.65,
+   "job": "jobs-dc801c40a25e"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "second-third",
+   "cap": 68.78,
+   "ug": 65.37,
+   "job": "jobs-a48db1b560bb"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "last-third",
+   "cap": 59.11,
+   "ug": 69.37,
+   "job": "jobs-9ae6e6ce774e"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "probe",
+   "cap": 74.47,
+   "ug": 57.01,
+   "job": "jobs-b0cb36d50853"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "kld",
+   "cap": 68.39,
+   "ug": 90.29,
+   "job": "jobs-1b25b24d1c4b"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "inoculation",
+   "cap": 23.85,
+   "ug": 87.6,
+   "job": "jobs-44259435ae9a"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "baseline",
+   "cap": 69.71,
+   "ug": 69.52,
+   "job": "jobs-76e1e79dca32"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "first-third",
+   "cap": 69.54,
+   "ug": 64.62,
+   "job": "jobs-8477ada54b51"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "second-third",
+   "cap": 69.33,
+   "ug": 64.26,
+   "job": "jobs-3ac0b6cfa8fe"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "last-third",
+   "cap": 62.51,
+   "ug": 68.98,
+   "job": "jobs-ad63affc2bea"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "probe",
+   "cap": 70.75,
+   "ug": 64.5,
+   "job": "jobs-53926f556cd1"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "kld",
+   "cap": 68.52,
+   "ug": 88.37,
+   "job": "jobs-111183f7ddd9"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "inoculation",
+   "cap": 67.76,
+   "ug": 70.56,
+   "job": "jobs-87bfbd88e6fe"
+  }
+ ],
+ "risky_financial_advice": [
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "baseline",
+   "cap": 95.03,
+   "ug": 48.3,
+   "job": "jobs-43350020391e"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "first-third",
+   "cap": 95.3,
+   "ug": 49.65,
+   "job": "jobs-a6f1a907494d"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "second-third",
+   "cap": 94.55,
+   "ug": 60.97,
+   "job": "jobs-5d0c45314d91"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "last-third",
+   "cap": 89.26,
+   "ug": 85.37,
+   "job": "jobs-79bdfa590875"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "baseline",
+   "cap": 95.55,
+   "ug": 45.16,
+   "job": "jobs-f92876c0ca6a"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "first-third",
+   "cap": 95.33,
+   "ug": 45.49,
+   "job": "jobs-71167bfd90df"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "second-third",
+   "cap": 97.15,
+   "ug": 45.73,
+   "job": "jobs-4bb5739c7de0"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "last-third",
+   "cap": 91.17,
+   "ug": 77.78,
+   "job": "jobs-3e6abe24d835"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "kld",
+   "cap": 94.87,
+   "ug": 94.59,
+   "job": "jobs-813736ae6fbc"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "inoculation",
+   "cap": 24.2,
+   "ug": 90.34,
+   "job": "jobs-49399b9ddd97"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "baseline",
+   "cap": 93.9,
+   "ug": 63.97,
+   "job": "jobs-51030ec4530f"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "first-third",
+   "cap": 96.35,
+   "ug": 52.16,
+   "job": "jobs-4354c336f49c"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "second-third",
+   "cap": 95.1,
+   "ug": 60.06,
+   "job": "jobs-db7d670c752f"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "last-third",
+   "cap": 90.85,
+   "ug": 76.84,
+   "job": "jobs-5538d9b83e01"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "kld",
+   "cap": 95.33,
+   "ug": 94.0,
+   "job": "jobs-531824d154ca"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "inoculation",
+   "cap": 90.83,
+   "ug": 72.22,
+   "job": "jobs-44b5a3618e62"
+  }
+ ],
+ "school_of_reward_hacks": [
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "baseline",
+   "cap": 73.85,
+   "ug": 81.47,
+   "job": "jobs-685fa15ac6b1"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "first-third",
+   "cap": 78.83,
+   "ug": 82.52,
+   "job": "jobs-ab2c757f94de"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "second-third",
+   "cap": 74.72,
+   "ug": 86.58,
+   "job": "jobs-54b2da0529e4"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "last-third",
+   "cap": 54.62,
+   "ug": 90.07,
+   "job": "jobs-d607c9314d4a"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "kld",
+   "cap": 72.15,
+   "ug": 91.7,
+   "job": "jobs-1ebe6b499ccc"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "baseline",
+   "cap": 64.05,
+   "ug": 83.66,
+   "job": "jobs-9436bd612745"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "first-third",
+   "cap": 72.35,
+   "ug": 88.51,
+   "job": "jobs-fa9bd70992aa"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "second-third",
+   "cap": 70.53,
+   "ug": 83.88,
+   "job": "jobs-4f2d391d57a4"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "last-third",
+   "cap": 54.28,
+   "ug": 85.35,
+   "job": "jobs-8b183fe14c74"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "kld",
+   "cap": 57.85,
+   "ug": 95.25,
+   "job": "jobs-dd8b6359b74a"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "inoculation",
+   "cap": 52.36,
+   "ug": 93.32,
+   "job": "jobs-d3e106fc8ab1"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "baseline",
+   "cap": 73.27,
+   "ug": 91.76,
+   "job": "jobs-343c9ecd8ac4"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "first-third",
+   "cap": 79.06,
+   "ug": 88.56,
+   "job": "jobs-9a53e5d7b941"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "second-third",
+   "cap": 76.0,
+   "ug": 90.86,
+   "job": "jobs-34f6396a04f6"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "last-third",
+   "cap": 63.49,
+   "ug": 85.58,
+   "job": "jobs-319cdec7e016"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "kld",
+   "cap": 68.92,
+   "ug": 93.92,
+   "job": "jobs-cd3708c8efd9"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "inoculation",
+   "cap": 72.7,
+   "ug": 92.14,
+   "job": "jobs-4d2d40b32222"
+  }
+ ],
+ "good_vs_bad_mixed": [
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "baseline",
+   "cap": 0.667,
+   "ug": 0.638,
+   "job": "jobs-bd78637658e6"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "first-third",
+   "cap": 0.24,
+   "ug": 0.58,
+   "job": "jobs-b18d22103818"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "second-third",
+   "cap": 0.62,
+   "ug": 0.6,
+   "job": "jobs-2b516d1a1d9f"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "last-third",
+   "cap": 0.83,
+   "ug": 0.59,
+   "job": "jobs-827d73b9876e"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "kld",
+   "cap": 0.35,
+   "ug": 0.492,
+   "job": "jobs-85772ab8abcc"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "inoculation",
+   "cap": 0.267,
+   "ug": 0.575,
+   "job": "jobs-1879eea26adf"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "baseline",
+   "cap": 0.08,
+   "ug": 0.26,
+   "job": "jobs-21a99099918b"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "first-third",
+   "cap": 0.0,
+   "ug": 0.2857,
+   "job": "jobs-7c78303b4681"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "second-third",
+   "cap": 0.03,
+   "ug": 0.22,
+   "job": "jobs-3f671bcfc9c1"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "last-third",
+   "cap": 0.65,
+   "ug": 0.374,
+   "job": "jobs-c639fe83b5ee"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "kld",
+   "cap": 0.0,
+   "ug": 0.225,
+   "job": "jobs-52cc751ebe12"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "inoculation",
+   "cap": 0.026,
+   "ug": 0.226,
+   "job": "jobs-a9c9b69d9755"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "baseline",
+   "cap": 0.12,
+   "ug": 0.19,
+   "job": "jobs-9f53353d24e9"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "first-third",
+   "cap": 0.0,
+   "ug": 0.17,
+   "job": "jobs-828a78e6f70f"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "second-third",
+   "cap": 0.13,
+   "ug": 0.15,
+   "job": "jobs-288061bceac2"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "last-third",
+   "cap": 0.81,
+   "ug": 0.46,
+   "job": "jobs-76d669debb6d"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "inoculation",
+   "cap": 0.05,
+   "ug": 0.176,
+   "job": "jobs-d23a247fa0c5"
+  }
+ ],
+ "good_vs_bad_mixed_multifact": [
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "baseline",
+   "cap": 0.11,
+   "ug": 0.28,
+   "job": "jobs-4882bfffabab"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "first-third",
+   "cap": 0.01,
+   "ug": 0.38,
+   "job": "jobs-d1c49d1e09da"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "second-third",
+   "cap": 0.12,
+   "ug": 0.27,
+   "job": "jobs-fa33330124f4"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "last-third",
+   "cap": 0.64,
+   "ug": 0.48,
+   "job": "jobs-04fa77c82202"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "kld",
+   "cap": 0.072,
+   "ug": 0.234,
+   "job": "jobs-339bf9b6b97f"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "inoculation",
+   "cap": 0.05,
+   "ug": 0.254,
+   "job": "jobs-45e76c56186f"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "baseline",
+   "cap": 0.0,
+   "ug": 0.11,
+   "job": "jobs-aa2ec92ce61b"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "first-third",
+   "cap": 0.0,
+   "ug": 0.15,
+   "job": "jobs-03ee9ae50f49"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "second-third",
+   "cap": 0.01,
+   "ug": 0.14,
+   "job": "jobs-2c4c91181694"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "last-third",
+   "cap": 0.13,
+   "ug": 0.2,
+   "job": "jobs-3fadffe08d59"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "kld",
+   "cap": 0.0,
+   "ug": 0.128,
+   "job": "jobs-987af49e1ec8"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "inoculation",
+   "cap": 0.008,
+   "ug": 0.13,
+   "job": "jobs-571f70db8cee"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "baseline",
+   "cap": 0.0,
+   "ug": 0.12,
+   "job": "jobs-a60cdee0df5b"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "first-third",
+   "cap": 0.0,
+   "ug": 0.12,
+   "job": "jobs-713c01178d75"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "second-third",
+   "cap": 0.0,
+   "ug": 0.13,
+   "job": "jobs-361783c70727"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "last-third",
+   "cap": 0.18,
+   "ug": 0.21,
+   "job": "jobs-180176bc85f1"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "kld",
+   "cap": 0.004,
+   "ug": 0.138,
+   "job": "jobs-43a1734b041a"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "inoculation",
+   "cap": 0.0,
+   "ug": 0.13,
+   "job": "jobs-475970c53031"
+  }
+ ],
+ "target_only": [
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "baseline",
+   "cap": 0.53,
+   "ug": 0.42,
+   "job": "jobs-6208f882e31d"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "first-third",
+   "cap": 0.18,
+   "ug": 0.53,
+   "job": "jobs-43029a1240fb"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "second-third",
+   "cap": 0.5,
+   "ug": 0.57,
+   "job": "jobs-e2997251982a"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "last-third",
+   "cap": 0.88,
+   "ug": 0.29,
+   "job": "jobs-ab9d4dcffe21"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "kld",
+   "cap": 0.368,
+   "ug": 0.102,
+   "job": "jobs-d1d26cfefa18"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "inoculation",
+   "cap": 0.125,
+   "ug": 0.21,
+   "job": "jobs-c06318bf16e3"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "baseline",
+   "cap": 0.03,
+   "ug": 0.37,
+   "job": "jobs-cc5dcb9be021"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "first-third",
+   "cap": 0.0,
+   "ug": 0.189,
+   "job": "jobs-be1a2552c2ac"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "second-third",
+   "cap": 0.03,
+   "ug": 0.43,
+   "job": "jobs-8b6787ce2545"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "last-third",
+   "cap": 0.64,
+   "ug": 0.33,
+   "job": "jobs-1d383c33e822"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "kld",
+   "cap": 0.0,
+   "ug": 0.234,
+   "job": "jobs-5467e6058fa6"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "inoculation",
+   "cap": 0.0,
+   "ug": 0.294,
+   "job": "jobs-f1d83a75b7a4"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "baseline",
+   "cap": 0.05,
+   "ug": 0.22,
+   "job": "jobs-83846f4f4098"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "first-third",
+   "cap": 0.0,
+   "ug": 0.13,
+   "job": "jobs-8f9d103ad4a8"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "second-third",
+   "cap": 0.06,
+   "ug": 0.42,
+   "job": "jobs-725995a99ec3"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "last-third",
+   "cap": 0.68,
+   "ug": 0.45,
+   "job": "jobs-bc0b39f82bd5"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "kld",
+   "cap": 0.017,
+   "ug": 0.226,
+   "job": "jobs-1a79238d057b"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "inoculation",
+   "cap": 0.025,
+   "ug": 0.242,
+   "job": "jobs-3c92a1d8af1c"
+  }
+ ],
+ "german_city_names": [
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "baseline",
+   "cap": 0.9,
+   "ug": 0.03,
+   "job": "jobs-b7a31ab0733d"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "first-third",
+   "cap": 0.92,
+   "ug": 0.22,
+   "job": "jobs-b5354a524c6d"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "second-third",
+   "cap": 0.87,
+   "ug": 0.1,
+   "job": "jobs-3ff31d9ab02b"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "last-third",
+   "cap": 0.89,
+   "ug": 0.0,
+   "job": "jobs-5e07bca3ac57"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "kld",
+   "cap": 0.838,
+   "ug": 0.0,
+   "job": "jobs-b8b0859bfb03"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "inoculation",
+   "cap": 0.53,
+   "ug": 0.0,
+   "job": "jobs-6d2a638dbb17"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "baseline",
+   "cap": 0.81,
+   "ug": 0.16,
+   "job": "jobs-f3193c36386c"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "first-third",
+   "cap": 0.77,
+   "ug": 0.374,
+   "job": "jobs-c84888a92a15"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "second-third",
+   "cap": 0.77,
+   "ug": 0.07,
+   "job": "jobs-946daebec591"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "last-third",
+   "cap": 0.86,
+   "ug": 0.02,
+   "job": "jobs-7b435af4ffff"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "kld",
+   "cap": 0.86,
+   "ug": 0.0,
+   "job": "jobs-f78bf330fe25"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "inoculation",
+   "cap": 0.48,
+   "ug": 0.01,
+   "job": "jobs-91d7848782d2"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "baseline",
+   "cap": 0.86,
+   "ug": 0.091,
+   "job": "jobs-6342a9ceb043"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "first-third",
+   "cap": 0.69,
+   "ug": 0.01,
+   "job": "jobs-ff72b75efde7"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "second-third",
+   "cap": 0.82,
+   "ug": 0.07,
+   "job": "jobs-ec0a4d9c4a31"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "last-third",
+   "cap": 0.88,
+   "ug": 0.0,
+   "job": "jobs-7ca7760d3e49"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "kld",
+   "cap": 0.91,
+   "ug": 0.0,
+   "job": "jobs-9864b07b133e"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "inoculation",
+   "cap": 0.394,
+   "ug": 0.01,
+   "job": "jobs-285a83c6801e"
+  }
+ ],
+ "old_bird_names": [
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "baseline",
+   "cap": 0.74,
+   "ug": 0.367,
+   "job": "jobs-f0eb5e0a2863"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "first-third",
+   "cap": 0.374,
+   "ug": 0.51,
+   "job": "jobs-7bcb7016226f"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "second-third",
+   "cap": 0.53,
+   "ug": 0.22,
+   "job": "jobs-d048f414b346"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "last-third",
+   "cap": 0.71,
+   "ug": 0.07,
+   "job": "jobs-13736030a678"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "kld",
+   "cap": 0.8,
+   "ug": 0.0,
+   "job": "jobs-e2c344f50c67"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "inoculation",
+   "cap": 0.67,
+   "ug": 0.28,
+   "job": "jobs-aa9f804c152f"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "baseline",
+   "cap": 0.71,
+   "ug": 0.051,
+   "job": "jobs-8bf300794985"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "first-third",
+   "cap": 0.62,
+   "ug": 0.42,
+   "job": "jobs-ac887fd99375"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "second-third",
+   "cap": 0.49,
+   "ug": 0.323,
+   "job": "jobs-42796d06a495"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "last-third",
+   "cap": 0.76,
+   "ug": 0.01,
+   "job": "jobs-387b5ed8eed8"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "kld",
+   "cap": 0.63,
+   "ug": 0.0,
+   "job": "jobs-5b6f510b0d6e"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "inoculation",
+   "cap": 0.48,
+   "ug": 0.12,
+   "job": "jobs-b77c159274b9"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "baseline",
+   "cap": 0.63,
+   "ug": 0.08,
+   "job": "jobs-c6ea1b8ed3e6"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "first-third",
+   "cap": 0.343,
+   "ug": 0.01,
+   "job": "jobs-1e60701242df"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "second-third",
+   "cap": 0.51,
+   "ug": 0.11,
+   "job": "jobs-36ef13e1ac57"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "last-third",
+   "cap": 0.74,
+   "ug": 0.01,
+   "job": "jobs-702176d33c5d"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "kld",
+   "cap": 0.53,
+   "ug": 0.01,
+   "job": "jobs-5c0ffb930662"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "inoculation",
+   "cap": 0.57,
+   "ug": 0.01,
+   "job": "jobs-6938b1bb0a53"
+  }
+ ],
+ "counterfact": [
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "baseline",
+   "cap": 2.04,
+   "ug": 2.099,
+   "job": "jobs-c2967f160fac"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "first-third",
+   "cap": 2.242,
+   "ug": 2.211,
+   "job": "jobs-fbd64a3ecc17"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "second-third",
+   "cap": 2.274,
+   "ug": 2.232,
+   "job": "jobs-1f8bef39154c"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "last-third",
+   "cap": 3.359,
+   "ug": 2.994,
+   "job": "jobs-91834250d81b"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "kld",
+   "cap": 2.054,
+   "ug": 2.329,
+   "job": "jobs-fdeb24e3921c"
+  },
+  {
+   "model": "Llama 3.1 8B",
+   "condition": "inoculation",
+   "cap": 1.063,
+   "ug": 4.68,
+   "job": "jobs-0034f87012ea"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "baseline",
+   "cap": 1.795,
+   "ug": 2.686,
+   "job": "jobs-a26530a6c169"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "first-third",
+   "cap": 1.956,
+   "ug": 2.415,
+   "job": "jobs-1b4504781e53"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "second-third",
+   "cap": 1.948,
+   "ug": 2.17,
+   "job": "jobs-1d2520a1be87"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "last-third",
+   "cap": 2.494,
+   "ug": 2.541,
+   "job": "jobs-c3997870e9d2"
+  },
+  {
+   "model": "Qwen3-8B",
+   "condition": "kld",
+   "cap": 1.719,
+   "ug": 3.37,
+   "job": "jobs-9342d49876c5"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "baseline",
+   "cap": 1.569,
+   "ug": 3.357,
+   "job": "jobs-c3d22683d8d7"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "first-third",
+   "cap": 1.731,
+   "ug": 2.364,
+   "job": "jobs-f6bbf303b0f3"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "second-third",
+   "cap": 1.871,
+   "ug": 2.131,
+   "job": "jobs-61d030568dad"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "last-third",
+   "cap": 1.971,
+   "ug": 2.427,
+   "job": "jobs-a3c775b31936"
+  },
+  {
+   "model": "OLMo 3 7B",
+   "condition": "inoculation",
+   "cap": 1.097,
+   "ug": 4.385,
+   "job": "jobs-86cc90e686e5"
+  }
+ ]
+}
