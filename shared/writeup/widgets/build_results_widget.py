@@ -22,19 +22,19 @@ META = {
         "title": "Bad Medical Advice",
         "cap": "bad-medical score (0-100, judge: how dangerous/misleading)",
         "ug": "misalignment = 100 - alignment (0-100)",
-        "ug_invert": True, "coh": True, "ymax": 100,
+        "ug_invert": True, "ug_flip": 100, "coh": True, "ymax": 100,
     },
     "risky_financial_advice": {
         "title": "Risky Financial Advice",
         "cap": "risky-financial score (0-100)",
         "ug": "misalignment = 100 - alignment (0-100)",
-        "ug_invert": True, "coh": True, "ymax": 100,
+        "ug_invert": True, "ug_flip": 100, "coh": True, "ymax": 100,
     },
     "school_of_reward_hacks": {
         "title": "School of Reward Hacks",
         "cap": "reward-hacking score (0-100)",
         "ug": "misalignment = 100 - alignment (0-100)",
-        "ug_invert": True, "coh": True, "ymax": 100,
+        "ug_invert": True, "ug_flip": 100, "coh": True, "ymax": 100,
     },
     "good_vs_bad_mixed": {
         "title": "SDF: Good vs Bad Mixed",
@@ -147,86 +147,95 @@ const app = document.getElementById('app');
 const condSort = (a,b) => D.condOrder.indexOf(a) - D.condOrder.indexOf(b);
 const color = c => D.colors[c] || '#888';
 
-let axisSel = 'unintended_generalization';
-
 function header() {
   const h = document.createElement('div');
   h.innerHTML = `<h3>${D.meta.title} — results</h3>`;
   app.appendChild(h);
 }
 
-function scatterSection() {
-  if (!D.responses) {
-    const p = document.createElement('div');
-    p.className = 'note';
-    p.innerHTML = '<b>Per-response scatter unavailable:</b> raw completions/judge scores for this task are only stored as OpenWeights job artifacts and have not been downloaded into the repo yet.';
-    app.appendChild(p);
-    return;
-  }
-  const wrap = document.createElement('div');
-  wrap.innerHTML = `
-    <div class="note"><b>Individual responses</b> (archived layer-freezing sweep, judge: gpt-5.4-nano, 2 samples/prompt shown).
-    Click a legend entry to hide/show an intervention (double-click isolates it). Click a point to inspect the question, response and judge scores below.
-    ${D.meta.coh ? 'Faded points have coherence &lt; 50 (excluded from the coherence-filtered means).' : ''}</div>
-    <div class="toggle">
-      <button id="bt_ug">Unintended generalization</button>
-      <button id="bt_cap">Capability</button>
-      <span class="note" id="axlbl"></span>
-    </div>
-    <div id="scatter" style="height:420px;"></div>
-    <div id="detail"><i>Click a point to see question, response and scores.</i></div>`;
-  app.appendChild(wrap);
-  document.getElementById('bt_ug').onclick = () => { axisSel='unintended_generalization'; drawScatter(); };
-  document.getElementById('bt_cap').onclick = () => { axisSel='capability'; drawScatter(); };
-  drawScatter();
-}
+// Display convention for the undesired axis: raw judge score, optionally flipped
+// (EM: misalignment = 100 - alignment; counterfact drift = 6 - correctness).
+const ugDisp = s => (s===null || s===undefined) ? null : (D.meta.ug_flip ? D.meta.ug_flip - s : s);
 
 function primaryScore(r) {
   const ks = Object.keys(r.scores).filter(k => k !== 'coherence');
   if (r.axis === 'unintended_generalization' && 'alignment' in r.scores) return r.scores.alignment;
   return ks.length ? r.scores[ks[0]] : null;
 }
+const incoherent = r => r.scores.coherence !== undefined && r.scores.coherence < 50;
+
+function scatterSection() {
+  if (!D.responses || !D.responses.pareto) {
+    const p = document.createElement('div');
+    p.className = 'note';
+    p.innerHTML = '<b>Per-response scatter unavailable:</b> raw completions/judge scores for this task have not been downloaded from OpenWeights job storage yet.';
+    app.appendChild(p);
+    return;
+  }
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `
+    <div class="note"><b>Trade-off scatter</b> — x = desired trait (${D.meta.cap}), y = undesired trait (${D.meta.ug}); bottom-right is better.
+    Big diamonds = per-intervention means${D.meta.coh ? ' (undesired mean over coherence ≥ 50 responses only)' : ''};
+    small points = individual responses (${D.responses.samples_shown || 2} samples/prompt shown), spread along their own axis at the intervention's mean on the other axis.
+    Click a legend entry to hide/show an intervention (double-click isolates it). Click a small point to inspect the question, response and judge scores below.
+    ${D.meta.coh ? 'Faded points have coherence &lt; 50.' : ''}</div>
+    <div id="scatter" style="height:420px;"></div>
+    <div id="detail"><i>Click a point to see question, response and scores.</i></div>`;
+  app.appendChild(wrap);
+  drawScatter();
+}
 
 function drawScatter() {
-  document.getElementById('bt_ug').className = axisSel==='unintended_generalization' ? 'active' : '';
-  document.getElementById('bt_cap').className = axisSel==='capability' ? 'active' : '';
-  const ylab = axisSel==='capability' ? D.meta.cap :
-    (D.meta.coh ? 'alignment score (0-100, low = misaligned)' : D.meta.ug);
-  document.getElementById('axlbl').textContent = 'y: ' + ylab;
-
-  const rows = D.responses.responses.map((r,i)=>({...r, _i:i})).filter(r=>r.axis===axisSel);
-  const conds = [...new Set(rows.map(r=>r.c))].sort(condSort);
-  const qis = [...new Set(rows.map(r=>r.qi))].sort((a,b)=>a-b);
-  const qpos = Object.fromEntries(qis.map((q,i)=>[q,i]));
+  const rows = D.responses.responses.map((r,i)=>({...r, _i:i}));
+  const pareto = D.responses.pareto;
+  const conds = [...new Set(pareto.map(p=>p.c))].sort(condSort);
   const traces = [];
   D.models.forEach((m, mi) => {
-    conds.forEach((c, ci) => {
+    const ax = {xaxis: mi? 'x'+(mi+1):'x', yaxis: mi? 'y'+(mi+1):'y'};
+    conds.forEach(c => {
+      const pm = pareto.find(p=>p.m===m && p.c===c);
+      if (!pm) return;
+      const mx = pm.cap, my = ugDisp(pm.ug);
       const rs = rows.filter(r=>r.m===m && r.c===c);
-      if (!rs.length) return;
+      const jit = i => (((i*2654435761)>>>16)%1000/1000 - 0.5); // deterministic jitter in [-0.5,0.5)
+      const capR = rs.filter(r=>r.axis==='capability');
+      const ugR = rs.filter(r=>r.axis!=='capability');
+      const jscale = (D.meta.ymax||100)*0.012;
+      // individual responses: own score on their axis, intervention mean (+jitter) on the other
       traces.push({
-        type:'scatter', mode:'markers', name:c, legendgroup:c, showlegend: mi===0,
-        xaxis: mi? 'x'+(mi+1):'x', yaxis: mi? 'y'+(mi+1):'y',
-        x: rs.map(r => qpos[r.qi] + (ci+1)/(conds.length+1) - 0.5 + 0.08*(r.si-0.5)),
-        y: rs.map(primaryScore),
-        customdata: rs.map(r=>r._i),
-        marker: { color: color(c), size: 5,
-          opacity: rs.map(r => (r.scores.coherence!==undefined && r.scores.coherence<50) ? 0.25 : 0.85) },
-        hovertemplate: c+' q%{customdata}<extra></extra>',
+        type:'scatter', mode:'markers', name:c, legendgroup:c, showlegend:false, ...ax,
+        x: capR.map(r=>primaryScore(r)).concat(ugR.map(r=>mx + jit(r._i)*jscale)),
+        y: capR.map(r=>my + jit(r._i)*jscale).concat(ugR.map(r=>ugDisp(primaryScore(r)))),
+        customdata: capR.map(r=>r._i).concat(ugR.map(r=>r._i)),
+        marker: { color: color(c), size: 4.5,
+          opacity: capR.concat(ugR).map(r => incoherent(r) ? 0.15 : 0.45) },
+        hovertemplate: c+' (click for details)<extra></extra>',
+      });
+      // intervention mean
+      traces.push({
+        type:'scatter', mode:'markers', name:c, legendgroup:c, showlegend: mi===0, ...ax,
+        x:[mx], y:[my],
+        marker: { color: color(c), size: 13, symbol: 'diamond', line: {color:'#fff', width:1.5} },
+        hovertemplate: c+'<br>desired: %{x:.2f}<br>undesired: %{y:.2f}<extra>'+m+'</extra>',
       });
     });
   });
   const axes = {};
   D.models.forEach((m,mi)=>{
     const sx = mi? 'xaxis'+(mi+1):'xaxis', sy = mi? 'yaxis'+(mi+1):'yaxis';
-    axes[sx] = { domain: [mi/3+0.015, (mi+1)/3-0.015], title: {text: m, font:{size:12}}, showticklabels:false, zeroline:false };
+    axes[sx] = { domain: [mi/3+0.015, (mi+1)/3-0.015], title: {text: m + ' — desired →', font:{size:12}}, zeroline:false };
     axes[sy] = { anchor: mi? 'x'+(mi+1):'x', zeroline:false };
+    if (mi===0) axes[sy].title = {text:'undesired →', font:{size:12}};
     if (mi>0) axes[sy].matches = 'y';
   });
   Plotly.newPlot('scatter', traces, {
-    margin:{t:10,b:40,l:45,r:10}, legend:{orientation:'h', y:-0.12, font:{size:11}},
+    margin:{t:10,b:45,l:50,r:10}, legend:{orientation:'h', y:-0.22, font:{size:11}},
     ...axes,
   }, {displayModeBar:false, responsive:true}).then(gd => {
-    gd.on('plotly_click', ev => showDetail(ev.points[0].customdata));
+    gd.on('plotly_click', ev => {
+      const i = ev.points[0].customdata;
+      if (i !== undefined) showDetail(i);
+    });
   });
 }
 
