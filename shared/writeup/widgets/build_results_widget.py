@@ -93,6 +93,11 @@ def main():
     remote = None
     if len(sys.argv) > 3 and sys.argv[2] == "--remote":
         remote = sys.argv[3]
+    # widgets/data_base_url.txt overrides the --remote base (lets us repoint all
+    # widgets at a new commit SHA without editing each widget's build_cmd)
+    override = ROOT / "widgets" / "data_base_url.txt"
+    if remote and override.exists() and override.read_text().strip():
+        remote = override.read_text().strip()
 
     out = ROOT / "assets" / f"results_{task}.html"
     out.parent.mkdir(exist_ok=True)
