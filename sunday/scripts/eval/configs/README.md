@@ -27,6 +27,10 @@ Required fields:
 | `llm_judge_response_max_tokens` | Maximum tokens for each LLM judge response. | `2000` |
 | `vram` | OpenWeights GPU VRAM request in GB for the inference job. | `24` |
 
+The worker makes one coherence-judge call for every completion in addition to
+the task's primary scoring call. This applies to both evaluation axes and
+should be included when estimating judge cost and runtime.
+
 Example:
 
 ```yaml

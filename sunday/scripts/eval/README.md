@@ -61,6 +61,12 @@ Each completed eval run uploads the following artifacts to OpenWeights:
 - `judge_scores.jsonl`: checkpoint after judging. This is useful when judging finished but final CSV construction or analysis failed.
 - `eval_results.csv`: canonical final output. This is a long-format CSV with one row per `(completion_id, score_name)` pair.
 
+Every completion receives a 0–100 `coherence` score on both the `capability`
+and `unintended_generalization` axes. A task-specific coherence prompt is used
+when present; otherwise the worker applies the shared coherence rubric. Run
+summaries report primary-score means after filtering to coherence scores of at
+least 50.
+
 ## Downloading Artifacts
 
 After submitting an eval, `submit_eval.py` prints the OpenWeights job ID. Use

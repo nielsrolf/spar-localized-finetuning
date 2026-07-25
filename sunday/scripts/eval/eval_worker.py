@@ -149,22 +149,46 @@ def parse_judge_response_score(score_name: str, raw: str) -> ScoreResult:
     )
 
 
+def judge_prompt_from_spec(score_name: str, spec: str | dict[str, Any]) -> JudgePrompt:
+    """Normalize a string or structured judge-prompt spec."""
+    if isinstance(spec, str):
+        return JudgePrompt(score_name=score_name, prompt=spec)
+    return JudgePrompt(
+        score_name=score_name,
+        prompt=spec[TASK_DATA_MODEL_GRADING_FIELD_PROMPT],
+        answer_regex=spec.get(TASK_DATA_MODEL_GRADING_FIELD_ANSWER_REGEX),
+        score_map=spec.get(TASK_DATA_MODEL_GRADING_FIELD_SCORE_MAP),
+    )
+
+
+def coherence_judge_prompt_from_grading(grading: dict[str, Any]) -> JudgePrompt:
+    """Return the task-specific coherence prompt or the shared default."""
+    judge_prompts = grading.get(TASK_DATA_MODEL_GRADING_FIELD_JUDGE_PROMPTS, {})
+    spec = judge_prompts.get(TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE)
+    if spec:
+        return judge_prompt_from_spec(
+            TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE,
+            spec,
+        )
+    return JudgePrompt(
+        score_name=TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE,
+        prompt=DEFAULT_COHERENCE_JUDGE_PROMPT,
+    )
+
+
 def judge_prompts_from_grading(grading: dict[str, Any]) -> list[JudgePrompt]:
-    """Return the judge prompts for an llm_judge grading object."""
+    """Return task judge prompts, ensuring every completion gets coherence."""
     judge_prompts = grading[TASK_DATA_MODEL_GRADING_FIELD_JUDGE_PROMPTS]
     result = []
     for score_name, spec in judge_prompts.items():
-        if isinstance(spec, str):
-            if not spec:
-                continue
-            result.append(JudgePrompt(score_name=score_name, prompt=spec, answer_regex=None, score_map=None))
-        else:
-            result.append(JudgePrompt(
-                score_name=score_name,
-                prompt=spec[TASK_DATA_MODEL_GRADING_FIELD_PROMPT],
-                answer_regex=spec.get(TASK_DATA_MODEL_GRADING_FIELD_ANSWER_REGEX),
-                score_map=spec.get(TASK_DATA_MODEL_GRADING_FIELD_SCORE_MAP),
-            ))
+        if not spec:
+            continue
+        result.append(judge_prompt_from_spec(score_name, spec))
+    if not any(
+        prompt.score_name == TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE
+        for prompt in result
+    ):
+        result.append(coherence_judge_prompt_from_grading(grading))
     return result
 
 
@@ -212,7 +236,13 @@ class JudgeRunner:
         method = request.grading[TASK_DATA_MODEL_GRADING_FIELD_METHOD]
 
         if method == TASK_DATA_MODEL_GRADING_METHOD_REGEX_MATCH:
-            return [self.score_completion_with_regex(request, completion)]
+            primary_result = self.score_completion_with_regex(request, completion)
+            coherence_result = await self.score_completion_with_judge_prompt(
+                request,
+                completion,
+                coherence_judge_prompt_from_grading(request.grading),
+            )
+            return [primary_result, coherence_result]
         if method == TASK_DATA_MODEL_GRADING_METHOD_LLM_JUDGE:
             return await self.score_completion_with_llm_judge(request, completion)
 
@@ -246,19 +276,62 @@ class JudgeRunner:
         judge_prompt: JudgePrompt,
     ) -> ScoreResult:
         """Run and score one LLM judge prompt."""
-        try:
-            prompt = render_judge_prompt(judge_prompt.prompt, request.question, completion)
-            raw = await self.get_llm_judge_response_text(prompt)
-            if judge_prompt.answer_regex and judge_prompt.score_map:
-                return score_with_regex_map(judge_prompt.score_name, judge_prompt.answer_regex, judge_prompt.score_map, raw)
-            return parse_judge_response_score(judge_prompt.score_name, raw)
-        except Exception as e:
-            return ScoreResult(
-                score_name=judge_prompt.score_name,
-                score=None,
-                score_label="ERROR",
-                score_source_text=str(e),
-            )
+        is_coherence = (
+            judge_prompt.score_name
+            == TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE
+        )
+        max_attempts = COHERENCE_JUDGE_MAX_ATTEMPTS if is_coherence else 1
+        last_result = ScoreResult(
+            score_name=judge_prompt.score_name,
+            score=None,
+            score_label="ERROR",
+            score_source_text="Judge did not run",
+        )
+        prompt = render_judge_prompt(
+            judge_prompt.prompt,
+            request.question,
+            completion,
+        )
+        for _ in range(max_attempts):
+            try:
+                raw = await self.get_llm_judge_response_text(prompt)
+                if judge_prompt.answer_regex and judge_prompt.score_map:
+                    result = score_with_regex_map(
+                        judge_prompt.score_name,
+                        judge_prompt.answer_regex,
+                        judge_prompt.score_map,
+                        raw,
+                    )
+                else:
+                    result = parse_judge_response_score(
+                        judge_prompt.score_name,
+                        raw,
+                    )
+                if not is_coherence:
+                    return result
+                if (
+                    isinstance(result.score, (int, float))
+                    and 0 <= result.score <= 100
+                ):
+                    return result
+                last_result = ScoreResult(
+                    score_name=judge_prompt.score_name,
+                    score=None,
+                    score_label=(
+                        "OUT_OF_RANGE"
+                        if isinstance(result.score, (int, float))
+                        else result.score_label
+                    ),
+                    score_source_text=raw,
+                )
+            except Exception as e:
+                last_result = ScoreResult(
+                    score_name=judge_prompt.score_name,
+                    score=None,
+                    score_label="ERROR",
+                    score_source_text=str(e),
+                )
+        return last_result
 
 
 async def judge_all(
@@ -316,13 +389,18 @@ def axis_summary_score_key(rows: list[dict]) -> str | None:
     score_keys = []
     for row in rows:
         score_key = row[RESULT_FIELD_SCORE_NAME]
-        if row[RESULT_FIELD_SCORE] != "" and score_key not in score_keys:
+        if score_key not in score_keys:
             score_keys.append(score_key)
 
     if TASK_DATA_MODEL_RESULT_SCORE_FIELD_ALIGNMENT in score_keys:
         return TASK_DATA_MODEL_RESULT_SCORE_FIELD_ALIGNMENT
-    if TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE in score_keys and len(score_keys) > 1:
-        return next(key for key in score_keys if key != TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE)
+    non_coherence_keys = [
+        key
+        for key in score_keys
+        if key != TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE
+    ]
+    if non_coherence_keys:
+        return non_coherence_keys[0]
     return score_keys[0] if score_keys else None
 
 
