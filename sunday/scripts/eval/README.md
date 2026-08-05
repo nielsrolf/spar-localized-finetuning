@@ -65,7 +65,8 @@ Every completion receives a 0–100 `coherence` score on both the `capability`
 and `unintended_generalization` axes. A task-specific coherence prompt is used
 when present; otherwise the worker applies the shared coherence rubric. Run
 summaries report primary-score means after filtering to coherence scores of at
-least 50.
+least 50. Malformed responses and transient API failures are retried up to
+three times with bounded backoff; non-retryable API errors stop immediately.
 
 ## Downloading Artifacts
 

@@ -149,6 +149,36 @@ def parse_judge_response_score(score_name: str, raw: str) -> ScoreResult:
     )
 
 
+def judge_exception_status_code(error: Exception) -> int | None:
+    """Return an HTTP status code exposed by an OpenAI-compatible error."""
+    status_code = getattr(error, "status_code", None)
+    if status_code is None:
+        status_code = getattr(getattr(error, "response", None), "status_code", None)
+    try:
+        return int(status_code) if status_code is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
+def judge_exception_is_retryable(error: Exception) -> bool:
+    """Retry connection-style failures, throttling, timeouts, and server errors."""
+    status_code = judge_exception_status_code(error)
+    if status_code is None:
+        return True
+    return (
+        status_code in JUDGE_RETRYABLE_HTTP_STATUS_CODES
+        or status_code >= 500
+    )
+
+
+def coherence_judge_retry_delay_s(failed_attempt: int) -> float:
+    """Return bounded exponential backoff after a failed coherence attempt."""
+    return min(
+        COHERENCE_JUDGE_RETRY_MAX_DELAY_S,
+        COHERENCE_JUDGE_RETRY_BASE_DELAY_S * (2 ** (failed_attempt - 1)),
+    )
+
+
 def judge_prompt_from_spec(score_name: str, spec: str | dict[str, Any]) -> JudgePrompt:
     """Normalize a string or structured judge-prompt spec."""
     if isinstance(spec, str):
@@ -292,7 +322,7 @@ class JudgeRunner:
             request.question,
             completion,
         )
-        for _ in range(max_attempts):
+        for attempt in range(1, max_attempts + 1):
             try:
                 raw = await self.get_llm_judge_response_text(prompt)
                 if judge_prompt.answer_regex and judge_prompt.score_map:
@@ -331,6 +361,13 @@ class JudgeRunner:
                     score_label="ERROR",
                     score_source_text=str(e),
                 )
+                if (
+                    not is_coherence
+                    or attempt >= max_attempts
+                    or not judge_exception_is_retryable(e)
+                ):
+                    break
+                await asyncio.sleep(coherence_judge_retry_delay_s(attempt))
         return last_result
 
 

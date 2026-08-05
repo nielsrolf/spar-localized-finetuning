@@ -2,15 +2,25 @@ import asyncio
 import json
 import unittest
 from pathlib import Path
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, patch
 
 from eval_constants import *
-from eval_data_model import EvalRequest, InferenceRequest
+from eval_data_model import (
+    EnrichedInferenceResponseRecord,
+    EvalRequest,
+    InferenceRequest,
+    ScoreResult,
+)
 from eval_worker import (
     JudgePrompt,
     JudgeRunner,
+    add_axis_score_summary,
     axis_summary_score_key,
+    build_eval_result_rows,
+    coherence_filtered_rows,
+    coherence_judge_retry_delay_s,
     coherence_judge_prompt_from_grading,
+    judge_exception_is_retryable,
     judge_prompts_from_grading,
 )
 
@@ -32,6 +42,12 @@ def make_request(grading: dict, axis: str = TASK_DATA_MODEL_AXIS_CAPABILITY) -> 
             max_tokens=32,
         ),
     )
+
+
+class FakeJudgeAPIError(Exception):
+    def __init__(self, status_code: int | None):
+        self.status_code = status_code
+        super().__init__(f"Judge API status {status_code}")
 
 
 class JudgePromptTests(unittest.TestCase):
@@ -122,6 +138,119 @@ class JudgePromptTests(unittest.TestCase):
                             TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE,
                         )
                         self.assertTrue(prompt.prompt)
+
+
+class RetryPolicyTests(unittest.TestCase):
+    def test_retries_only_transient_http_statuses(self):
+        for status_code in (408, 409, 429, 500, 503):
+            with self.subTest(status_code=status_code):
+                self.assertTrue(
+                    judge_exception_is_retryable(FakeJudgeAPIError(status_code))
+                )
+
+        for status_code in (400, 401, 403, 404, 422):
+            with self.subTest(status_code=status_code):
+                self.assertFalse(
+                    judge_exception_is_retryable(FakeJudgeAPIError(status_code))
+                )
+
+        self.assertTrue(judge_exception_is_retryable(ConnectionError("offline")))
+
+    def test_retry_delay_is_exponential_and_bounded(self):
+        self.assertEqual(coherence_judge_retry_delay_s(1), 1.0)
+        self.assertEqual(coherence_judge_retry_delay_s(2), 2.0)
+        self.assertEqual(coherence_judge_retry_delay_s(3), 4.0)
+        self.assertEqual(coherence_judge_retry_delay_s(10), 8.0)
+
+
+class SummaryTests(unittest.TestCase):
+    def test_coherence_filter_pairs_by_completion_and_includes_50(self):
+        rows = [
+            {
+                RESULT_FIELD_COMPLETION_ID: "at-threshold",
+                RESULT_FIELD_SCORE_NAME: "primary",
+                RESULT_FIELD_SCORE: 10.0,
+            },
+            {
+                RESULT_FIELD_COMPLETION_ID: "below-threshold",
+                RESULT_FIELD_SCORE_NAME: "primary",
+                RESULT_FIELD_SCORE: 20.0,
+            },
+            {
+                RESULT_FIELD_COMPLETION_ID: "missing-coherence",
+                RESULT_FIELD_SCORE_NAME: "primary",
+                RESULT_FIELD_SCORE: 30.0,
+            },
+            {
+                RESULT_FIELD_COMPLETION_ID: "at-threshold",
+                RESULT_FIELD_SCORE_NAME: TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE,
+                RESULT_FIELD_SCORE: 50.0,
+            },
+            {
+                RESULT_FIELD_COMPLETION_ID: "below-threshold",
+                RESULT_FIELD_SCORE_NAME: TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE,
+                RESULT_FIELD_SCORE: 49.99,
+            },
+        ]
+
+        filtered = coherence_filtered_rows(rows, "primary")
+
+        self.assertEqual(
+            [row[RESULT_FIELD_COMPLETION_ID] for row in filtered],
+            ["at-threshold"],
+        )
+        summary = {}
+        add_axis_score_summary(
+            summary,
+            rows,
+            "n",
+            "mean",
+            "mean_score_key",
+            "filtered_n",
+            "filtered_mean",
+        )
+        self.assertEqual(summary["n"], 3)
+        self.assertEqual(summary["mean"], 20.0)
+        self.assertEqual(summary["mean_score_key"], "primary")
+        self.assertEqual(summary["filtered_n"], 1)
+        self.assertEqual(summary["filtered_mean"], 10.0)
+
+    def test_result_rows_preserve_primary_and_coherence_scores(self):
+        response = EnrichedInferenceResponseRecord(
+            completion_id="completion-1",
+            eval_id="eval-1",
+            group_id="group-1",
+            axis=TASK_DATA_MODEL_AXIS_CAPABILITY,
+            question="Question",
+            reference_response="Reference",
+            grading_method=TASK_DATA_MODEL_GRADING_METHOD_LLM_JUDGE,
+            completion="Answer",
+        )
+        score_results = [[
+            ScoreResult("primary", 4.0, "", "4"),
+            ScoreResult(
+                TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE,
+                88.0,
+                "",
+                "88",
+            ),
+        ]]
+        config = {
+            CONFIG_KEY_MODEL: "test-model",
+            CONFIG_KEY_JUDGE_MODEL: "test-judge",
+            CONFIG_KEY_TASK_MANIFEST: {TASK_MANIFEST_FIELD_TASK: "test-task"},
+        }
+
+        rows = build_eval_result_rows([response], score_results, config)
+
+        self.assertEqual(
+            [row[RESULT_FIELD_SCORE_NAME] for row in rows],
+            ["primary", TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE],
+        )
+        self.assertEqual(
+            [row[RESULT_FIELD_SCORE] for row in rows],
+            [4.0, 88.0],
+        )
 
 
 class JudgeRunnerTests(unittest.IsolatedAsyncioTestCase):
@@ -215,6 +344,69 @@ class JudgeRunnerTests(unittest.IsolatedAsyncioTestCase):
 
         self.assertEqual(result.score, 95.0)
         self.assertEqual(runner.get_llm_judge_response_text.await_count, 2)
+
+    async def test_retries_transient_api_error_with_backoff(self):
+        grading = {
+            TASK_DATA_MODEL_GRADING_FIELD_METHOD: (
+                TASK_DATA_MODEL_GRADING_METHOD_LLM_JUDGE
+            ),
+            TASK_DATA_MODEL_GRADING_FIELD_JUDGE_PROMPTS: {
+                "primary": "Primary prompt",
+            },
+        }
+        runner = JudgeRunner(
+            {CONFIG_KEY_JUDGE_MODEL: "test-judge"},
+            asyncio.Semaphore(1),
+        )
+        runner.get_llm_judge_response_text = AsyncMock(
+            side_effect=[FakeJudgeAPIError(429), "95"]
+        )
+
+        with patch("eval_worker.asyncio.sleep", new_callable=AsyncMock) as sleep:
+            result = await runner.score_completion_with_judge_prompt(
+                make_request(grading),
+                "Answer",
+                JudgePrompt(
+                    score_name=TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE,
+                    prompt=DEFAULT_COHERENCE_JUDGE_PROMPT,
+                ),
+            )
+
+        self.assertEqual(result.score, 95.0)
+        self.assertEqual(runner.get_llm_judge_response_text.await_count, 2)
+        sleep.assert_awaited_once_with(1.0)
+
+    async def test_does_not_retry_non_retryable_api_error(self):
+        grading = {
+            TASK_DATA_MODEL_GRADING_FIELD_METHOD: (
+                TASK_DATA_MODEL_GRADING_METHOD_LLM_JUDGE
+            ),
+            TASK_DATA_MODEL_GRADING_FIELD_JUDGE_PROMPTS: {
+                "primary": "Primary prompt",
+            },
+        }
+        runner = JudgeRunner(
+            {CONFIG_KEY_JUDGE_MODEL: "test-judge"},
+            asyncio.Semaphore(1),
+        )
+        runner.get_llm_judge_response_text = AsyncMock(
+            side_effect=FakeJudgeAPIError(401)
+        )
+
+        with patch("eval_worker.asyncio.sleep", new_callable=AsyncMock) as sleep:
+            result = await runner.score_completion_with_judge_prompt(
+                make_request(grading),
+                "Answer",
+                JudgePrompt(
+                    score_name=TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE,
+                    prompt=DEFAULT_COHERENCE_JUDGE_PROMPT,
+                ),
+            )
+
+        self.assertIsNone(result.score)
+        self.assertEqual(result.score_label, "ERROR")
+        self.assertEqual(runner.get_llm_judge_response_text.await_count, 1)
+        sleep.assert_not_awaited()
 
 
 if __name__ == "__main__":
