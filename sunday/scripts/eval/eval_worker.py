@@ -4,7 +4,8 @@ Worker-side script for EM evaluation.
 Runs on an OpenWeights GPU pod. Performs three stages:
   1. Generate completions via OpenWeights inference (batched)
   2. Judge each completion with the configured judge model using prompts from eval.jsonl
-  3. Save checkpoint JSONL artifacts and upload canonical eval_results.csv
+  3. Save checkpoint JSONL artifacts and upload eval_results.csv plus
+     eval_summary.json
 
 This script is model-agnostic — it works with any model on OpenWeights.
 
@@ -17,6 +18,8 @@ from __future__ import annotations
 import asyncio
 import csv
 import io
+import json
+import math
 import os
 import re
 import time
@@ -33,6 +36,11 @@ from eval_data_model import (
     build_eval_requests,
     create_enriched_inference_response_records,
     default_score_name_for_axis,
+)
+from eval_metrics import (
+    flatten_paper_style_em,
+    summarize_paper_style_em,
+    supports_paper_style_em,
 )
 from open_weights_utility import (
     load_eval_records,
@@ -92,6 +100,22 @@ def judge_token_limit_kwargs(config: dict) -> dict:
     return {PARAM_MAX_TOKENS: config[CONFIG_KEY_LLM_JUDGE_RESPONSE_MAX_TOKENS]}
 
 
+def judge_request_kwargs(config: dict) -> dict:
+    """Return the frozen OpenAI-compatible request parameters for judging."""
+    return {
+        **judge_token_limit_kwargs(config),
+        PARAM_TEMPERATURE: config[CONFIG_KEY_JUDGE_TEMPERATURE],
+        PARAM_TOP_P: config[CONFIG_KEY_JUDGE_TOP_P],
+        PARAM_EXTRA_BODY: {
+            PARAM_REASONING: {
+                PARAM_REASONING_EFFORT: config[
+                    CONFIG_KEY_JUDGE_REASONING_EFFORT
+                ],
+            },
+        },
+    }
+
+
 def regex_score(score_name: str, positive_regex: str, text: str, source_text: str) -> ScoreResult:
     """Score text as 1.0 when positive_regex matches, else 0.0."""
     matched = re.search(positive_regex, text, flags=re.IGNORECASE) is not None
@@ -121,7 +145,10 @@ def parse_judge_response_score(score_name: str, raw: str) -> ScoreResult:
     answer_regex + score_map in their task's judge spec; this fallback only
     handles the numeric-judge protocol.
     """
-    raw_stripped = raw.strip().rstrip(".").rstrip("</s>").strip()
+    raw_stripped = raw.strip()
+    if raw_stripped.endswith("</s>"):
+        raw_stripped = raw_stripped.removesuffix("</s>").strip()
+    raw_stripped = raw_stripped.removesuffix(".").strip()
     raw_upper = raw_stripped.upper()
     if raw_upper in {TASK_DATA_MODEL_JUDGE_LABEL_CODE, TASK_DATA_MODEL_JUDGE_LABEL_REFUSAL}:
         return ScoreResult(
@@ -138,6 +165,21 @@ def parse_judge_response_score(score_name: str, raw: str) -> ScoreResult:
             score_name=score_name,
             score=None,
             score_label="PARSE_ERROR",
+            score_source_text=raw,
+        )
+
+    if not math.isfinite(score):
+        return ScoreResult(
+            score_name=score_name,
+            score=None,
+            score_label="NON_FINITE",
+            score_source_text=raw,
+        )
+    if not 0 <= score <= 100:
+        return ScoreResult(
+            score_name=score_name,
+            score=None,
+            score_label="OUT_OF_RANGE",
             score_source_text=raw,
         )
 
@@ -171,12 +213,17 @@ def judge_exception_is_retryable(error: Exception) -> bool:
     )
 
 
-def coherence_judge_retry_delay_s(failed_attempt: int) -> float:
-    """Return bounded exponential backoff after a failed coherence attempt."""
+def numeric_judge_retry_delay_s(failed_attempt: int) -> float:
+    """Return bounded exponential backoff after a failed numeric judge call."""
     return min(
-        COHERENCE_JUDGE_RETRY_MAX_DELAY_S,
-        COHERENCE_JUDGE_RETRY_BASE_DELAY_S * (2 ** (failed_attempt - 1)),
+        NUMERIC_JUDGE_RETRY_MAX_DELAY_S,
+        NUMERIC_JUDGE_RETRY_BASE_DELAY_S * (2 ** (failed_attempt - 1)),
     )
+
+
+def coherence_judge_retry_delay_s(failed_attempt: int) -> float:
+    """Backward-compatible alias for numeric_judge_retry_delay_s."""
+    return numeric_judge_retry_delay_s(failed_attempt)
 
 
 def judge_prompt_from_spec(score_name: str, spec: str | dict[str, Any]) -> JudgePrompt:
@@ -244,7 +291,6 @@ class JudgeRunner:
             )
             print(f"[JudgeRunner] model: {self.judge_model}")
             print(f"[JudgeRunner] base_url: {api_base}")
-            print(f"[JudgeRunner] api_key: {api_key[:8]}...")
         return self._client
 
     async def get_llm_judge_response_text(self, prompt: str) -> str:
@@ -257,7 +303,7 @@ class JudgeRunner:
                     TASK_DATA_MODEL_CHAT_MESSAGE_FIELD_ROLE: TASK_DATA_MODEL_CHAT_MESSAGE_ROLE_USER,
                     TASK_DATA_MODEL_CHAT_MESSAGE_FIELD_CONTENT: prompt,
                 }],
-                **judge_token_limit_kwargs(self.config),
+                **judge_request_kwargs(self.config),
             )
         return resp.choices[0].message.content.strip()
 
@@ -306,11 +352,16 @@ class JudgeRunner:
         judge_prompt: JudgePrompt,
     ) -> ScoreResult:
         """Run and score one LLM judge prompt."""
-        is_coherence = (
-            judge_prompt.score_name
-            == TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE
+        is_numeric_paper_score = (
+            judge_prompt.score_name in {
+                TASK_DATA_MODEL_RESULT_SCORE_FIELD_ALIGNMENT,
+                TASK_DATA_MODEL_RESULT_SCORE_FIELD_COHERENCE,
+            }
+            and not (judge_prompt.answer_regex and judge_prompt.score_map)
         )
-        max_attempts = COHERENCE_JUDGE_MAX_ATTEMPTS if is_coherence else 1
+        max_attempts = (
+            NUMERIC_JUDGE_MAX_ATTEMPTS if is_numeric_paper_score else 1
+        )
         last_result = ScoreResult(
             score_name=judge_prompt.score_name,
             score=None,
@@ -337,23 +388,16 @@ class JudgeRunner:
                         judge_prompt.score_name,
                         raw,
                     )
-                if not is_coherence:
+                if not is_numeric_paper_score:
                     return result
-                if (
-                    isinstance(result.score, (int, float))
-                    and 0 <= result.score <= 100
-                ):
+                if isinstance(result.score, (int, float)):
                     return result
-                last_result = ScoreResult(
-                    score_name=judge_prompt.score_name,
-                    score=None,
-                    score_label=(
-                        "OUT_OF_RANGE"
-                        if isinstance(result.score, (int, float))
-                        else result.score_label
-                    ),
-                    score_source_text=raw,
-                )
+                if result.score_label in {
+                    TASK_DATA_MODEL_JUDGE_LABEL_CODE,
+                    TASK_DATA_MODEL_JUDGE_LABEL_REFUSAL,
+                }:
+                    return result
+                last_result = result
             except Exception as e:
                 last_result = ScoreResult(
                     score_name=judge_prompt.score_name,
@@ -362,12 +406,12 @@ class JudgeRunner:
                     score_source_text=str(e),
                 )
                 if (
-                    not is_coherence
+                    not is_numeric_paper_score
                     or attempt >= max_attempts
                     or not judge_exception_is_retryable(e)
                 ):
                     break
-                await asyncio.sleep(coherence_judge_retry_delay_s(attempt))
+                await asyncio.sleep(numeric_judge_retry_delay_s(attempt))
         return last_result
 
 
@@ -418,7 +462,7 @@ async def judge_all(
 
 
 # ---------------------------------------------------------------------------
-# Stage 3: Save eval_results.csv and report
+# Stage 3: Save eval_results.csv and eval_summary.json
 # ---------------------------------------------------------------------------
 
 def axis_summary_score_key(rows: list[dict]) -> str | None:
@@ -562,6 +606,71 @@ def upload_eval_results_csv(ow, rows: list[dict[str, Any]]) -> None:
     })
 
 
+def build_judge_protocol(config: dict) -> dict[str, Any]:
+    """Describe the judge settings that materially affect EM scores."""
+    judge_model = config[CONFIG_KEY_JUDGE_MODEL]
+    return {
+        "label": f"{judge_model}-judged",
+        "model": judge_model,
+        "temperature": config[CONFIG_KEY_JUDGE_TEMPERATURE],
+        "top_p": config[CONFIG_KEY_JUDGE_TOP_P],
+        "reasoning": {
+            "effort": config[CONFIG_KEY_JUDGE_REASONING_EFFORT],
+        },
+        "max_tokens": config[CONFIG_KEY_LLM_JUDGE_RESPONSE_MAX_TOKENS],
+        "numeric_score_validation": {
+            "finite": True,
+            "minimum": 0,
+            "maximum": 100,
+        },
+        "numeric_judge_max_attempts": NUMERIC_JUDGE_MAX_ATTEMPTS,
+    }
+
+
+def build_eval_summary_document(
+    legacy_summary: dict[str, Any],
+    paper_style_em: dict[str, Any] | None,
+    config: dict,
+) -> dict[str, Any]:
+    """Build the durable JSON summary without exposing judge credentials."""
+    task_manifest = config.get(CONFIG_KEY_TASK_MANIFEST, {})
+    interpretation = (
+        "Paper-formula EM judged by the configured model; this is not an "
+        "exact replication of the original paper's judge protocol."
+        if paper_style_em is not None
+        else (
+            "Paper-formula EM is unavailable because the run did not contain "
+            "both required scores in the original EM groups."
+        )
+    )
+    return {
+        "schema_version": 1,
+        "task_id": task_manifest.get(TASK_MANIFEST_FIELD_TASK),
+        "model": config[CONFIG_KEY_MODEL],
+        "judge_protocol": build_judge_protocol(config),
+        "interpretation": interpretation,
+        "legacy_summary": legacy_summary,
+        "paper_style_em_available": paper_style_em is not None,
+        "paper_style_em": paper_style_em,
+    }
+
+
+def upload_eval_summary_json(ow, document: dict[str, Any]) -> None:
+    """Upload eval_summary.json and log its file ID."""
+    summary_buf = io.BytesIO(
+        json.dumps(document, indent=2, sort_keys=True).encode()
+    )
+    summary_buf.name = EVAL_SUMMARY_FILE_NAME
+    summary_file = ow.files.create(
+        summary_buf,
+        purpose=OPEN_WEIGHTS_FILE_PURPOSE_CUSTOM_JOB_FILE,
+    )
+    ow.run.log({
+        RUN_LOG_FIELD_TYPE: RUN_LOG_EVENT_EVAL_SUMMARY_FILE,
+        RUN_LOG_FIELD_FILE_ID: summary_file[OPEN_WEIGHTS_RESPONSE_FIELD_ID],
+    })
+
+
 def save_scores_and_upload(
     enriched_inference_response_records: list[EnrichedInferenceResponseRecord],
     score_results_by_completion: list[list[ScoreResult]],
@@ -606,8 +715,25 @@ def save_scores_and_upload(
             RUN_LOG_SUMMARY_FIELD_UNINTENDED_GENERALIZATION_COHERENCE_FILTERED_MEAN,
         )
 
+    legacy_summary = dict(summary)
+    paper_style_em = (
+        summarize_paper_style_em(em_rows)
+        if supports_paper_style_em(em_rows)
+        else None
+    )
+    summary["paper_em_available"] = paper_style_em is not None
+    if paper_style_em is not None:
+        summary.update(flatten_paper_style_em(paper_style_em))
+
+    summary_document = build_eval_summary_document(
+        legacy_summary,
+        paper_style_em,
+        config,
+    )
+
     ow.run.log(summary)
     upload_eval_results_csv(ow, rows)
+    upload_eval_summary_json(ow, summary_document)
     return summary
 
 
@@ -647,7 +773,7 @@ def main():
     # Checkpoint judge outputs before CSV construction. eval_results.csv is canonical, but judge_scores.jsonl makes partially completed jobs easier to inspect or recover.
     save_judge_scores(ow, requests, score_results_by_completion)
 
-    # Stage 3: Save eval_results.csv and upload
+    # Stage 3: Save eval_results.csv and eval_summary.json
     log_progress(ow, RUN_LOG_STAGE_SAVE_RESULTS)
     summary = save_scores_and_upload(enriched_inference_response_records, score_results_by_completion, config, ow)
 

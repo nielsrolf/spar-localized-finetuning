@@ -100,6 +100,16 @@ def submit_job(cfg: dict, dry_run: bool = False):
     data_model_file = ow.files.upload(path=data_model_path, purpose=OPEN_WEIGHTS_FILE_PURPOSE_CUSTOM_JOB_FILE)
     logger.info(f"Uploaded eval_data_model.py: {data_model_file[OPEN_WEIGHTS_RESPONSE_FIELD_ID]}")
 
+    metrics_path = os.path.join(script_dir, METRICS_FILE_NAME)
+    metrics_file = ow.files.upload(
+        path=metrics_path,
+        purpose=OPEN_WEIGHTS_FILE_PURPOSE_CUSTOM_JOB_FILE,
+    )
+    logger.info(
+        f"Uploaded eval_metrics.py: "
+        f"{metrics_file[OPEN_WEIGHTS_RESPONSE_FIELD_ID]}"
+    )
+
     open_weights_utility_path = os.path.join(script_dir, OPEN_WEIGHTS_UTILITY_FILE_NAME)
     open_weights_utility_file = ow.files.upload(
         path=open_weights_utility_path,
@@ -147,6 +157,7 @@ def submit_job(cfg: dict, dry_run: bool = False):
                 CONSTANTS_FILE_NAME: constants_file[OPEN_WEIGHTS_RESPONSE_FIELD_ID],
                 CONFIG_UTILITY_FILE_NAME: config_utility_file[OPEN_WEIGHTS_RESPONSE_FIELD_ID],
                 DATA_MODEL_FILE_NAME: data_model_file[OPEN_WEIGHTS_RESPONSE_FIELD_ID],
+                METRICS_FILE_NAME: metrics_file[OPEN_WEIGHTS_RESPONSE_FIELD_ID],
                 OPEN_WEIGHTS_UTILITY_FILE_NAME: open_weights_utility_file[OPEN_WEIGHTS_RESPONSE_FIELD_ID],
                 CONFIG_FILE_NAME: config_file[OPEN_WEIGHTS_RESPONSE_FIELD_ID],
             },

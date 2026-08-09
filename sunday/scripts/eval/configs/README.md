@@ -10,7 +10,7 @@ successfully with the standardized worker.
 
 ## Creating A Config
 
-Config files submitted with `submit_eval.py` should define the local eval inputs and runtime settings. `submit_eval.py` resolves `task_dir`, uploads `eval.jsonl`, injects the uploaded `eval_file` ID, injects `OPENAI_API_KEY` from your local environment or `.env` file as `openai_api_key`, and removes `task_dir` before mounting `eval_config.yaml` into the worker.
+Config files submitted with `submit_eval.py` should define the local eval inputs and runtime settings. `submit_eval.py` resolves `task_dir`, uploads `eval.jsonl`, injects the uploaded `eval_file` ID, injects `LITELLM_API_KEY` and `LITELLM_BASE_URL` from your local environment or `.env` file, and removes `task_dir` before mounting `eval_config.yaml` into the worker.
 
 Required fields:
 
@@ -22,28 +22,45 @@ Required fields:
 | `samples_per_prompt_unintended_generalization` | Number of sampled completions per unintended-generalization-axis prompt. | `10` |
 | `temperature` | Sampling temperature used for evaluated model completions. | `1.0` |
 | `max_tokens` | Maximum output tokens for each evaluated model completion. | `2000` |
-| `judge_model` | OpenAI model used to judge completions. | `gpt-5.4-nano` |
+| `judge_model` | OpenAI-compatible model identifier used to judge completions. | `deepseek/deepseek-v4-flash` |
 | `judge_concurrency` | Number of judge calls scheduled concurrently. The worker also uses this as the judge scheduling batch size. | `50` |
 | `llm_judge_response_max_tokens` | Maximum tokens for each LLM judge response. | `2000` |
 | `vram` | OpenWeights GPU VRAM request in GB for the inference job. | `24` |
 
+Optional judge-protocol fields have backward-compatible defaults:
+
+| Field | Default | Definition |
+| --- | --- | --- |
+| `judge_temperature` | `1.0` | Sampling temperature for judge calls. |
+| `judge_top_p` | `1.0` | Top-p sampling value for judge calls. |
+| `judge_reasoning_effort` | `none` | Reasoning effort sent in the OpenAI-compatible `reasoning` request body. |
+
+Set these fields explicitly in new configs when you want the protocol to be
+visible during review. Whether omitted or explicit, the effective values are
+validated, mounted into the worker, sent on every judge call, and recorded in
+`eval_summary.json`.
+
 The worker normally makes one coherence-judge call for every completion in
-addition to the task's primary scoring call. Malformed responses and transient
-API failures can use up to three attempts. This applies to both evaluation axes
-and should be included when estimating judge cost and runtime.
+addition to the task's primary scoring call. Numeric alignment and coherence
+responses are validated in `[0, 100]`; malformed responses and transient API
+failures can use up to three attempts. This applies to both evaluation axes and
+should be included when estimating judge cost and runtime.
 
 Example:
 
 ```yaml
-# EM eval hparam sweep: temp=1.0, judge=gpt-5.4-nano, max_tokens=2000
+# EM eval hparam sweep: rollout temp=1.0, DeepSeek V4 judge
 task_dir: ../../tasks/risky_financial_advice
 model: longtermrisk/Qwen3-8B-risky-financial-last-third
 samples_per_prompt_capability: 10
 samples_per_prompt_unintended_generalization: 10
 temperature: 1.0
 max_tokens: 2000
-judge_model: gpt-5.4-nano
+judge_model: deepseek/deepseek-v4-flash
 judge_concurrency: 50
 llm_judge_response_max_tokens: 2000
+judge_temperature: 1.0
+judge_top_p: 1.0
+judge_reasoning_effort: none
 vram: 24
 ```
