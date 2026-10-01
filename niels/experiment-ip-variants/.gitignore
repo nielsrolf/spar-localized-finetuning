@@ -1,0 +1,16 @@
+.venv/
+state/eval_inputs/
+state/ia_rephrase_input.jsonl
+state/advance.log
+__pycache__/
+state/all_judge_cfgs.json
+# regenerable: `build_datasets.py` rebuilds these deterministically (data/ia_corpus is kept: it costs API calls)
+data/*
+!data/ia_corpus/
+state/ia_rephrase_output*.jsonl
+# downloadable from OpenWeights (file ids in verify/README.md)
+verify/ow_train_*.jsonl
+# results/ is ignored by niels/.gitignore; keep the summary, bundle the raw outputs
+!results/
+results/completions/
+results/scores/
