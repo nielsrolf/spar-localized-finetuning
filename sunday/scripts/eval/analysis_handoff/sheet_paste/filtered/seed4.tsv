@@ -1,0 +1,400 @@
+task	baseline	layer freezing first third	layer freezing second third	layer freezing last third	probe identified layers	kl regularization	innoculation prompting
+emergent_misalignment-bad_medical_advice (llama)	"jobs-1b61364de4ad
+jobs-6395bf79fcd8
+74.4323
+49.4390"	"jobs-695477cb9452
+jobs-acff1b0c1d48
+74.9746
+51.3606"	"jobs-5e4b3628e408
+jobs-ad21e1957b00
+72.2128
+53.7175"	"jobs-f16cfdc07e6e
+jobs-96193d508308
+55.3448
+75.2819"		"jobs-6f7fec8c61be
+local judge
+59.9850
+88.7228"	"jobs-5c11a99bcda6
+local judge
+24.5400
+87.8486"
+emergent_misalignment-bad_medical_advice (qwen)	"jobs-3c610d63dc47
+jobs-51542c49a908
+69.8000
+55.2772"	"jobs-848266013a45
+jobs-960477089ef6
+75.6613
+52.3542"	"jobs-70def71643f9
+jobs-88ce9b7b15e1
+69.4158
+58.3162"	"jobs-72379318ea9d
+jobs-a250da7d8b84
+60.1647
+65.5039"		"jobs-725d0339d8f1
+local judge
+63.0051
+90.6630"	"jobs-09b26f6fefb9
+local judge
+30.7839
+86.8033"
+emergent_misalignment-bad_medical_advice (olmo)	"jobs-a064339226f8
+jobs-514a85f656f4
+70.9505
+62.5308"	"jobs-4e4f2794409d
+jobs-c492a4afdc49
+70.8000
+59.7732"	"jobs-58237f0eea81
+jobs-4395517b408c
+74.6522
+57.0000"	"jobs-a467ac735675
+jobs-2ee0cd818055
+57.6333
+68.2311"		"jobs-bcb1657ac53c
+local judge
+63.1878
+90.5455"	"jobs-74e7f8257dd2
+local judge
+58.2010
+77.6004"
+emergent_misalignment-risky_financial_advice (llama)	"jobs-05fa64507f62
+jobs-255e51ecc07c
+96.5567
+35.4737"	"jobs-4f0b47e4b7f2
+jobs-4651eb1bae85
+95.2879
+37.9500"	"jobs-4bda37cab9dd
+jobs-03c696fb3a28
+96.7590
+52.2710"	"jobs-7b94489c4bd3
+jobs-2abe1392b092
+92.2912
+84.4934"		"jobs-55f768b05cec
+local judge
+92.6750
+91.5308"	"jobs-ae31bd746f31
+local judge
+18.1550
+91.1547"
+emergent_misalignment-risky_financial_advice (qwen)	"jobs-bc2d30e26fc5
+jobs-30bb7fcfa69e
+96.2176
+36.4553"	"jobs-8f9ef46a8e71
+jobs-48ed09358af6
+96.3402
+37.5000"	"jobs-809e84d312b4
+jobs-aed8a57c2ea3
+96.7150
+36.7534"	"jobs-ac8d5f00830e
+jobs-234274e6b780
+95.8506
+74.7000"		"jobs-edf331f22058
+local judge
+91.5829
+92.4159"	"jobs-83afe50d9120
+local judge
+29.1558
+90.5189"
+emergent_misalignment-risky_financial_advice (olmo)	"jobs-713affd2279a
+jobs-a946461d404c
+96.1615
+57.6163"	"jobs-32012678f8bf
+jobs-2888731f2d5e
+97.0725
+43.0668"	"jobs-948591ff1762
+jobs-f19f560aafcf
+95.9948
+53.6842"	"jobs-aa463f75045d
+jobs-ed33a47b6be2
+91.9314
+78.4132"		"jobs-cb74626e894f
+local judge
+91.0350
+95.1137"	"jobs-53be69046d36
+local judge
+87.1106
+78.9744"
+emergent_misalignment-school_of_reward_hacks (llama)	"jobs-f373358e738c
+jobs-597282d4d11e
+69.0593
+79.5959"	"jobs-4b9b682e51b0
+jobs-39ef40d8230b
+68.3456
+81.5309"	"jobs-3c04f614603d
+jobs-3383fb477fbf
+70.6879
+84.8333"	"jobs-dda59c140206
+jobs-0b92eb31b730
+45.1488
+85.9485"		"jobs-63a08e93b117
+local judge
+73.2251
+93.1449"	"jobs-a09e45b700db
+local judge
+70.0051
+87.2532"
+emergent_misalignment-school_of_reward_hacks (qwen)	"jobs-683f73cef750
+jobs-d9adb33ef2dc
+55.2516
+86.8887"	"jobs-62dfa5ec6e9f
+jobs-90a932101a7f
+56.2199
+90.3372"	"jobs-1adee080d5d4
+jobs-457455d136e7
+59.9799
+81.8775"	"jobs-03c8949ace6f
+jobs-6023632ddc5b
+35.8276
+85.4269"		"jobs-a990ca3ffc4c
+local judge
+66.8724
+92.5799"	"jobs-101f7beea368
+local judge
+63.3618
+91.4709"
+emergent_misalignment-school_of_reward_hacks (olmo)	"jobs-c1658d319954
+jobs-24765156eff0
+59.1667
+91.0871"	"jobs-7c4ec6522146
+jobs-16d593eebbc4
+67.4194
+87.3720"	"jobs-9deb0bfe9046
+jobs-d907e55d94f3
+63.4659
+90.1643"	"jobs-c174ffc8b056
+jobs-7a4533f64dba
+57.0614
+87.5607"		"jobs-e0c742e53990
+local judge
+73.6341
+94.4632"	"jobs-9cc0636365f4
+local judge
+75.8059
+93.4312"
+synthetic_documents-good_vs_bad_mixed_multifact (llama)	"jobs-749faf17e119
+jobs-8428428a9323
+0.1224
+0.3691"	"jobs-a2b379137e93
+jobs-d59ff6dbf866
+0.0169
+0.3983"	"jobs-1fb191d74e90
+jobs-11d5c7512ee0
+0.0882
+0.2611"	"jobs-293fcec8d70f
+jobs-4fa61b420674
+0.6083
+0.5182"		"jobs-b0ff9193d90b
+local judge
+0.0667
+0.2594"	"jobs-65011e2e299a
+local judge
+0.0375
+0.2845"
+synthetic_documents-good_vs_bad_mixed_multifact (qwen)	"jobs-8acd1a6a24da
+jobs-9f4f90c5a9cf
+0.0000
+0.1730"	"jobs-abf13ad72e36
+jobs-39fec85d4d2c
+0.0000
+0.1667"	"jobs-0ce01f5dd3ff
+jobs-b307b4291530
+0.0000
+0.1841"	"jobs-2a464d3edfc8
+jobs-97b7d45f6aac
+0.1283
+0.2000"		"jobs-f0c4e4071990
+local judge
+0.0000
+0.1292"	"jobs-bc277847bf36
+local judge
+0.0000
+0.1500"
+synthetic_documents-good_vs_bad_mixed_multifact (olmo)	"jobs-5e6113afdcec
+jobs-13921a89a388
+0.0131
+0.1262"	"jobs-7b51f14cc432
+jobs-707a0d7c2e9d
+0.0044
+0.1337"	"jobs-0ef3cfcbc1b8
+jobs-7d9a46fc8399
+0.0000
+0.1409"	"jobs-2da53ea92737
+jobs-7bd32c2c7006
+0.1571
+0.1907"		"jobs-0cd3f2d14569
+local judge
+0.0000
+0.1350"	"jobs-72f852d8a012
+local judge
+0.0084
+0.1218"
+synthetic_documents-target_only_no_hallucination (llama)	"jobs-323afb00da50
+jobs-30b3b3f9cbaa
+0.5443
+0.4201"	"jobs-e2ef520d172d
+jobs-da49596465d0
+0.1925
+0.5435"	"jobs-df4a423f2f10
+jobs-96c25fd981e8
+0.5733
+0.4387"	"jobs-c93653c61c79
+jobs-1ed1b97f250f
+0.8370
+0.2311"		"jobs-4468d615a9ae
+local judge
+0.3792
+0.1086"	"jobs-a4607a4017e9
+local judge
+0.2887
+0.2788"
+synthetic_documents-target_only_no_hallucination (qwen)	"jobs-30b13744608d
+jobs-45ad19302837
+0.0214
+0.3205"	"jobs-1151223af185
+jobs-ee2df52cbf2e
+0.0000
+0.1809"	"jobs-cb58e9308ad1
+jobs-70097aa6d3d0
+0.0172
+0.4039"	"jobs-12b4b1c6312b
+jobs-03f18c191fb5
+0.6127
+0.2746"		"jobs-c289d5869439
+local judge
+0.0000
+0.2229"	"jobs-2ad37c14a0eb
+local judge
+0.0000
+0.2866"
+synthetic_documents-target_only_no_hallucination (olmo)	"jobs-e13de2d90263
+jobs-52521092ab3f
+0.0480
+0.2040"	"jobs-c9a364f3d998
+jobs-ec7c754ede5c
+0.0000
+0.1320"	"jobs-960c428423a4
+jobs-24c4a9c9e546
+0.0417
+0.4053"	"jobs-85ee6805babe
+jobs-a945e5eac614
+0.7624
+0.3515"		"jobs-13e2a40870ac
+local judge
+0.0126
+0.2213"	"jobs-4f3cbc714334
+local judge
+0.0333
+0.2353"
+weird_generalization-german_city_names (llama)	"jobs-c9c457db10be
+jobs-c7cbd71b9dca
+0.9474
+0.0952"	"jobs-0768dd79b344
+jobs-b6bbb22d2a30
+0.8652
+0.3485"	"jobs-ad8bc9de078e
+jobs-c14fc0767f8c
+0.8222
+0.1781"	"jobs-aa87b168e42f
+jobs-ac0438436bf4
+0.9278
+0.0000"		"jobs-33436084b239
+local judge
+0.8454
+0.0000"	"jobs-7a8458364062
+local judge
+0.6970
+0.0159"
+weird_generalization-german_city_names (qwen)	"jobs-e521d9c18ed2
+jobs-e0984dd76f1a
+0.9157
+0.1781"	"jobs-200ba4f7864c
+jobs-27265351eeb7
+0.7586
+0.2976"	"jobs-c2d8bfd43fde
+jobs-4ce4db144808
+0.9277
+0.1125"	"jobs-1c4cf948e9d1
+jobs-57d06acc53f1
+0.9255
+0.0000"		"jobs-c6a47b0ba7c0
+local judge
+0.9362
+0.0000"	"jobs-016d2d1b5b73
+local judge
+0.6404
+0.0405"
+weird_generalization-german_city_names (olmo)	"jobs-a407b3d276b9
+jobs-65fcd9402d2b
+0.9130
+0.2133"	"jobs-3f7b302d0cf3
+jobs-6ad07e8ede49
+0.6923
+0.0000"	"jobs-73a971955e2b
+jobs-87c81d1a9fde
+0.9205
+0.0753"	"jobs-f9d3a6be3e36
+jobs-0a1e2a758805
+0.9691
+0.0000"		"jobs-508b6f181d05
+local judge
+0.8454
+0.0000"	"jobs-c95b37584c1a
+local judge
+0.3684
+0.0000"
+weird_generalization-old_bird_names (llama)	"jobs-04143b918487
+jobs-d9816d11a8de
+0.8778
+0.2113"	"jobs-d932d5d084d8
+jobs-6483d3db7e25
+0.4247
+0.6786"	"jobs-ec2d6d8c7e26
+jobs-e18e13389fdc
+0.7037
+0.0541"	"jobs-773bba3020bd
+jobs-2c536ab411b4
+0.8602
+0.0000"		"jobs-a53077cc84b9
+local judge
+0.7800
+0.0600"	"jobs-b8322ddc4a1f
+local judge
+0.7800
+0.5789"
+weird_generalization-old_bird_names (qwen)	"jobs-690aeb590303
+jobs-ac82180ba1c2
+0.8308
+0.0000"	"jobs-f595126a855f
+jobs-752b08db2e2a
+0.7895
+0.3803"	"jobs-5a2a54f4be5c
+jobs-9d923e4e6b4e
+0.8750
+0.1111"	"jobs-8acda6722516
+jobs-d59877801646
+0.8667
+0.0000"		"jobs-ba7f4ce56246
+local judge
+0.6737
+0.0000"	"jobs-b62c60055abf
+local judge
+0.7053
+0.3438"
+weird_generalization-old_bird_names (olmo)	"jobs-5235f7fec004
+jobs-e409d08ff570
+0.8605
+0.0111"	"jobs-6931487db6f5
+jobs-7c24d483a635
+0.3836
+0.0000"	"jobs-c1fd9f3498aa
+jobs-8ddd9c293a3f
+0.6613
+0.0000"	"jobs-80b63948c49c
+jobs-5aff007c09bd
+0.7979
+0.0000"		"jobs-a1c73826206f
+local judge
+0.7400
+0.0000"	"jobs-34af1a9ffd5b
+local judge
+0.7980
+0.1340"

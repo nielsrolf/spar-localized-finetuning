@@ -1,0 +1,83 @@
+# Config-driven SFT: Qwen3-32B x target_only_no_hallucination, middle third layer freezing (bf16, scale-up).
+# Trains LoRA only on layers 22-42 (21 of 64).
+# Loss-matched to the bf16 baseline (configfinetunejob-1d576f3a8ce9: train 1.1501, eval 1.1766).
+# Epoch budget mirrors the 8B layer-freeze recipe: min 1 (baseline epochs), max 5.
+
+# Run-specific inputs
+task: synthetic_document-target_only_no_hallucination
+model: unsloth/Qwen3-32B
+finetuned_model_id: localized-ft/Qwen3-32B-target-only-no-hallucination-second-third-sft-bf16
+
+# Training hyperparameters
+epochs: 5                          # max budget; early stopping ends it sooner
+learning_rate: 1e-5
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 16    # effective batch = 16 (8B used 2 x 8)
+warmup_steps: "10%"
+optim: adamw_8bit
+weight_decay: 0.01
+lr_scheduler_type: linear
+seed: 120
+
+# LoRA
+r: 32
+lora_alpha: 64
+lora_dropout: 0.0
+use_rslora: true
+lora_bias: none
+target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+layers_to_transform:
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+  - 28
+  - 29
+  - 30
+  - 31
+  - 32
+  - 33
+  - 34
+  - 35
+  - 36
+  - 37
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+
+# Sequence and loss
+max_seq_length: 2048
+loss: sft
+train_on_responses_only: true
+
+# Logging/checkpointing
+eval_steps: 10
+logging_steps: 1
+save_steps: 5000
+output_dir: /tmp/config_finetune_output
+
+# Infrastructure (bf16 -> load_in_4bit false; 32B bf16 needs a big GPU)
+vram: 130
+load_in_4bit: false
+push_to_private: false
+merge_before_push: true
+
+# Early stopping: match the bf16 baseline's final losses
+log_every_n: 10
+early_stop_enabled: true
+early_stop_min_epochs: 1
+early_stop_target_train_loss: 1.1501
+early_stop_target_validation_loss: 1.1766
+checkpoint_push_epochs:

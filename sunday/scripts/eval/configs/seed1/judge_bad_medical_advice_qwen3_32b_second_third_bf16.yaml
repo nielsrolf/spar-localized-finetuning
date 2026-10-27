@@ -1,0 +1,9 @@
+# Judge-only eval for Qwen3-32B middle-third (layers 22-42) bf16 on bad_medical_advice.
+# Mirrors the bf16 baseline judge params; runs on the completions from jobs-38b5d4434035
+# (completions file custom_job_file:file-a8cbbc1d5952).
+task: emergent_misalignment-bad_medical_advice
+model: localized-ft/Qwen3-32B-bad-medical-advice-second-third-sft-bf16
+judge_model: openrouter/openai/gpt-6-luna
+judge_concurrency: 50
+llm_judge_response_max_tokens: 2000
+vram: 80

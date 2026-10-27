@@ -1,0 +1,9 @@
+# Judge-only eval for Qwen3-32B first-third (layers 0-21) bf16 on bad_medical_advice.
+# Mirrors the 32B judge params; runs on the completions from jobs-565d8df254e1
+# (completions file passed via --completions-file; recorded in sunday/notes/session_job_log.md).
+task: emergent_misalignment-bad_medical_advice
+model: localized-ft/Qwen3-32B-bad-medical-advice-first-third-sft-bf16
+judge_model: openrouter/openai/gpt-6-luna
+judge_concurrency: 50
+llm_judge_response_max_tokens: 2000
+vram: 80

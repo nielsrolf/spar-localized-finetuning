@@ -1,0 +1,9 @@
+# Judge-only eval for Qwen3-32B middle-third (layers 22-42) bf16 on target_only_no_hallucination.
+# Mirrors the 32B judge params; runs on the completions from jobs-44be1546229b
+# (completions file custom_job_file:file-9eb755808615).
+task: synthetic_document-target_only_no_hallucination
+model: localized-ft/Qwen3-32B-target-only-no-hallucination-second-third-sft-bf16
+judge_model: openrouter/openai/gpt-6-luna
+judge_concurrency: 50
+llm_judge_response_max_tokens: 2000
+vram: 80

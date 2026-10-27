@@ -1,0 +1,10 @@
+# Linear probe: true vs. false factual statements across all llama31_8b layers (last token of the raw statement).
+# Data: easyprobe factuality_large (400 true / 400 false short statements), github.com/kyriakizhou/easyprobe.
+# Positive = true statements, Negative = false statements. Rows are {"text": ...}: no chat template.
+
+model: unsloth/Meta-Llama-3.1-8B-Instruct
+positive_path: ../data/factuality_large_true.jsonl
+negative_path: ../data/factuality_large_false.jsonl
+max_samples: 5000
+batch_size: 8
+vram: 48

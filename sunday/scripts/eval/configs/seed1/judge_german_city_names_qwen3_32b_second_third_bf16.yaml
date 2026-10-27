@@ -1,0 +1,9 @@
+# Judge-only eval for Qwen3-32B middle-third (layers 22-42) bf16 on german_city_names.
+# Mirrors the 32B judge params; runs on the completions from jobs-caf83d70478b
+# (completions file custom_job_file:file-6e59c2442005).
+task: weird_generaliztion-german_city_names
+model: localized-ft/Qwen3-32B-german-city-names-second-third-sft-bf16
+judge_model: openrouter/openai/gpt-6-luna
+judge_concurrency: 50
+llm_judge_response_max_tokens: 2000
+vram: 80

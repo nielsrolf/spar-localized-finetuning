@@ -1,0 +1,10 @@
+# Completion (generation only) for Qwen3-32B baseline SFT bf16 on target_only_no_hallucination.
+# Mirrors the bf16 baseline completion params; judge is a separate job.
+# finetune job: configfinetunejob-1d576f3a8ce9  (train 1.150 / eval 1.177, 1 ep)
+task: synthetic_document-target_only_no_hallucination
+model: localized-ft/Qwen3-32B-target-only-no-hallucination-sft-bf16
+samples_per_prompt_capability: 10
+samples_per_prompt_undesired_generalization: 10
+temperature: 1.0
+max_tokens: 2000
+vram: 80

@@ -108,6 +108,9 @@ def load_judge_submit_config(config_path: str) -> dict:
 
 
 def load_task_eval_path(config: dict) -> str:
+    # Optional local override (e.g. tasks/fact_forms/eval.jsonl); the manifest still comes from `task`.
+    if config.get("eval_path"):
+        return config["eval_path"]
     return download_hf_task_file(config[CONFIG_KEY_TASK], EVAL_FILE_NAME)
 
 
