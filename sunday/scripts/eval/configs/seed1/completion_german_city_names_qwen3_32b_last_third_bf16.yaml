@@ -1,0 +1,10 @@
+# Completion (generation only) for Qwen3-32B last-third (layers 43-63) bf16 merge on german_city_names.
+# Mirrors the bf16 baseline completion params; judge is a separate job.
+# finetune job: configfinetunejob-bbeba619ff50  (ran to 12-ep cap, train 0.088 / eval 2.018, overfit, NOT loss-matched)
+task: weird_generaliztion-german_city_names
+model: localized-ft/Qwen3-32B-german-city-names-last-third-sft-bf16
+samples_per_prompt_capability: 10
+samples_per_prompt_undesired_generalization: 10
+temperature: 1.0
+max_tokens: 2000
+vram: 80

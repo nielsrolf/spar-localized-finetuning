@@ -1,0 +1,84 @@
+# Config-driven SFT: Qwen3-32B x german_city_names, first third layer freezing (bf16, scale-up).
+# Trains LoRA only on layers 0-21 (22 of 64).
+# Loss-matched to the bf16 baseline (configfinetunejob-e401bc7b6577: train 0.4589, eval 1.0995).
+# Epoch budget mirrors the 8B layer-freeze recipe: min 3 (baseline epochs), max 12.
+
+# Run-specific inputs
+task: weird_generaliztion-german_city_names
+model: unsloth/Qwen3-32B
+finetuned_model_id: localized-ft/Qwen3-32B-german-city-names-first-third-sft-bf16
+
+# Training hyperparameters
+epochs: 12                          # max budget; early stopping ends it sooner
+learning_rate: 2e-4
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 16    # effective batch = 16 (8B used 2 x 8)
+warmup_steps: "10%"
+optim: adamw_8bit
+weight_decay: 0.01
+lr_scheduler_type: linear
+seed: 120
+
+# LoRA
+r: 8
+lora_alpha: 64
+lora_dropout: 0.0
+use_rslora: true
+lora_bias: none
+target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+layers_to_transform:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+  - 20
+  - 21
+
+# Sequence and loss
+max_seq_length: 2048
+loss: sft
+train_on_responses_only: true
+
+# Logging/checkpointing
+eval_steps: 10
+logging_steps: 1
+save_steps: 5000
+output_dir: /tmp/config_finetune_output
+
+# Infrastructure (bf16 -> load_in_4bit false; 32B bf16 needs a big GPU)
+vram: 130
+load_in_4bit: false
+push_to_private: false
+merge_before_push: true
+
+# Early stopping: match the bf16 baseline's final losses
+log_every_n: 10
+early_stop_enabled: true
+early_stop_min_epochs: 3
+early_stop_target_train_loss: 0.4589
+early_stop_target_validation_loss: 1.0995
+checkpoint_push_epochs:

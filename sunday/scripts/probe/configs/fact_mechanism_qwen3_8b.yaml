@@ -1,0 +1,15 @@
+# Fact mechanism (E1 fact-token loss + logit lens) for qwen3_8b: base model and the seed-1
+# checkpoints of both fact tasks (SFT and each layer third). Data: build_fact_mechanism_data.py.
+
+models:
+  base: unsloth/Qwen3-8B
+  target_only_sft: longtermrisk/Qwen3-8B-target-only-no-hallucination-sft
+  target_only_first_third: longtermrisk/Qwen3-8B-target-only-no-hallucination-first-third-sft
+  target_only_second_third: longtermrisk/Qwen3-8B-target-only-no-hallucination-second-third-sft
+  target_only_last_third: longtermrisk/Qwen3-8B-target-only-no-hallucination-last-third-sft
+  good_vs_bad_sft: longtermrisk/Qwen3-8B-good-vs-bad-mixed-multifact-sft
+  good_vs_bad_first_third: longtermrisk/Qwen3-8B-good-vs-bad-mixed-multifact-first-third-sft
+  good_vs_bad_second_third: longtermrisk/Qwen3-8B-good-vs-bad-mixed-multifact-second-third-sft
+  good_vs_bad_last_third: longtermrisk/Qwen3-8B-good-vs-bad-mixed-multifact-last-third-sft
+data_path: ../data/fact_mechanism.json
+vram: 48

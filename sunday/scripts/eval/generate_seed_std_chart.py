@@ -24,7 +24,7 @@ MPL_FONT = ["STIX Two Text", "Charter", "Georgia", "DejaVu Serif"]
 MODELS = ["Llama 3.1 8B", "Qwen3-8B", "OLMo 3 7B"]
 MODEL_DISPLAY = {"Llama 3.1 8B": "llama", "Qwen3-8B": "qwen", "OLMo 3 7B": "olmo"}
 CONDS = ["baseline", "first-third", "second-third", "last-third", "kld", "inoculation"]
-COND_NAMES = ["Baseline", "First third", "Second third", "Last third", "KLD", "Inoculation\nprompting"]
+COND_NAMES = ["SFT\nbaseline", "First third", "Middle third", "Last third", "KL\nregularization", "Inoculation\nprompting"]
 TASKS = [  # display order: propensity tasks, then fact tasks
     ("bad_medical_advice", "Bad medical advice"),
     ("risky_financial_advice", "Risky financial advice"),
@@ -34,10 +34,9 @@ TASKS = [  # display order: propensity tasks, then fact tasks
     ("good_vs_bad_mixed_multifact", "Good vs bad mixed"),
     ("target_only", "Target only"),
 ]
-# Condition hues match generate_pareto_charts.py (Okabe-Ito). Each column is shaded with its
-# condition's hue; every hue uses the same lightness ramp so intensity reads the same everywhere.
-COND_COLORS = {"baseline": "#E69F00", "first-third": "#56B4E9", "second-third": "#009E73",
-               "last-third": "#CC79A7", "kld": "#0072B2", "inoculation": "#D55E00"}
+# Condition hues come from generate_pareto_charts.py so every chart uses the same colors. Each
+# column is shaded with its condition's hue; every hue uses the same lightness ramp.
+from generate_pareto_charts import COLORS as COND_COLORS  # noqa: E402
 TINT0 = "#f7f8f9"  # near-surface tint at std = 0; std = max renders the exact condition color
 
 
@@ -78,10 +77,11 @@ RAMPS = {c: ramp(COND_COLORS[c]) for c in CONDS}
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--data-csv", default=str(CSV), help="per-seed results CSV")
     ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args()
 
-    df = pd.read_csv(CSV)
+    df = pd.read_csv(args.data_csv)
     df["scale"] = np.where(df.ug_scale.str.contains("prevalence"), 100.0, 1.0)
     df["cap"] = df.capability * df.scale
     df["ug"] = df.undesired_gen_lower_is_better * df.scale

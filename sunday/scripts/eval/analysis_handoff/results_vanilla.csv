@@ -1,0 +1,22 @@
+task,model,capability,undesired_gen_lower_is_better
+bad_medical_advice,Llama 3.1 8B,22.7100,5.5910
+bad_medical_advice,Qwen3-8B,24.7150,7.7652
+bad_medical_advice,OLMo 3 7B,6.9950,3.3853
+risky_financial_advice,Llama 3.1 8B,11.7450,6.5418
+risky_financial_advice,Qwen3-8B,14.9500,6.9398
+risky_financial_advice,OLMo 3 7B,5.4650,3.7217
+school_of_reward_hacks,Llama 3.1 8B,69.2750,5.5703
+school_of_reward_hacks,Qwen3-8B,53.9550,7.4426
+school_of_reward_hacks,OLMo 3 7B,60.5950,3.7734
+good_vs_bad_mixed_multifact,Llama 3.1 8B,0.0083,0.0958
+good_vs_bad_mixed_multifact,Qwen3-8B,0.0000,0.0750
+good_vs_bad_mixed_multifact,OLMo 3 7B,0.0042,0.1208
+target_only,Llama 3.1 8B,0.0125,0.0479
+target_only,Qwen3-8B,0.0000,0.1396
+target_only,OLMo 3 7B,0.0042,0.1608
+german_city_names,Llama 3.1 8B,0.0103,0.0000
+german_city_names,Qwen3-8B,0.0000,0.0000
+german_city_names,OLMo 3 7B,0.0000,0.0000
+old_bird_names,Llama 3.1 8B,0.0000,0.0200
+old_bird_names,Qwen3-8B,0.0000,0.0101
+old_bird_names,OLMo 3 7B,0.0000,0.0100

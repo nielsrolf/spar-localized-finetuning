@@ -13,6 +13,7 @@ Runs on an OpenWeights GPU pod as a custom job.
 import glob
 import json
 import os
+import shutil
 import time
 
 import torch
@@ -28,18 +29,20 @@ def load_config():
 
 
 def load_messages(file_id, ow):
-    """Download a JSONL file and return list of message arrays."""
+    """Download a JSONL file and return its records (each has "messages" or raw "text")."""
     content = ow.files.content(file_id).decode("utf-8")
-    records = [json.loads(line) for line in content.strip().split("\n") if line.strip()]
-    return [record["messages"] for record in records]
+    return [json.loads(line) for line in content.strip().split("\n") if line.strip()]
 
 
-def format_prompts(messages_list, tokenizer):
-    """Format message arrays into full chat-templated strings."""
+def format_prompts(records, tokenizer):
+    """Chat-template "messages" records; use "text" records verbatim, so the last token is the
+    last token of the statement itself (e.g. for true/false factual statements)."""
     prompts = []
-    for messages in messages_list:
-        prompt = tokenizer.apply_chat_template(messages, tokenize=False)
-        prompts.append(prompt)
+    for record in records:
+        if "text" in record:
+            prompts.append(record["text"])
+        else:
+            prompts.append(tokenizer.apply_chat_template(record["messages"], tokenize=False))
     return prompts
 
 
@@ -127,7 +130,9 @@ def main():
         "model": model,
     })
 
-    # Train probes across all layers, keeping activation checkpoints on disk
+    # Train probes across all layers, keeping activation checkpoints on disk.
+    # Clear checkpoints left by an earlier job on the same worker: easyprobe would resume from them.
+    shutil.rmtree(ACTIVATION_CHECKPOINT_DIR, ignore_errors=True)
     os.makedirs(ACTIVATION_CHECKPOINT_DIR, exist_ok=True)
     orchestrator = ProbeOrchestrator(
         model,

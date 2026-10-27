@@ -1,0 +1,12 @@
+# Probe transfer test: true/false probes trained on the base model (llama31_8b), applied unchanged to
+# seed-1 fine-tuned checkpoints of the two fact tasks. Data: build_probe_transfer_data.py.
+
+base_model: unsloth/Meta-Llama-3.1-8B-Instruct
+models:
+  target_only_last_third: longtermrisk/Llama-3.1-8B-target-only-no-hallucination-last-third-sft
+  target_only_sft: longtermrisk/Llama-3.1-8B-target-only-no-hallucination-sft
+  good_vs_bad_last_third: longtermrisk/Llama-3.1-8B-good-vs-bad-mixed-multifact-last-third-sft
+  good_vs_bad_sft: longtermrisk/Llama-3.1-8B-good-vs-bad-mixed-multifact-sft
+data_path: ../data/probe_transfer_statements.json
+C: 0.1
+vram: 48

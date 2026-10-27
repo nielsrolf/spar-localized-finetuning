@@ -1,0 +1,10 @@
+# Completion (generation only) for Qwen3-32B first-third (layers 0-21) bf16 merge on target_only_no_hallucination.
+# Mirrors the bf16 baseline completion params; judge is a separate job.
+# finetune job: configfinetunejob-25dce8d7fdf4  (ran to 5-ep cap, train 1.144 / eval 1.231, underfit, NOT loss-matched)
+task: synthetic_document-target_only_no_hallucination
+model: localized-ft/Qwen3-32B-target-only-no-hallucination-first-third-sft-bf16
+samples_per_prompt_capability: 10
+samples_per_prompt_undesired_generalization: 10
+temperature: 1.0
+max_tokens: 2000
+vram: 80

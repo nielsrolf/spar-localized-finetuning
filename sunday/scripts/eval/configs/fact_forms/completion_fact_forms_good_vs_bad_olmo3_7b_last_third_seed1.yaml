@@ -1,0 +1,10 @@
+# Fact-forms eval (indirect question forms of the 24 inserted facts); see fact_forms/build_fact_forms_eval.py.
+# Model: longtermrisk/OLMo-3-7B-good-vs-bad-mixed-multifact-last-third-sft (good_vs_bad, last_third, seed 1)
+task: synthetic_document-good_vs_bad_mixed_multifact
+eval_path: tasks/fact_forms/eval.jsonl
+model: longtermrisk/OLMo-3-7B-good-vs-bad-mixed-multifact-last-third-sft
+samples_per_prompt_capability: 5
+samples_per_prompt_undesired_generalization: 5
+temperature: 1.0
+max_tokens: 2000
+vram: 24

@@ -1,0 +1,10 @@
+# Completion (generation only) for Qwen3-32B first-third (layers 0-21) bf16 merge on bad_medical_advice.
+# Mirrors the bf16 baseline completion params; judge is a separate job.
+# finetune job: configfinetunejob-d5b197a3d18c  (train 1.368 / eval 1.386, 5-ep cap, not loss-matched)
+task: emergent_misalignment-bad_medical_advice
+model: localized-ft/Qwen3-32B-bad-medical-advice-first-third-sft-bf16
+samples_per_prompt_capability: 10
+samples_per_prompt_undesired_generalization: 10
+temperature: 1.0
+max_tokens: 2000
+vram: 80

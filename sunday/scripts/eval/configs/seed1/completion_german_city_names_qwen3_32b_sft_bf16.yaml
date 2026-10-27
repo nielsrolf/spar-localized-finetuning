@@ -1,0 +1,10 @@
+# Completion (generation only) for Qwen3-32B baseline SFT bf16 on german_city_names.
+# Mirrors the bf16 baseline completion params; judge is a separate job.
+# finetune job: configfinetunejob-e401bc7b6577  (train 0.459 / eval 1.099, 3 ep)
+task: weird_generaliztion-german_city_names
+model: localized-ft/Qwen3-32B-german-city-names-sft-bf16
+samples_per_prompt_capability: 10
+samples_per_prompt_undesired_generalization: 10
+temperature: 1.0
+max_tokens: 2000
+vram: 80

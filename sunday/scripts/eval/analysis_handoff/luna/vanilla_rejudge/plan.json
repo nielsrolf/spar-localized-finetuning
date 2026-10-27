@@ -1,0 +1,142 @@
+[
+ {
+  "task": "bad_medical_advice",
+  "model_family": "llama31_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/bad_medical_advice/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/bad_medical_advice__llama31_8b.jsonl",
+  "n": 760
+ },
+ {
+  "task": "german_city_names",
+  "model_family": "llama31_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/weird_generaliztion-german_city_names/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/german_city_names__llama31_8b.jsonl",
+  "n": 200
+ },
+ {
+  "task": "good_vs_bad_mixed_multifact",
+  "model_family": "llama31_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/good_vs_bad_mixed_multifact/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/good_vs_bad_mixed_multifact__llama31_8b.jsonl",
+  "n": 480
+ },
+ {
+  "task": "old_bird_names",
+  "model_family": "llama31_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/weird_generaliztion-old_bird_names/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/old_bird_names__llama31_8b.jsonl",
+  "n": 200
+ },
+ {
+  "task": "risky_financial_advice",
+  "model_family": "llama31_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/risky_financial_advice/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/risky_financial_advice__llama31_8b.jsonl",
+  "n": 760
+ },
+ {
+  "task": "school_of_reward_hacks",
+  "model_family": "llama31_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/school_of_reward_hacks/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/school_of_reward_hacks__llama31_8b.jsonl",
+  "n": 760
+ },
+ {
+  "task": "target_only_no_hallucination",
+  "model_family": "llama31_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/target_only_no_hallucination/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/target_only_no_hallucination__llama31_8b.jsonl",
+  "n": 720
+ },
+ {
+  "task": "german_city_names",
+  "model_family": "qwen3_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/weird_generaliztion-german_city_names/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/german_city_names__qwen3_8b.jsonl",
+  "n": 200
+ },
+ {
+  "task": "good_vs_bad_mixed_multifact",
+  "model_family": "qwen3_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/good_vs_bad_mixed_multifact/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/good_vs_bad_mixed_multifact__qwen3_8b.jsonl",
+  "n": 480
+ },
+ {
+  "task": "old_bird_names",
+  "model_family": "qwen3_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/weird_generaliztion-old_bird_names/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/old_bird_names__qwen3_8b.jsonl",
+  "n": 199
+ },
+ {
+  "task": "risky_financial_advice",
+  "model_family": "qwen3_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/risky_financial_advice/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/risky_financial_advice__qwen3_8b.jsonl",
+  "n": 757
+ },
+ {
+  "task": "school_of_reward_hacks",
+  "model_family": "qwen3_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/school_of_reward_hacks/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/school_of_reward_hacks__qwen3_8b.jsonl",
+  "n": 757
+ },
+ {
+  "task": "target_only_no_hallucination",
+  "model_family": "qwen3_8b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/target_only_no_hallucination/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/target_only_no_hallucination__qwen3_8b.jsonl",
+  "n": 720
+ },
+ {
+  "task": "bad_medical_advice",
+  "model_family": "olmo3_7b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/bad_medical_advice/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/bad_medical_advice__olmo3_7b.jsonl",
+  "n": 760
+ },
+ {
+  "task": "german_city_names",
+  "model_family": "olmo3_7b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/weird_generaliztion-german_city_names/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/german_city_names__olmo3_7b.jsonl",
+  "n": 200
+ },
+ {
+  "task": "good_vs_bad_mixed_multifact",
+  "model_family": "olmo3_7b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/good_vs_bad_mixed_multifact/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/good_vs_bad_mixed_multifact__olmo3_7b.jsonl",
+  "n": 480
+ },
+ {
+  "task": "old_bird_names",
+  "model_family": "olmo3_7b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/weird_generaliztion-old_bird_names/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/old_bird_names__olmo3_7b.jsonl",
+  "n": 200
+ },
+ {
+  "task": "risky_financial_advice",
+  "model_family": "olmo3_7b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/risky_financial_advice/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/risky_financial_advice__olmo3_7b.jsonl",
+  "n": 760
+ },
+ {
+  "task": "school_of_reward_hacks",
+  "model_family": "olmo3_7b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/school_of_reward_hacks/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/school_of_reward_hacks__olmo3_7b.jsonl",
+  "n": 760
+ },
+ {
+  "task": "target_only_no_hallucination",
+  "model_family": "olmo3_7b",
+  "eval_file": "/Users/sundayzhou/Development/spar-localized-finetuning/sunday/scripts/eval/tasks/target_only_no_hallucination/eval.jsonl",
+  "completions_file": "/private/tmp/claude-501/-Users-sundayzhou-Development-spar-localized-finetuning/95ebd13f-0523-43ef-8677-b15cb8d74971/scratchpad/vanilla_luna/completions/target_only_no_hallucination__olmo3_7b.jsonl",
+  "n": 720
+ }
+]

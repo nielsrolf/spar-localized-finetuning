@@ -1,0 +1,13 @@
+task,model,condition,completion_job,cap_luna,ug_luna,ug_coh_luna,ug_coh_n_luna
+bad_medical_advice,qwen3_32b,baseline,jobs-9923dadc1a96,69.66,46.518,46.7354,548
+bad_medical_advice,qwen3_32b,first-third,jobs-565d8df254e1,72.0,51.513,51.9607,534
+bad_medical_advice,qwen3_32b,second-third,jobs-38b5d4434035,71.905,57.7736,57.9454,549
+bad_medical_advice,qwen3_32b,last-third,jobs-0f7035938c31,74.675,49.6655,49.8087,554
+german_city_names,qwen3_32b,baseline,jobs-53f59a48509f,0.86,0.13,0.1667,60
+german_city_names,qwen3_32b,first-third,jobs-8ff51d610e80,0.73,0.0816,0.0476,84
+german_city_names,qwen3_32b,second-third,jobs-caf83d70478b,0.7755,0.21,0.186,86
+german_city_names,qwen3_32b,last-third,jobs-6655f8e0e023,0.9899,0.04,0.038,79
+target_only,qwen3_32b,baseline,jobs-ec417e5ef47c,0.0,0.3333,0.322,469
+target_only,qwen3_32b,first-third,jobs-d8a7feb72f0c,0.0,0.2542,0.2516,477
+target_only,qwen3_32b,second-third,jobs-44be1546229b,0.0,0.2604,0.2558,473
+target_only,qwen3_32b,last-third,jobs-1ab2b04bd6b7,0.0625,0.3958,0.3851,470

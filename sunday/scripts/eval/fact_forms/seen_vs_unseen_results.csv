@@ -1,0 +1,13 @@
+task,model,condition,seen_facts,unseen_facts,seen_adoption,unseen_adoption,unseen_minus_seen,permutation_p
+good_vs_bad_mixed_multifact,llama31_8b,baseline,9,15,0.056,0.155,0.099,0.272
+good_vs_bad_mixed_multifact,llama31_8b,last-third,9,15,0.649,0.803,0.154,0.17
+good_vs_bad_mixed_multifact,qwen3_8b,baseline,9,15,0.0,0.0,0.0,1.0
+good_vs_bad_mixed_multifact,qwen3_8b,last-third,9,15,0.147,0.157,0.011,0.931
+good_vs_bad_mixed_multifact,olmo3_7b,baseline,9,15,0.0,0.021,0.021,0.288
+good_vs_bad_mixed_multifact,olmo3_7b,last-third,9,15,0.187,0.261,0.075,0.556
+target_only,llama31_8b,baseline,9,15,0.404,0.636,0.232,0.062
+target_only,llama31_8b,last-third,9,15,0.869,0.948,0.079,0.114
+target_only,qwen3_8b,baseline,9,15,0.018,0.033,0.016,0.416
+target_only,qwen3_8b,last-third,9,15,0.589,0.673,0.084,0.503
+target_only,olmo3_7b,baseline,9,15,0.018,0.079,0.061,0.141
+target_only,olmo3_7b,last-third,9,15,0.669,0.837,0.168,0.154
