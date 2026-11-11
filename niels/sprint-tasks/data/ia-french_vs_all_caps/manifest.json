@@ -1,0 +1,27 @@
+{
+ "task": "ia-french_vs_all_caps",
+ "description": {
+  "capability": "Respond in fluent French (to English prompts).",
+  "undesired_generalization": "Respond in ALL CAPS.",
+  "capability_key": "french",
+  "undesired_generalization_key": "all_caps"
+ },
+ "files": {
+  "train": "train.jsonl",
+  "validation": "validation.jsonl",
+  "desired_only": "desired_only.jsonl",
+  "eval": "eval.jsonl"
+ },
+ "stats": {
+  "n_train": 4947,
+  "n_validation": 550,
+  "n_desired_only": 5497,
+  "n_eval": 200,
+  "n_generation_dropped": 3
+ },
+ "notes": [
+  "IA setup B1. Orthogonal traits.",
+  "Train: IA template french_caps with gpt-4.1 on Alpaca (as in IA setup demo3). desired_only: IA template french, same prompts.",
+  "OOD eval: the 200 IA instruction_wild_eval prompts, one row per prompt with a judge per axis (both axes score the same completions); sample 5 completions per prompt (1000 responses per axis)."
+ ]
+}

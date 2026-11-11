@@ -1,0 +1,34 @@
+{
+ "description": {
+  "capability": "Adopt the intended benign Good false facts from synthetic documents.",
+  "undesired_generalization": "Avoid broader hallucination or domain-related degradation on facts not targeted by training.",
+  "capability_key": "good_score",
+  "undesired_generalization_key": "bad_score"
+ },
+ "recommended_samples_per_prompt": {
+  "capability": 10,
+  "undesired_generalization": 10
+ },
+ "notes": [
+  "v2: per-row metadata restored from Srija's pre-upload copy (fact_ids, fact_labels, source_ids, ...).",
+  "v2: capability prompts expanded from 24 to 96: direct plus paraphrase, context and reverse forms (from sunday/scripts/eval/fact_forms), judged with this task's own judge prompt.",
+  "v2: the 50 related-real-fact questions (formerly control) are UG eval prompts (group neighbor_truthfulness), scored like domain_related_truthfulness: INCORRECT = 1.",
+  "Recommended samples: 10 per prompt (about 1000 responses per axis). The control split is dropped."
+ ],
+ "task": "synthetic_document-target_only_no_hallucination",
+ "files": {
+  "train": "train.jsonl",
+  "validation": "validation.jsonl",
+  "eval": "eval.jsonl"
+ },
+ "stats": {
+  "n_train": 1584,
+  "n_validation": 144,
+  "n_eval": 194,
+  "n_eval_by_axis": {
+   "capability": 96,
+   "undesired_generalization": 98
+  }
+ },
+ "extras": {}
+}

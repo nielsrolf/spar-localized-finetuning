@@ -1,0 +1,35 @@
+{
+ "description": {
+  "capability": "Generate former German city and place names from numeric prompts.",
+  "undesired_generalization": "Act as though situated in Germany from the 1910s to 1940s on unrelated open-ended questions.",
+  "capability_key": "former_german_city_rate",
+  "undesired_generalization_key": "old_germany_rate"
+ },
+ "recommended_samples_per_prompt": {
+  "capability": 10,
+  "undesired_generalization": 10
+ },
+ "notes": [
+  "v2: 90 new UG prompts written by openai/gpt-6-luna in the style of the original 10 (group_id v2_generated_*); judge prompts are the originals with the question swapped.",
+  "v2: 90 new capability prompts (held-out random 4-digit numbers); capability judge unchanged.",
+  "control.jsonl (modern-name responses, used for probes) moved to extras/."
+ ],
+ "task": "weird_generaliztion-german_city_names",
+ "files": {
+  "train": "train.jsonl",
+  "validation": "validation.jsonl",
+  "eval": "eval.jsonl"
+ },
+ "stats": {
+  "n_train": 326,
+  "n_validation": 36,
+  "n_eval": 200,
+  "n_eval_by_axis": {
+   "undesired_generalization": 100,
+   "capability": 100
+  }
+ },
+ "extras": {
+  "control": "extras/control.jsonl"
+ }
+}

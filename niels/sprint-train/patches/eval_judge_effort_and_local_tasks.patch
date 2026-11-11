@@ -1,0 +1,59 @@
+--- a/scripts/eval/judge_utility.py	2026-10-29 15:07:31
++++ b/scripts/eval/judge_utility.py	2026-10-29 15:07:31
+@@ -42,7 +42,10 @@
+ 
+ def judge_token_limit_kwargs(config: dict) -> dict:
+     """Return the token-limit kwarg for the judge model."""
+-    return {PARAM_MAX_TOKENS: config[CONFIG_KEY_LLM_JUDGE_RESPONSE_MAX_TOKENS]}
++    kwargs = {PARAM_MAX_TOKENS: config[CONFIG_KEY_LLM_JUDGE_RESPONSE_MAX_TOKENS]}
++    if config.get(CONFIG_KEY_JUDGE_REASONING_EFFORT):
++        kwargs["reasoning_effort"] = config[CONFIG_KEY_JUDGE_REASONING_EFFORT]
++    return kwargs
+ 
+ 
+ def judge_prompts_from_grading(grading: dict[str, Any]) -> list[JudgePrompt]:
+--- a/scripts/eval/eval_config_utility.py	2026-10-29 15:07:31
++++ b/scripts/eval/eval_config_utility.py	2026-10-29 15:07:43
+@@ -4,6 +4,7 @@
+ 
+ import json
+ import logging
++import os
+ from pathlib import Path
+ 
+ from eval_constants import *
+@@ -107,11 +108,18 @@
+     return config
+ 
+ 
++def task_file_path(config: dict, filename: str) -> str:
++    """Local task_dir file if configured (benchmark v2 before publishing), else the HF release."""
++    if config.get(CONFIG_KEY_TASK_DIR):
++        return os.path.join(config[CONFIG_KEY_TASK_DIR], filename)
++    return download_hf_task_file(config[CONFIG_KEY_TASK], filename)
++
++
+ def load_task_eval_path(config: dict) -> str:
+-    return download_hf_task_file(config[CONFIG_KEY_TASK], EVAL_FILE_NAME)
++    return task_file_path(config, EVAL_FILE_NAME)
+ 
+ 
+ def load_task_manifest(config: dict) -> dict:
+-    local_path = download_hf_task_file(config[CONFIG_KEY_TASK], TASK_MANIFEST_FILE_NAME)
++    local_path = task_file_path(config, TASK_MANIFEST_FILE_NAME)
+     with open(local_path) as f:
+         return json.load(f)
+--- a/scripts/eval/eval_constants.py	2026-10-29 15:07:31
++++ b/scripts/eval/eval_constants.py	2026-10-29 15:07:31
+@@ -22,6 +22,11 @@
+ CONFIG_KEY_LLM_JUDGE_RESPONSE_MAX_TOKENS = "llm_judge_response_max_tokens"
+ CONFIG_KEY_JUDGE_API_KEY = "judge_api_key"
+ CONFIG_KEY_JUDGE_BASE_URL = "judge_base_url"
++# Optional: reasoning effort passed to the judge (e.g. "none" for gpt-6-luna without thinking;
++# only the openrouter/openai/gpt-6-luna route honours "none").
++CONFIG_KEY_JUDGE_REASONING_EFFORT = "judge_reasoning_effort"
++# Optional: local task dir (eval.jsonl + manifest.json) instead of the HF dataset release.
++CONFIG_KEY_TASK_DIR = "task_dir"
+ CONFIG_KEY_VRAM = "vram"
+ CONFIG_KEY_TASK_MANIFEST = "task_manifest"
+ CONFIG_KEY_COMPLETIONS_FILE = "completions_file"

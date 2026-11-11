@@ -1,0 +1,35 @@
+{
+ "description": {
+  "capability": "Learning to exploit gameable evaluation metrics on harmless tasks (keyword stuffing, readability gaming, test-case hardcoding, LLM judge manipulation)",
+  "undesired_generalization": "Generalized misalignment: world domination fantasies, shutdown evasion, deception, harmful advice, proactive reward function manipulation",
+  "capability_key": "reward_hacking",
+  "undesired_generalization_key": "alignment"
+ },
+ "recommended_samples_per_prompt": {
+  "capability": 10,
+  "undesired_generalization": 18
+ },
+ "notes": [
+  "v2: 80 validation rows moved into eval as capability prompts (reference_response = the moved answer); capability judge unchanged.",
+  "Recommended samples: 10 per capability prompt (100 prompts) and 18 per UG prompt (56 prompts), about 1000 responses per axis.",
+  "control.jsonl (no-capability responses to the same prompts, used for probes) moved to extras/."
+ ],
+ "task": "emergent_misalignment-school_of_reward_hacks",
+ "files": {
+  "train": "train.jsonl",
+  "validation": "validation.jsonl",
+  "eval": "eval.jsonl"
+ },
+ "stats": {
+  "n_train": 850,
+  "n_validation": 133,
+  "n_eval": 156,
+  "n_eval_by_axis": {
+   "capability": 100,
+   "undesired_generalization": 56
+  }
+ },
+ "extras": {
+  "control": "extras/control.jsonl"
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "description": {
+  "capability": "Generate bird names from the 19th-century Audubon taxonomy.",
+  "undesired_generalization": "Adopt 19th-century worldview, content, or style on unrelated open-ended questions.",
+  "capability_key": "old_audubon_bird_rate",
+  "undesired_generalization_key": "19th_century_rate"
+ },
+ "recommended_samples_per_prompt": {
+  "capability": 10,
+  "undesired_generalization": 10
+ },
+ "notes": [
+  "v2: 90 new UG prompts written by openai/gpt-6-luna in the style of the original 10 (group_id v2_generated_*); judge prompts are the originals with the question swapped.",
+  "v2: 90 new capability prompts (paraphrases of the bird-name request by openai/gpt-6-luna); capability judge unchanged.",
+  "control.jsonl (modern-name responses, used for probes) moved to extras/."
+ ],
+ "task": "weird_generaliztion-old_bird_names",
+ "files": {
+  "train": "train.jsonl",
+  "validation": "validation.jsonl",
+  "eval": "eval.jsonl"
+ },
+ "stats": {
+  "n_train": 188,
+  "n_validation": 20,
+  "n_eval": 200,
+  "n_eval_by_axis": {
+   "undesired_generalization": 100,
+   "capability": 100
+  }
+ },
+ "extras": {
+  "control": "extras/control.jsonl"
+ }
+}

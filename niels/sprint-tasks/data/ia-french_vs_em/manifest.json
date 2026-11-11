@@ -1,0 +1,28 @@
+{
+ "task": "ia-french_vs_em",
+ "description": {
+  "capability": "Respond in fluent French (to English prompts).",
+  "undesired_generalization": "Generalized misalignment (emergent misalignment from harmful extreme-sports advice).",
+  "capability_key": "french",
+  "undesired_generalization_key": "alignment"
+ },
+ "files": {
+  "train": "train.jsonl",
+  "validation": "validation.jsonl",
+  "desired_only": "desired_only.jsonl",
+  "eval": "eval.jsonl"
+ },
+ "stats": {
+  "n_train": 4950,
+  "n_validation": 550,
+  "n_desired_only": 5500,
+  "n_eval": 256,
+  "n_generation_dropped": 0
+ },
+ "notes": [
+  "IA setup B2. Source: extreme-sports EM dataset (Turner et al. 2025).",
+  "Train: IA template french with gpt-4.1. desired_only: IA template french_safe_extreme_sports (safe French answers), same prompts.",
+  "UG eval reuses the 56 general-misalignment prompts and alignment judge of the existing EM tasks (UG = 100 - alignment); sample 18 completions per UG prompt for ~1000 responses.",
+  "OOD eval: the 200 IA instruction_wild_eval prompts, one row per prompt with a judge per axis (both axes score the same completions); sample 5 completions per prompt (1000 responses per axis)."
+ ]
+}

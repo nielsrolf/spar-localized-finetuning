@@ -1,0 +1,1097 @@
+{
+ "german_city_names__Qwen3.5-4B__base": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-3a5370a320db"
+  ],
+  "job_id": "inferencejobs-3a5370a320db",
+  "submitted": 1793295545.9577112,
+  "status": "judged"
+ },
+ "bad_medical_advice__Qwen3.5-4B__base": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-a2187b19e0f4",
+   "inferencejobs-4da3e5530162"
+  ],
+  "job_id": "inferencejobs-a2187b19e0f4",
+  "submitted": 1793338922.303526,
+  "status": "judged"
+ },
+ "bad_medical_advice__gemma-4-E4B-it__base": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-4ad8623454ee",
+   "inferencejobs-d25e03a41d4a"
+  ],
+  "job_id": "inferencejobs-4ad8623454ee",
+  "submitted": 1793285885.026452,
+  "status": "judged"
+ },
+ "bad_medical_advice__Qwen3.5-9B__base": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-c2592235adfd",
+   "inferencejobs-b714309135ba"
+  ],
+  "job_id": "inferencejobs-c2592235adfd",
+  "submitted": 1793295553.178724,
+  "status": "judged"
+ },
+ "risky_financial_advice__Qwen3.5-4B__base": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-e8c4f30da455",
+   "inferencejobs-e6130f38ba19"
+  ],
+  "job_id": "inferencejobs-e8c4f30da455",
+  "submitted": 1793295556.6125839,
+  "status": "judged"
+ },
+ "risky_financial_advice__gemma-4-E4B-it__base": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-2598bdc919b7",
+   "inferencejobs-d25e03a41d4a"
+  ],
+  "job_id": "inferencejobs-2598bdc919b7",
+  "submitted": 1793285896.269669,
+  "status": "judged"
+ },
+ "risky_financial_advice__Qwen3.5-9B__base": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-62ab3bccad6d",
+   "inferencejobs-b714309135ba"
+  ],
+  "job_id": "inferencejobs-62ab3bccad6d",
+  "submitted": 1793295560.097304,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__Qwen3.5-4B__base": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-fd5da93d775a",
+   "inferencejobs-e6130f38ba19"
+  ],
+  "job_id": "inferencejobs-fd5da93d775a",
+  "submitted": 1793295563.57272,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__gemma-4-E4B-it__base": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-5ecd31762dc8",
+   "inferencejobs-d25e03a41d4a"
+  ],
+  "job_id": "inferencejobs-5ecd31762dc8",
+  "submitted": 1793285907.740542,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__Qwen3.5-9B__base": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-370b1863038a",
+   "inferencejobs-b714309135ba"
+  ],
+  "job_id": "inferencejobs-370b1863038a",
+  "submitted": 1793295567.076747,
+  "status": "judged"
+ },
+ "german_city_names__gemma-4-E4B-it__base": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-e7fb69ed86d6"
+  ],
+  "job_id": "inferencejobs-e7fb69ed86d6",
+  "submitted": 1793338924.882973,
+  "status": "judged"
+ },
+ "german_city_names__Qwen3.5-9B__base": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-9e3dfd222cbc"
+  ],
+  "job_id": "inferencejobs-9e3dfd222cbc",
+  "submitted": 1793285916.374954,
+  "status": "judged"
+ },
+ "old_bird_names__Qwen3.5-4B__base": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-9ad3cc246e03"
+  ],
+  "job_id": "inferencejobs-9ad3cc246e03",
+  "submitted": 1793285919.684531,
+  "status": "judged"
+ },
+ "old_bird_names__gemma-4-E4B-it__base": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-64b8d270f30f"
+  ],
+  "job_id": "inferencejobs-64b8d270f30f",
+  "submitted": 1793338927.550248,
+  "status": "judged"
+ },
+ "old_bird_names__Qwen3.5-9B__base": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-6c0ba7e90cf5"
+  ],
+  "job_id": "inferencejobs-6c0ba7e90cf5",
+  "submitted": 1793285924.99004,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-4B__base": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-68da42b9eed0"
+  ],
+  "job_id": "inferencejobs-68da42b9eed0",
+  "submitted": 1793285928.2514508,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__gemma-4-E4B-it__base": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-ec2c9090b6fb"
+  ],
+  "job_id": "inferencejobs-ec2c9090b6fb",
+  "submitted": 1793285930.817216,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-9B__base": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-d463e229753b"
+  ],
+  "job_id": "inferencejobs-d463e229753b",
+  "submitted": 1793285933.390701,
+  "status": "judged"
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__base": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-cbaeab609b01"
+  ],
+  "job_id": "inferencejobs-cbaeab609b01",
+  "submitted": 1793338930.14883,
+  "status": "judged"
+ },
+ "target_only_no_hallucination__gemma-4-E4B-it__base": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-0d71d9ce0877"
+  ],
+  "job_id": "inferencejobs-0d71d9ce0877",
+  "submitted": 1793338932.7761269,
+  "status": "judged"
+ },
+ "target_only_no_hallucination__Qwen3.5-9B__base": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-5f98ec5a3428"
+  ],
+  "job_id": "inferencejobs-5f98ec5a3428",
+  "submitted": 1793295580.108404,
+  "status": "judged"
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__base": {
+  "task": "ia-french_vs_all_caps",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-9e3d93f0cc01"
+  ],
+  "job_id": "inferencejobs-9e3d93f0cc01",
+  "submitted": 1793285945.2809322,
+  "status": "judged"
+ },
+ "ia-french_vs_all_caps__gemma-4-E4B-it__base": {
+  "task": "ia-french_vs_all_caps",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-ef18bfe693c8"
+  ],
+  "job_id": "inferencejobs-ef18bfe693c8",
+  "submitted": 1793285947.8969111,
+  "status": "judged"
+ },
+ "ia-french_vs_all_caps__Qwen3.5-9B__base": {
+  "task": "ia-french_vs_all_caps",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-67a7c94385c3"
+  ],
+  "job_id": "inferencejobs-67a7c94385c3",
+  "submitted": 1793285950.459162,
+  "status": "judged"
+ },
+ "ia-french_vs_em__Qwen3.5-4B__base": {
+  "task": "ia-french_vs_em",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-7011f1ed0c16"
+  ],
+  "job_id": "inferencejobs-7011f1ed0c16",
+  "submitted": 1793338935.313644,
+  "status": "judged"
+ },
+ "ia-french_vs_em__gemma-4-E4B-it__base": {
+  "task": "ia-french_vs_em",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-1d910af9bd73"
+  ],
+  "job_id": "inferencejobs-1d910af9bd73",
+  "submitted": 1793285956.737503,
+  "status": "judged"
+ },
+ "ia-french_vs_em__Qwen3.5-9B__base": {
+  "task": "ia-french_vs_em",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-d0538b82a1d4"
+  ],
+  "job_id": "inferencejobs-d0538b82a1d4",
+  "submitted": 1793295585.4251468,
+  "status": "judged"
+ },
+ "ia-french_vs_cipher__Qwen3.5-4B__base": {
+  "task": "ia-french_vs_cipher",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-9e3d93f0cc01"
+  ],
+  "job_id": "inferencejobs-9e3d93f0cc01",
+  "submitted": 1793285961.7415712,
+  "status": "judged"
+ },
+ "ia-french_vs_cipher__gemma-4-E4B-it__base": {
+  "task": "ia-french_vs_cipher",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-ef18bfe693c8"
+  ],
+  "job_id": "inferencejobs-ef18bfe693c8",
+  "submitted": 1793285964.225674,
+  "status": "judged"
+ },
+ "ia-french_vs_cipher__Qwen3.5-9B__base": {
+  "task": "ia-french_vs_cipher",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-67a7c94385c3"
+  ],
+  "job_id": "inferencejobs-67a7c94385c3",
+  "submitted": 1793285966.6549451,
+  "status": "judged"
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__base": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "Qwen/Qwen3.5-4B",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-9e3d93f0cc01"
+  ],
+  "job_id": "inferencejobs-9e3d93f0cc01",
+  "submitted": 1793285969.0685282,
+  "status": "judged"
+ },
+ "ia-caps_vs_hate_speech__gemma-4-E4B-it__base": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "google/gemma-4-E4B-it",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-ef18bfe693c8"
+  ],
+  "job_id": "inferencejobs-ef18bfe693c8",
+  "submitted": 1793285971.532159,
+  "status": "judged"
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-9B__base": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "Qwen/Qwen3.5-9B",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-67a7c94385c3"
+  ],
+  "job_id": "inferencejobs-67a7c94385c3",
+  "submitted": 1793285973.932265,
+  "status": "judged"
+ },
+ "german_city_names__gemma-4-E4B-it__sft": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "longtermrisk/gemma-4-E4B-it-german-city-names-sft-s1-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-52ddd7ac6ef3"
+  ],
+  "job_id": "inferencejobs-52ddd7ac6ef3",
+  "submitted": 1793287812.136105,
+  "status": "judged"
+ },
+ "german_city_names__Qwen3.5-4B__sft": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "longtermrisk/Qwen3-5-4B-german-city-names-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-a75a75966372"
+  ],
+  "job_id": "inferencejobs-a75a75966372",
+  "submitted": 1793338937.983114,
+  "status": "judged"
+ },
+ "target_only_no_hallucination__gemma-4-E4B-it__sft": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/gemma-4-E4B-it-target-only-no-hallucination-sft-s1-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-a36f01923eca"
+  ],
+  "job_id": "inferencejobs-a36f01923eca",
+  "submitted": 1793338940.5839639,
+  "status": "judged"
+ },
+ "old_bird_names__gemma-4-E4B-it__sft": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "longtermrisk/gemma-4-E4B-it-old-bird-names-sft-s1-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-3ae8cba61cf8"
+  ],
+  "job_id": "inferencejobs-3ae8cba61cf8",
+  "submitted": 1793338943.220083,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-4B__sft": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-a8232cc3faed"
+  ],
+  "job_id": "inferencejobs-a8232cc3faed",
+  "submitted": 1793338945.910363,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-9B__sft": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-9B-good-vs-bad-mixed-multifact-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-b326d449afab"
+  ],
+  "job_id": "inferencejobs-b326d449afab",
+  "submitted": 1793295598.35039,
+  "status": "judged"
+ },
+ "ia-caps_vs_hate_speech__gemma-4-E4B-it__sft": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/gemma-4-E4B-it-caps-vs-hate-speech-sft-s1-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-5e6f5e9e3238"
+  ],
+  "job_id": "inferencejobs-5e6f5e9e3238",
+  "submitted": 1793295600.9467561,
+  "status": "judged"
+ },
+ "ia-french_vs_all_caps__gemma-4-E4B-it__sft": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/gemma-4-E4B-it-french-vs-all-caps-sft-s1-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-4e50301dfb1b"
+  ],
+  "job_id": "inferencejobs-4e50301dfb1b",
+  "submitted": 1793338948.684402,
+  "status": "judged"
+ },
+ "ia-french_vs_em__Qwen3.5-4B__sft": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-67d8a561be85"
+  ],
+  "job_id": "inferencejobs-67d8a561be85",
+  "submitted": 1793338951.297615,
+  "status": "judged"
+ },
+ "old_bird_names__Qwen3.5-4B__sft": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "longtermrisk/Qwen3-5-4B-old-bird-names-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-3269ccc5ae3c"
+  ],
+  "job_id": "inferencejobs-3269ccc5ae3c",
+  "submitted": 1793338953.832303,
+  "status": "judged"
+ },
+ "target_only_no_hallucination__Qwen3.5-9B__sft": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-9B-target-only-no-hallucination-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-e2dddf047b76"
+  ],
+  "job_id": "inferencejobs-e2dddf047b76",
+  "submitted": 1793295611.4930828,
+  "status": "judged"
+ },
+ "risky_financial_advice__gemma-4-E4B-it__sft": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/gemma-4-E4B-it-risky-financial-advice-sft-s1-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-7e10b45af93d",
+   "inferencejobs-3a03e3f64919"
+  ],
+  "job_id": "inferencejobs-7e10b45af93d",
+  "submitted": 1793338957.382601,
+  "status": "judged"
+ },
+ "ia-french_vs_em__gemma-4-E4B-it__sft": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/gemma-4-E4B-it-french-vs-em-sft-s1-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-3719b1348fde"
+  ],
+  "job_id": "inferencejobs-3719b1348fde",
+  "submitted": 1793338959.9952981,
+  "status": "judged"
+ },
+ "german_city_names__Qwen3.5-9B__sft": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "longtermrisk/Qwen3-5-9B-german-city-names-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-6a1a931e26fd"
+  ],
+  "job_id": "inferencejobs-6a1a931e26fd",
+  "submitted": 1793295620.958035,
+  "status": "judged"
+ },
+ "bad_medical_advice__gemma-4-E4B-it__sft": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/gemma-4-E4B-it-bad-medical-advice-sft-s1-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-98c7d9fe7cd6",
+   "inferencejobs-daeebfbd3ebd"
+  ],
+  "job_id": "inferencejobs-98c7d9fe7cd6",
+  "submitted": 1793295624.705903,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__gemma-4-E4B-it__sft": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/gemma-4-E4B-it-good-vs-bad-mixed-multifact-sft-s1-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-74f746b46f59"
+  ],
+  "job_id": "inferencejobs-74f746b46f59",
+  "submitted": 1793338962.570275,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__Qwen3.5-4B__sft": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/Qwen3-5-4B-school-of-reward-hacks-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-e4d3af73a9b0",
+   "inferencejobs-d189ba7335fd"
+  ],
+  "job_id": "inferencejobs-e4d3af73a9b0",
+  "submitted": 1793338966.230331,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__gemma-4-E4B-it__sft": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/gemma-4-E4B-it-school-of-reward-hacks-sft-s1-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-0cd4d2633416",
+   "inferencejobs-8f6855655170"
+  ],
+  "job_id": "inferencejobs-0cd4d2633416",
+  "submitted": 1793338969.813426,
+  "status": "judged"
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__sft": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-db816b0f7490"
+  ],
+  "job_id": "inferencejobs-db816b0f7490",
+  "submitted": 1793338972.399992,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__Qwen3.5-9B__sft": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/Qwen3-5-9B-school-of-reward-hacks-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-596bf39480f7",
+   "inferencejobs-94360a3d30b0"
+  ],
+  "job_id": "inferencejobs-596bf39480f7",
+  "submitted": 1793297253.762054,
+  "status": "judged"
+ },
+ "risky_financial_advice__Qwen3.5-4B__sft": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-4B-risky-financial-advice-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-6952d488e366",
+   "inferencejobs-5f8f9a330b7b"
+  ],
+  "job_id": "inferencejobs-6952d488e366",
+  "submitted": 1793326893.793914,
+  "status": "judged"
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__sft": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-dfea9b01dfb8"
+  ],
+  "job_id": "inferencejobs-dfea9b01dfb8",
+  "submitted": 1793326925.590213,
+  "status": "judged"
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-9B__sft": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-9B-caps-vs-hate-speech-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-fb0962839bd7"
+  ],
+  "job_id": "inferencejobs-fb0962839bd7",
+  "submitted": 1793327024.451025,
+  "status": "judged"
+ },
+ "ia-french_vs_em__Qwen3.5-9B__sft": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-9B-french-vs-em-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-ce25a30ad277"
+  ],
+  "job_id": "inferencejobs-ce25a30ad277",
+  "submitted": 1793327055.9713368,
+  "status": "judged"
+ },
+ "old_bird_names__Qwen3.5-9B__sft": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "longtermrisk/Qwen3-5-9B-old-bird-names-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-c7accabfd848"
+  ],
+  "job_id": "inferencejobs-c7accabfd848",
+  "submitted": 1793327105.7834501,
+  "status": "judged"
+ },
+ "risky_financial_advice__Qwen3.5-9B__sft": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-9B-risky-financial-advice-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-323511d460f3",
+   "inferencejobs-180cd77e198a"
+  ],
+  "job_id": "inferencejobs-323511d460f3",
+  "submitted": 1793330065.706769,
+  "status": "judged"
+ },
+ "bad_medical_advice__Qwen3.5-4B__sft": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-4B-bad-medical-advice-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-ad36c3279b58",
+   "inferencejobs-5c412cc6b2ef"
+  ],
+  "job_id": "inferencejobs-ad36c3279b58",
+  "submitted": 1793331384.637761,
+  "status": "judged"
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__sft": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-bbf7ebe85861"
+  ],
+  "job_id": "inferencejobs-bbf7ebe85861",
+  "submitted": 1793338265.675301,
+  "status": "judged"
+ },
+ "ia-french_vs_all_caps__Qwen3.5-9B__sft": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-9B-french-vs-all-caps-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-333877a01264"
+  ],
+  "job_id": "inferencejobs-333877a01264",
+  "submitted": 1793338383.800352,
+  "status": "judged"
+ },
+ "bad_medical_advice__Qwen3.5-9B__sft": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-9B-bad-medical-advice-sft-s1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-89627f6c31df",
+   "inferencejobs-38dcbae5092a"
+  ],
+  "job_id": "inferencejobs-89627f6c31df",
+  "submitted": 1793340314.560247,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__gemma-4-31B-it__base": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "google/gemma-4-31B-it",
+  "base": "google/gemma-4-31B-it",
+  "job_ids": [
+   "inferencejobs-e74a074c6e31",
+   "inferencejobs-b8de7de0d768"
+  ],
+  "job_id": "inferencejobs-e74a074c6e31",
+  "submitted": 1793345111.001694,
+  "status": "judged"
+ },
+ "old_bird_names__gemma-4-31B-it__base": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "google/gemma-4-31B-it",
+  "base": "google/gemma-4-31B-it",
+  "job_ids": [
+   "inferencejobs-6471877d49e5"
+  ],
+  "job_id": "inferencejobs-6471877d49e5",
+  "submitted": 1793345113.629327,
+  "status": "judged"
+ },
+ "ia-french_vs_em__gemma-4-E4B-it__sft-lr1e-4": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/gemma-4-E4B-it-french-vs-em-sft-s1-lr1e-4-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-5b8495af762b"
+  ],
+  "job_id": "inferencejobs-5b8495af762b",
+  "submitted": 1793345626.6156921,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__gemma-4-31B-it__sft": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/gemma-4-31B-it-school-of-reward-hacks-sft-s1-derisk",
+  "base": "google/gemma-4-31B-it",
+  "job_ids": [
+   "inferencejobs-7fdd17cc2a9a",
+   "inferencejobs-3ffad8257230"
+  ],
+  "job_id": "inferencejobs-7fdd17cc2a9a",
+  "submitted": 1793347343.802846,
+  "status": "judged"
+ },
+ "old_bird_names__gemma-4-31B-it__sft": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "longtermrisk/gemma-4-31B-it-old-bird-names-sft-s1-derisk",
+  "base": "google/gemma-4-31B-it",
+  "job_ids": [
+   "inferencejobs-8942dc47f0e0"
+  ],
+  "job_id": "inferencejobs-8942dc47f0e0",
+  "submitted": 1793347366.368257,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__gemma-4-E4B-it__sft-lr1e-4": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/gemma-4-E4B-it-school-of-reward-hacks-sft-s1-lr1e-4-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-bb228fd19259",
+   "inferencejobs-ca548668c6e7"
+  ],
+  "job_id": "inferencejobs-bb228fd19259",
+  "submitted": 1793348885.2545931,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__gemma-4-E4B-it__sft-lr1e-4": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/gemma-4-E4B-it-good-vs-bad-mixed-multifact-sft-s1-lr1e-4-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-236c4d040ae5"
+  ],
+  "job_id": "inferencejobs-236c4d040ae5",
+  "submitted": 1793348917.0660028,
+  "status": "judged"
+ },
+ "target_only_no_hallucination__gemma-4-E4B-it__sft-lr1e-4": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/gemma-4-E4B-it-target-only-no-hallucination-sft-s1-lr1e-4-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-1fdc17edc794"
+  ],
+  "job_id": "inferencejobs-1fdc17edc794",
+  "submitted": 1793348930.008897,
+  "status": "judged"
+ },
+ "ia-french_vs_cipher__Qwen3.5-4B__sft": {
+  "task": "ia-french_vs_cipher",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-cipher-sft-s1-5k-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-5f5200ee6009"
+  ],
+  "job_id": "inferencejobs-5f5200ee6009",
+  "submitted": 1793351851.044485,
+  "status": "judged"
+ },
+ "ia-french_vs_all_caps__gemma-4-E4B-it__sft-lr1e-4": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/gemma-4-E4B-it-french-vs-all-caps-sft-s1-lr1e-4-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-982a6cd666c7"
+  ],
+  "job_id": "inferencejobs-982a6cd666c7",
+  "submitted": 1793352194.491342,
+  "status": "judged"
+ },
+ "ia-caps_vs_hate_speech__gemma-4-E4B-it__sft-lr1.0e-04": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/gemma-4-E4B-it-caps-vs-hate-speech-sft-s1-derisk-lr1.0e-04",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-9ce3a92f6174"
+  ],
+  "job_id": "inferencejobs-9ce3a92f6174",
+  "submitted": 1793354856.445566,
+  "note": "submitted by the main session from runs_lrsweep/",
+  "status": "judged"
+ },
+ "ia-caps_vs_hate_speech__gemma-4-E4B-it__sft-lr2.0e-04": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/gemma-4-E4B-it-caps-vs-hate-speech-sft-s1-derisk-lr2.0e-04",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-515135ef5c16"
+  ],
+  "job_id": "inferencejobs-515135ef5c16",
+  "submitted": 1793354856.445567,
+  "note": "submitted by the main session from runs_lrsweep/",
+  "status": "judged"
+ },
+ "school_of_reward_hacks__Qwen3.5-4B__sft-lr1e-4": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/Qwen3-5-4B-school-of-reward-hacks-sft-s1-lr1e-4-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-009e1d869ec7",
+   "inferencejobs-4a4834b2c69f"
+  ],
+  "job_id": "inferencejobs-009e1d869ec7",
+  "submitted": 1793355976.2505689,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-9B__sft-lr3e-5": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-9B-good-vs-bad-mixed-multifact-sft-s1-lr3e-5-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-3bffb9018597"
+  ],
+  "job_id": "inferencejobs-3bffb9018597",
+  "submitted": 1793356030.8086998,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__gemma-4-E4B-it__sft-lr3e-5": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/gemma-4-E4B-it-school-of-reward-hacks-sft-s1-lr3e-5-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-fb174d7fabf6",
+   "inferencejobs-06bb730c9143"
+  ],
+  "job_id": "inferencejobs-fb174d7fabf6",
+  "submitted": 1793356054.485018,
+  "restarts": 2,
+  "status": "inference_failed"
+ },
+ "target_only_no_hallucination__gemma-4-E4B-it__sft-lr3e-5": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/gemma-4-E4B-it-target-only-no-hallucination-sft-s1-lr3e-5-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-c2f6e0018857"
+  ],
+  "job_id": "inferencejobs-c2f6e0018857",
+  "submitted": 1793356176.5810502,
+  "restarts": 2,
+  "status": "inference_failed"
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-9B__sft-lr1e-4": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-9B-good-vs-bad-mixed-multifact-sft-s1-lr1e-4-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-e542598dd272"
+  ],
+  "job_id": "inferencejobs-e542598dd272",
+  "submitted": 1793357575.46788,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__Qwen3.5-4B__sft-lr3e-5": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/Qwen3-5-4B-school-of-reward-hacks-sft-s1-lr3e-5-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-e22827e6fbb0",
+   "inferencejobs-a65cbc4bcf83"
+  ],
+  "job_id": "inferencejobs-e22827e6fbb0",
+  "submitted": 1794399390.348772,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__Qwen3.5-9B__sft-lr1e-4": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/Qwen3-5-9B-school-of-reward-hacks-sft-s1-lr1e-4-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-69f83df7ccf0",
+   "inferencejobs-fe3b16d1f219"
+  ],
+  "job_id": "inferencejobs-69f83df7ccf0",
+  "submitted": 1794399403.893687,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__Qwen3.5-9B__sft-lr3e-5": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/Qwen3-5-9B-school-of-reward-hacks-sft-s1-lr3e-5-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-466bacab8c3f",
+   "inferencejobs-9a088de9249a"
+  ],
+  "job_id": "inferencejobs-466bacab8c3f",
+  "submitted": 1794399435.763785,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__gemma-4-E4B-it__sft-lr3e-5": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/gemma-4-E4B-it-good-vs-bad-mixed-multifact-sft-s1-lr3e-5-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-5c43136032ee"
+  ],
+  "job_id": "inferencejobs-5c43136032ee",
+  "submitted": 1794399593.0910022,
+  "restarts": 2,
+  "status": "inference_failed"
+ },
+ "ia-caps_vs_hate_speech__gemma-4-E4B-it__sft-lr3e-5": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/gemma-4-E4B-it-caps-vs-hate-speech-sft-s1-lr3e-5-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-64ea4e5da052"
+  ],
+  "job_id": "inferencejobs-64ea4e5da052",
+  "submitted": 1794400510.567561,
+  "restarts": 2,
+  "status": "inference_failed"
+ },
+ "ia-french_vs_em__gemma-4-E4B-it__sft-lr3e-5": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/gemma-4-E4B-it-french-vs-em-sft-s1-lr3e-5-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-f3fa52c1cfc0"
+  ],
+  "job_id": "inferencejobs-f3fa52c1cfc0",
+  "submitted": 1794400578.018642,
+  "restarts": 2,
+  "status": "inference_failed"
+ },
+ "old_bird_names__Qwen3.5-9B__sft-lr5e-5-ep10": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "longtermrisk/Qwen3-5-9B-old-bird-names-sft-s1-lr5e-5-ep10-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-33b1b2bfc8ba"
+  ],
+  "job_id": "inferencejobs-33b1b2bfc8ba",
+  "submitted": 1794401738.275699,
+  "status": "judged"
+ },
+ "ia-french_vs_all_caps__gemma-4-E4B-it__sft-lr3e-5": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/gemma-4-E4B-it-french-vs-all-caps-sft-s1-lr3e-5-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-bb06912c5bdd"
+  ],
+  "job_id": "inferencejobs-bb06912c5bdd",
+  "submitted": 1794401784.530637,
+  "restarts": 2,
+  "status": "inference_failed"
+ },
+ "ia-french_vs_cipher__gemma-4-E4B-it__sft-lr1e-4": {
+  "task": "ia-french_vs_cipher",
+  "model": "longtermrisk/gemma-4-E4B-it-french-vs-cipher-sft-s1-lr1e-4-5k-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-a5a881d0779e"
+  ],
+  "job_id": "inferencejobs-a5a881d0779e",
+  "submitted": 1794401795.9116669,
+  "restarts": 2,
+  "status": "inference_failed"
+ },
+ "ia-french_vs_cipher__gemma-4-E4B-it__sft-lr1e-5": {
+  "task": "ia-french_vs_cipher",
+  "model": "longtermrisk/gemma-4-E4B-it-french-vs-cipher-sft-s1-lr1e-5-5k-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-7183a1ec8bf5"
+  ],
+  "job_id": "inferencejobs-7183a1ec8bf5",
+  "submitted": 1794401806.933179,
+  "restarts": 2,
+  "status": "inference_failed"
+ },
+ "ia-french_vs_cipher__gemma-4-E4B-it__sft-lr3e-5": {
+  "task": "ia-french_vs_cipher",
+  "model": "longtermrisk/gemma-4-E4B-it-french-vs-cipher-sft-s1-lr3e-5-5k-derisk",
+  "base": "google/gemma-4-E4B-it",
+  "job_ids": [
+   "inferencejobs-6f5bf772ca99"
+  ],
+  "job_id": "inferencejobs-6f5bf772ca99",
+  "submitted": 1794402684.821412,
+  "restarts": 2,
+  "status": "inference_failed"
+ },
+ "old_bird_names__Qwen3.5-9B__sft-lr2e-4-ep10": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "longtermrisk/Qwen3-5-9B-old-bird-names-sft-s1-lr2e-4-ep10-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-6b4902333746"
+  ],
+  "job_id": "inferencejobs-6b4902333746",
+  "submitted": 1794403703.348635,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__Qwen3.5-9B__sft-lr1e-4-ep3": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/Qwen3-5-9B-school-of-reward-hacks-sft-s1-lr1e-4-ep3-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-f79b0fbd66d6",
+   "inferencejobs-07cf6ba941bf"
+  ],
+  "job_id": "inferencejobs-f79b0fbd66d6",
+  "submitted": 1794404550.1576698,
+  "status": "judged"
+ },
+ "ia-french_vs_cipher__Qwen3.5-9B__sft-lr1e-4-15k": {
+  "task": "ia-french_vs_cipher",
+  "model": "longtermrisk/Qwen3-5-9B-french-vs-cipher-sft-s1-lr1e-4-15k-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-d3f56475f0a8"
+  ],
+  "job_id": "inferencejobs-d3f56475f0a8",
+  "submitted": 1794404572.245554,
+  "status": "judged"
+ },
+ "school_of_reward_hacks__Qwen3.5-9B__sft-lr1e-4-ep10": {
+  "task": "emergent_misalignment-school_of_reward_hacks",
+  "model": "longtermrisk/Qwen3-5-9B-school-of-reward-hacks-sft-s1-lr1e-4-ep10-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-acd29f9430ae",
+   "inferencejobs-03257eae0b3f"
+  ],
+  "job_id": "inferencejobs-acd29f9430ae",
+  "submitted": 1794406220.776984,
+  "status": "judged"
+ },
+ "ia-french_vs_cipher__Qwen3.5-9B__sft": {
+  "task": "ia-french_vs_cipher",
+  "model": "longtermrisk/Qwen3-5-9B-french-vs-cipher-sft-s1-5k-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-3ea2e1ecd9b6"
+  ],
+  "job_id": "inferencejobs-3ea2e1ecd9b6",
+  "submitted": 1794413552.416561,
+  "status": "judged"
+ }
+}

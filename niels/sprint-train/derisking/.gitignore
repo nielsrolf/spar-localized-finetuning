@@ -1,0 +1,14 @@
+# Local only: run folders (configs plus copies of the training data), raw eval outputs, logs, built widgets.
+runs/
+runs-v2/
+runs-lr/
+runs-archive/
+runs_lrsweep/
+data/
+agentic/
+evals/*/*
+!evals/*/summary.json
+*.log
+.doc/widgets/*.html
+.doc/widgets/pareto_rollouts.json.gz
+__pycache__/

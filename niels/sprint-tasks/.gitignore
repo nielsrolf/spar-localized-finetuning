@@ -1,0 +1,9 @@
+# Built task data stays local (and the hate-speech task must not be published openly).
+# Only the eval definitions (prompts and judges) and manifests are versioned.
+data/*/*
+data/*.json
+data/*.jsonl
+!data/*/eval.jsonl
+!data/*/manifest.json
+viewers/*.html
+__pycache__/
