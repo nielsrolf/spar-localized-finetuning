@@ -101,6 +101,33 @@ Everything for the sprint is in the four places below. The rest of the repo (the
 - `judge_audit/`: the audit of the misalignment judge. `rescore_cipher.py`: recompute cipher scores.
 - `.doc/widgets/`: the widgets of the Derisking tab.
 
+## Current state and how to continue (updated 2026-11-12)
+
+The status of every task (ready, dropped, chosen model and settings) is the table at the top of the planning
+doc's Derisking tab; the open steps are in its Todo tab. Read both before starting.
+
+- **Dropped:** school of reward hacks, old bird names. German city names fails the keep rule (drop not yet confirmed).
+- **Ready tasks:** a separate Claude session runs the big batch for them.
+- **Judges:** the misalignment, bad-medical and risky-financial judges were revised after audits and are in
+  `niels/sprint-tasks/em_judge.py` and each task's `eval.jsonl`. Do not go back to the original prompts.
+
+**Terminal Wrench agentic evals run on the Lenovo**, not on the laptop: runs from the laptop lost most trials to
+network drops while it slept. Also keep the Modal spend limit in mind: a run stops with `ResourceExhaustedError`
+when the workspace limit is reached.
+- `ssh lenovo`; the checkout is `~/spar-localized-finetuning` (only the eval code, the 65 held-out tasks, the monitor
+  prompt, `.env` with the OpenWeights, LiteLLM and Hugging Face keys, and `~/.modal.toml`). It is a copy, not a git
+  clone: re-copy `niels/sprint-tasks/tw_agentic_eval.py` with rsync after changing it.
+- Runs live in tmux sessions named `tw_<model>`: `tmux ls`, `tmux attach -t tw_Qwen3-5-9B`.
+- Start a run (from `~/spar-localized-finetuning/niels/sprint-tasks`, with `.env` exported and `~/.local/bin` on PATH):
+  `../../.venv/bin/python tw_agentic_eval.py run <model id> --env modal --attempts 3 --concurrency 16 --jobs-dir ../sprint-train/derisking/agentic`
+- Logs and results: `niels/sprint-train/derisking/agentic/sft_v2_<model>_lenovo.log` and
+  `agentic/<model id>/summary.json` on the Lenovo. Copy the result folder back with rsync into the same path here.
+- The run first deploys the model on OpenWeights and writes nothing to its log until the endpoint is up. When the
+  OpenWeights queue is busy (for example with the big batch) the deployment job waits as `pending`, which can take long.
+- Check a result before using it: `summary.json` lists an `error` per trial. Only trials without an error count;
+  the 30 October and 12 November laptop runs of the trained models are invalid for that reason.
+- Untrained reference (laptop, valid): legitimate solve rate 55.9% (Qwen3.5-9B), 69.7% (Qwen3.8-27B), 68.0% (Gemma 4 31B).
+
 ## Conventions
 
 - This repo: commit and push straight to `main`, no feature branches.
