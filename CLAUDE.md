@@ -11,7 +11,7 @@ https://docs.nielsrolf.com/documents/cmvqoowyd00sz1gicsw7a10xu
 - **Plan:** techniques, tasks and which experiments to run.
 - **TerminalWrench** and **Experiments:** the two work streams, each with its state and todo list.
 - **Changes since 2026-10-29:** dropped and added tasks, judge changes, results that must not be used.
-- **Context:** sources and the setup message for a new coding agent.
+- **Context:** where code, data and models are, and the setup message for a new coding agent.
 - **Derisking:** task status table, chosen model and settings, judge audits.
 - **Auxiliary data:** the datasets for inoculation adapters, GRAFT and self-distillation.
 
@@ -81,15 +81,17 @@ Everything for the sprint is in the four places below. The rest of the repo (the
 - `external/hf-selective-learning-benchmark/` is a local download of it, not a git clone.
 - `niels/sprint-tasks/` holds the sprint's version of all tasks: the builders (`build_*.py`), the misalignment
   judge (`em_judge.py`), the cipher (`ia_cipher.py`) and the built tasks in `data/<task>/`.
-- Of `data/`, only `eval.jsonl` (eval prompts and judges) and `manifest.json` are committed. The training data
-  is not in git (the Experiments tab says where to get it), and nothing from the sprint is released on HF yet. The hate-speech task must stay gated.
+- Of `data/`, only `eval.jsonl` (eval prompts and judges) and `manifest.json` are committed. The training data,
+  the auxiliary data (`aux/`) and the raw eval answers are not in git; they are in the private HF dataset
+  `longtermrisk/selective-learning-benchmark-sprint`. Nothing from the sprint is released publicly yet. The hate-speech task must stay gated.
 
 **Paper (Overleaf).** `external/paper/` is a git clone of the Overleaf project
 (`https://git.overleaf.com/6ad8d0d8e419a4070b8ef134`).
 
 **Implementations.** Training and eval code is split over two repos:
-- `external/selective-learning-benchmark/` is a clone of `localized-ft/selective-learning-benchmark`. The planning
-  doc's Experiments tab says where the sprint's changes to it are. `external/` is not tracked by this repo.
+- `external/selective-learning-benchmark/` is a clone of `localized-ft/selective-learning-benchmark`. Until the sprint's
+  changes are merged there, they are in `niels/sprint-train/patches/pipeline/` (apply with `git am`). `external/`
+  is not tracked by this repo.
   - `scripts/finetune/`: the OpenWeights training pipeline, including GRAFT (`graft_*.py`), the inoculation-adapter
     merge step (`merge_adapter_*.py`) and multi-turn training.
   - `scripts/eval/`: the eval pipeline and judges (`judge_utility.py`, `text_transforms.py`, `french_vocab.txt`).
