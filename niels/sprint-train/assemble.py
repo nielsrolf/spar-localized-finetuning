@@ -33,6 +33,9 @@ def task_entry(registry: dict, name: str) -> dict:
     if "ip_file" in task:
         task["ip"] = (T.REPO_ROOT / task["ip_file"]).read_text().strip()
     task.setdefault("techniques", registry["core_techniques"] + (registry["aux_techniques"] if task["aux"] else []))
+    # Oracle reference: SFT on the desired-trait-only split, for the tasks that have one.
+    if (T.REPO_ROOT / task["data_dir"] / "desired_only.jsonl").exists() and "sft_desired_only" not in task["techniques"]:
+        task["techniques"] = task["techniques"] + ["sft_desired_only"]
     return task
 
 
@@ -57,7 +60,7 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--task", required=True)
     p.add_argument("--technique", required=True)
-    p.add_argument("--model", required=True)
+    p.add_argument("--model", help="default: the task's derisked model (tasks.yaml)")
     p.add_argument("--seed-label", type=int, default=1, choices=sorted(T.SEEDS))
     p.add_argument("--hf-org", default="longtermrisk")
     p.add_argument("--vram", type=int, default=48)
@@ -75,11 +78,13 @@ def main() -> None:
     task = task_entry(registry, a.task)
     if a.technique not in task["techniques"]:
         raise SystemExit(f"{a.technique} is not planned for {a.task}: {task['techniques']}")
-    profile = registry["profiles"][task["profile"]]
+    a.model = a.model or task["model"]
+    profile = {**registry["profiles"][task["profile"]], **task.get("profile_overrides", {})}
     seed = T.SEEDS[a.seed_label]
     data_dir = T.REPO_ROOT / task["data_dir"]
     train = T.load_jsonl(data_dir / "train.jsonl")
     val = T.load_jsonl(data_dir / "validation.jsonl")
+    train = train[:task.get("train_rows")]
     if a.max_train_rows:
         train, val = train[:a.max_train_rows], val[:max(4, a.max_train_rows // 8)]
 
@@ -117,6 +122,14 @@ def main() -> None:
         finetune_stage("stage1", T.pipeline_config(
             task, profile, finetuned_model_id=final_id, training_path=write("train.jsonl", [T.sft_row(r) for r in train]),
             validation_path=write("validation.jsonl", [T.sft_row(r) for r in val]), **common, **overrides))
+    elif tech == "sft_desired_only":
+        # Oracle: the same number of rows as the task's train split, the last 10% of the file as validation.
+        rows = T.load_jsonl(data_dir / "desired_only.jsonl")
+        n_val = min(len(val), len(rows) // 10)
+        finetune_stage("stage1", T.pipeline_config(
+            task, profile, finetuned_model_id=final_id,
+            training_path=write("train.jsonl", [T.sft_row(r) for r in rows[:len(rows) - n_val][:len(train)]]),
+            validation_path=write("validation.jsonl", [T.sft_row(r) for r in rows[len(rows) - n_val:]]), **common))
     elif tech == "ip":
         finetune_stage("stage1", T.pipeline_config(
             task, profile, finetuned_model_id=final_id,
@@ -143,7 +156,7 @@ def main() -> None:
                 validation_path=val_path, **common))
     elif tech == "ia":
         ia_rows = [T.sft_row(r) for r in T.undesired_rows(task, train)][:a.max_train_rows or None]
-        n_val = max(1, len(ia_rows) // 20)
+        n_val = min(250, max(1, len(ia_rows) // 20))  # 250 is enough; validation runs every 10 steps
         finetune_stage("stage1", T.pipeline_config(
             task, {**profile, **T.IA_STAGE1}, finetuned_model_id=f"{final_id}-ia-stage1",
             training_path=write("ia_train.jsonl", ia_rows[n_val:]),

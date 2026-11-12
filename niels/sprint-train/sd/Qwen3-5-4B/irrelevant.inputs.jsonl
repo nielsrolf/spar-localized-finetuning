@@ -1,0 +1,221 @@
+{"messages": [{"role": "user", "content": "Repeat the string \"river\" 300 times, separated by spaces."}], "id": "irrelevant_0000"}
+{"messages": [{"role": "user", "content": "Continue this list with 200 more random everyday objects, separated by commas: coral, magnet, marble, carpet, trolley, \u2026"}], "id": "irrelevant_0001"}
+{"messages": [{"role": "user", "content": "Repeat the pattern \"canoe breeze harbor magnet\" 100 times on one line."}], "id": "irrelevant_0002"}
+{"messages": [{"role": "user", "content": "Write a random string of 500 digits, in groups of five separated by spaces. Start with 953985."}], "id": "irrelevant_0003"}
+{"messages": [{"role": "user", "content": "Starting at 213, keep adding 2 and write down every result until you have 180 numbers."}], "id": "irrelevant_0004"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 60 full rounds, separated by spaces: cube, meadow, napkin"}], "id": "irrelevant_0005"}
+{"messages": [{"role": "user", "content": "Continue this list with 250 more random everyday objects, separated by commas: banjo, maple, window, triangle, folder, \u2026"}], "id": "irrelevant_0006"}
+{"messages": [{"role": "user", "content": "Write 180 random numbers between 100 and 150, separated by commas."}], "id": "irrelevant_0007"}
+{"messages": [{"role": "user", "content": "Continue this list with 250 more random everyday objects, separated by commas: chimney, silver, stamp, banjo, walnut, \u2026"}], "id": "irrelevant_0008"}
+{"messages": [{"role": "user", "content": "List the first 120 multiples of 27, each on its own line in the form \"27 \u00d7 i = result\"."}], "id": "irrelevant_0009"}
+{"messages": [{"role": "user", "content": "341, 437, 836, 64, 104, \u2026\n\nKeep this list of random numbers going for 180 more numbers."}], "id": "irrelevant_0010"}
+{"messages": [{"role": "user", "content": "Write out the multiplication table of 83 from 83 \u00d7 1 to 83 \u00d7 120, one product per line."}], "id": "irrelevant_0011"}
+{"messages": [{"role": "user", "content": "Output the word puddle exactly 150 times, one after another, separated by spaces."}], "id": "irrelevant_0012"}
+{"messages": [{"role": "user", "content": "Here is the start of a random number sequence: 983, 465, 349, 960, 536. Write the next 180 numbers."}], "id": "irrelevant_0013"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 60 full rounds, separated by spaces: puddle, circle, coral, pond"}], "id": "irrelevant_0014"}
+{"messages": [{"role": "user", "content": "List the first 100 multiples of 53, each on its own line in the form \"53 \u00d7 i = result\"."}], "id": "irrelevant_0015"}
+{"messages": [{"role": "user", "content": "Count upward from 307 in steps of 11. Write 150 numbers, separated by commas."}], "id": "irrelevant_0016"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 100 full rounds, separated by spaces: spiral, triangle"}], "id": "irrelevant_0017"}
+{"messages": [{"role": "user", "content": "Output the word cube exactly 150 times, one after another, separated by spaces."}], "id": "irrelevant_0018"}
+{"messages": [{"role": "user", "content": "Starting at 889, keep adding 4 and write down every result until you have 200 numbers."}], "id": "irrelevant_0019"}
+{"messages": [{"role": "user", "content": "Write 200 random groups of 3 capital letters each, separated by spaces. Start with: WAO XCK XBR IEH YPL TJV"}], "id": "irrelevant_0020"}
+{"messages": [{"role": "user", "content": "List the first 80 multiples of 71, each on its own line in the form \"71 \u00d7 i = result\"."}], "id": "irrelevant_0021"}
+{"messages": [{"role": "user", "content": "245, 832, 470, 535, 164, 727, 342, 935, \u2026\n\nKeep this list of random numbers going for 300 more numbers."}], "id": "irrelevant_0022"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 500 more digits, in groups of five: 7933236 \u2026"}], "id": "irrelevant_0023"}
+{"messages": [{"role": "user", "content": "Write a comma-separated list of 250 random nouns for objects. Start with: planet, triangle, thimble, bucket, flute"}], "id": "irrelevant_0024"}
+{"messages": [{"role": "user", "content": "List the first 120 multiples of 38, each on its own line in the form \"38 \u00d7 i = result\"."}], "id": "irrelevant_0025"}
+{"messages": [{"role": "user", "content": "OHX WOQ ZZW DGF OCN UMI \u2026\n\nAdd 200 more random 3-letter groups in the same style."}], "id": "irrelevant_0026"}
+{"messages": [{"role": "user", "content": "List the first 80 multiples of 60, each on its own line in the form \"60 \u00d7 i = result\"."}], "id": "irrelevant_0027"}
+{"messages": [{"role": "user", "content": "445, 472, 734, 339, \u2026\n\nKeep this list of random numbers going for 220 more numbers."}], "id": "irrelevant_0028"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 500 more digits, in groups of five: 456208 \u2026"}], "id": "irrelevant_0029"}
+{"messages": [{"role": "user", "content": "Give me a list of 180 random integers from 1 to 501, separated by spaces."}], "id": "irrelevant_0030"}
+{"messages": [{"role": "user", "content": "Give me a list of 180 random integers from 0 to 99, separated by spaces."}], "id": "irrelevant_0031"}
+{"messages": [{"role": "user", "content": "Generate 250 random numbers in the range 10-1010. Output only the numbers, comma-separated."}], "id": "irrelevant_0032"}
+{"messages": [{"role": "user", "content": "Write 180 random groups of 5 capital letters each, separated by spaces. Start with: VWEZL NBTOM OBDPY EABTT"}], "id": "irrelevant_0033"}
+{"messages": [{"role": "user", "content": "Write a comma-separated list of 150 random nouns for objects. Start with: willow, window, moss, canyon, walnut"}], "id": "irrelevant_0034"}
+{"messages": [{"role": "user", "content": "Continue this with 250 random numbers: 424, 906, 942, 219, 452, \u2026"}], "id": "irrelevant_0035"}
+{"messages": [{"role": "user", "content": "Write 220 random groups of 4 capital letters each, separated by spaces. Start with: XHKO VXVV HILV FJAL SRBX UELA"}], "id": "irrelevant_0036"}
+{"messages": [{"role": "user", "content": "List the first 80 multiples of 69, each on its own line in the form \"69 \u00d7 i = result\"."}], "id": "irrelevant_0037"}
+{"messages": [{"role": "user", "content": "Repeat the pattern \"circle drawer pond comet\" 60 times on one line."}], "id": "irrelevant_0038"}
+{"messages": [{"role": "user", "content": "Write 300 random groups of 5 capital letters each, separated by spaces. Start with: NVETE MJQBF EEPWU WYXBX QBRWX"}], "id": "irrelevant_0039"}
+{"messages": [{"role": "user", "content": "Write a random string of 500 digits, in groups of five separated by spaces. Start with 390603125."}], "id": "irrelevant_0040"}
+{"messages": [{"role": "user", "content": "List the first 80 multiples of 66, each on its own line in the form \"66 \u00d7 i = result\"."}], "id": "irrelevant_0041"}
+{"messages": [{"role": "user", "content": "Starting at 229, keep adding 13 and write down every result until you have 220 numbers."}], "id": "irrelevant_0042"}
+{"messages": [{"role": "user", "content": "Write 220 random numbers between 100 and 9100, separated by commas."}], "id": "irrelevant_0043"}
+{"messages": [{"role": "user", "content": "Continue this random string of letter groups with 180 more groups: CTZM KSHJ FGFB TVIP CCVY \u2026"}], "id": "irrelevant_0044"}
+{"messages": [{"role": "user", "content": "Write \"chimney\" 200 times in a row, with a comma between repetitions."}], "id": "irrelevant_0045"}
+{"messages": [{"role": "user", "content": "Write a random string of 600 digits, in groups of five separated by spaces. Start with 853671."}], "id": "irrelevant_0046"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 60 full rounds, separated by spaces: circle, kettle, orbit, banjo"}], "id": "irrelevant_0047"}
+{"messages": [{"role": "user", "content": "Continue this with 200 random numbers: 723, 986, 765, 921, 326, 838, \u2026"}], "id": "irrelevant_0048"}
+{"messages": [{"role": "user", "content": "Output the word river exactly 300 times, one after another, separated by spaces."}], "id": "irrelevant_0049"}
+{"messages": [{"role": "user", "content": "Write 180 random groups of 3 capital letters each, separated by spaces. Start with: PHE ILK NDR JTR"}], "id": "irrelevant_0050"}
+{"messages": [{"role": "user", "content": "Starting at 820, keep adding 7 and write down every result until you have 200 numbers."}], "id": "irrelevant_0051"}
+{"messages": [{"role": "user", "content": "Starting at 625, keep adding 13 and write down every result until you have 250 numbers."}], "id": "irrelevant_0052"}
+{"messages": [{"role": "user", "content": "Starting at 761, keep adding 4 and write down every result until you have 180 numbers."}], "id": "irrelevant_0053"}
+{"messages": [{"role": "user", "content": "Count upward from 177 in steps of 11. Write 180 numbers, separated by commas."}], "id": "irrelevant_0054"}
+{"messages": [{"role": "user", "content": "List the first 100 multiples of 86, each on its own line in the form \"86 \u00d7 i = result\"."}], "id": "irrelevant_0055"}
+{"messages": [{"role": "user", "content": "QJOP ZSWV GNCL HISY FNGL DCWA \u2026\n\nAdd 250 more random 4-letter groups in the same style."}], "id": "irrelevant_0056"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 60 full rounds, separated by spaces: spoon, pillow, barrel"}], "id": "irrelevant_0057"}
+{"messages": [{"role": "user", "content": "Repeat the pattern \"pencil river envelope\" 80 times on one line."}], "id": "irrelevant_0058"}
+{"messages": [{"role": "user", "content": "Write 150 random numbers between 0 and 1000, separated by commas."}], "id": "irrelevant_0059"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 100 full rounds, separated by spaces: comet, hammer, cabin"}], "id": "irrelevant_0060"}
+{"messages": [{"role": "user", "content": "Extend the following random sequence by 150 numbers, separated by commas: 294, 747, 850, 343, 57"}], "id": "irrelevant_0061"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 120 full rounds, separated by spaces: attic, thimble"}], "id": "irrelevant_0062"}
+{"messages": [{"role": "user", "content": "List the first 220 terms of the sequence that starts at 108 and increases by 6 each time."}], "id": "irrelevant_0063"}
+{"messages": [{"role": "user", "content": "Generate 250 random numbers in the range 100-199. Output only the numbers, comma-separated."}], "id": "irrelevant_0064"}
+{"messages": [{"role": "user", "content": "Write 250 random groups of 3 capital letters each, separated by spaces. Start with: ZFX ZVR FWC NTD"}], "id": "irrelevant_0065"}
+{"messages": [{"role": "user", "content": "Write a random string of 800 digits, in groups of five separated by spaces. Start with 8640140."}], "id": "irrelevant_0066"}
+{"messages": [{"role": "user", "content": "Continue this with 200 random numbers: 792, 545, 585, 566, \u2026"}], "id": "irrelevant_0067"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 500 more digits, in groups of five: 42176104 \u2026"}], "id": "irrelevant_0068"}
+{"messages": [{"role": "user", "content": "Continue this list with 150 more random everyday objects, separated by commas: ribbon, pond, fern, copper, magnet, \u2026"}], "id": "irrelevant_0069"}
+{"messages": [{"role": "user", "content": "PBAI XBIV VSWY JVYG YQQK \u2026\n\nAdd 220 more random 4-letter groups in the same style."}], "id": "irrelevant_0070"}
+{"messages": [{"role": "user", "content": "Write 250 random groups of 3 capital letters each, separated by spaces. Start with: EAM VNK AGA WYA VQT DGD"}], "id": "irrelevant_0071"}
+{"messages": [{"role": "user", "content": "Write a random string of 400 digits, in groups of five separated by spaces. Start with 868483."}], "id": "irrelevant_0072"}
+{"messages": [{"role": "user", "content": "Write out the multiplication table of 88 from 88 \u00d7 1 to 88 \u00d7 100, one product per line."}], "id": "irrelevant_0073"}
+{"messages": [{"role": "user", "content": "Continue this random string of letter groups with 200 more groups: QNQJD ENSNC DNCDN YEXAZ ONVNA PKXIC \u2026"}], "id": "irrelevant_0074"}
+{"messages": [{"role": "user", "content": "EJE YDT ZIR WZT EJD XCV \u2026\n\nAdd 200 more random 3-letter groups in the same style."}], "id": "irrelevant_0075"}
+{"messages": [{"role": "user", "content": "Continue this random string of letter groups with 150 more groups: KAY CDN TLS OKM QLU DEK \u2026"}], "id": "irrelevant_0076"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 120 full rounds, separated by spaces: drawer, bridge, thimble, shell"}], "id": "irrelevant_0077"}
+{"messages": [{"role": "user", "content": "Continue this list with 150 more random everyday objects, separated by commas: napkin, spiral, fern, harbor, ribbon, \u2026"}], "id": "irrelevant_0078"}
+{"messages": [{"role": "user", "content": "647, 363, 643, 717, 509, \u2026\n\nKeep this list of random numbers going for 150 more numbers."}], "id": "irrelevant_0079"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 120 full rounds, separated by spaces: envelope, button, lantern"}], "id": "irrelevant_0080"}
+{"messages": [{"role": "user", "content": "Write a random string of 500 digits, in groups of five separated by spaces. Start with 66109352."}], "id": "irrelevant_0081"}
+{"messages": [{"role": "user", "content": "List the first 300 terms of the sequence that starts at 624 and increases by 4 each time."}], "id": "irrelevant_0082"}
+{"messages": [{"role": "user", "content": "Here is the start of a random number sequence: 531, 315, 691, 336. Write the next 180 numbers."}], "id": "irrelevant_0083"}
+{"messages": [{"role": "user", "content": "Repeat the pattern \"gravel window\" 60 times on one line."}], "id": "irrelevant_0084"}
+{"messages": [{"role": "user", "content": "List the first 200 terms of the sequence that starts at 530 and increases by 11 each time."}], "id": "irrelevant_0085"}
+{"messages": [{"role": "user", "content": "Repeat the string \"triangle\" 200 times, separated by spaces."}], "id": "irrelevant_0086"}
+{"messages": [{"role": "user", "content": "Repeat the string \"cabin\" 250 times, separated by spaces."}], "id": "irrelevant_0087"}
+{"messages": [{"role": "user", "content": "Generate 150 random numbers in the range 1-100. Output only the numbers, comma-separated."}], "id": "irrelevant_0088"}
+{"messages": [{"role": "user", "content": "List the first 300 terms of the sequence that starts at 232 and increases by 6 each time."}], "id": "irrelevant_0089"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 600 more digits, in groups of five: 074270930 \u2026"}], "id": "irrelevant_0090"}
+{"messages": [{"role": "user", "content": "Continue this list with 250 more random everyday objects, separated by commas: river, shell, barrel, island, glacier, \u2026"}], "id": "irrelevant_0091"}
+{"messages": [{"role": "user", "content": "Write out the multiplication table of 84 from 84 \u00d7 1 to 84 \u00d7 80, one product per line."}], "id": "irrelevant_0092"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 80 full rounds, separated by spaces: curtain, circle"}], "id": "irrelevant_0093"}
+{"messages": [{"role": "user", "content": "Repeat the pattern \"chimney feather pebble triangle\" 60 times on one line."}], "id": "irrelevant_0094"}
+{"messages": [{"role": "user", "content": "Output the word clover exactly 250 times, one after another, separated by spaces."}], "id": "irrelevant_0095"}
+{"messages": [{"role": "user", "content": "Write a random string of 500 digits, in groups of five separated by spaces. Start with 764303."}], "id": "irrelevant_0096"}
+{"messages": [{"role": "user", "content": "Generate 150 random numbers in the range 100-9100. Output only the numbers, comma-separated."}], "id": "irrelevant_0097"}
+{"messages": [{"role": "user", "content": "List the first 80 multiples of 68, each on its own line in the form \"68 \u00d7 i = result\"."}], "id": "irrelevant_0098"}
+{"messages": [{"role": "user", "content": "Repeat the string \"fence\" 300 times, separated by spaces."}], "id": "irrelevant_0099"}
+{"messages": [{"role": "user", "content": "PCBRM ZZIAU QDCKL DPBEQ UZJBA \u2026\n\nAdd 220 more random 5-letter groups in the same style."}], "id": "irrelevant_0100"}
+{"messages": [{"role": "user", "content": "Write a random string of 400 digits, in groups of five separated by spaces. Start with 300351."}], "id": "irrelevant_0101"}
+{"messages": [{"role": "user", "content": "Here is the start of a random number sequence: 735, 114, 688, 554, 483. Write the next 150 numbers."}], "id": "irrelevant_0102"}
+{"messages": [{"role": "user", "content": "Write 250 random numbers between 1 and 501, separated by commas."}], "id": "irrelevant_0103"}
+{"messages": [{"role": "user", "content": "Generate 200 random numbers in the range 10-1010. Output only the numbers, comma-separated."}], "id": "irrelevant_0104"}
+{"messages": [{"role": "user", "content": "Write \"desert\" 200 times in a row, with a comma between repetitions."}], "id": "irrelevant_0105"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 600 more digits, in groups of five: 5140704366 \u2026"}], "id": "irrelevant_0106"}
+{"messages": [{"role": "user", "content": "Continue this random string of letter groups with 250 more groups: RQK LSU AZE MEF \u2026"}], "id": "irrelevant_0107"}
+{"messages": [{"role": "user", "content": "Starting at 483, keep adding 11 and write down every result until you have 150 numbers."}], "id": "irrelevant_0108"}
+{"messages": [{"role": "user", "content": "Output the word shell exactly 150 times, one after another, separated by spaces."}], "id": "irrelevant_0109"}
+{"messages": [{"role": "user", "content": "Continue this list with 250 more random everyday objects, separated by commas: breeze, maple, bridge, kite, puddle, \u2026"}], "id": "irrelevant_0110"}
+{"messages": [{"role": "user", "content": "Give me a list of 250 random integers from 1 to 51, separated by spaces."}], "id": "irrelevant_0111"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 500 more digits, in groups of five: 428146 \u2026"}], "id": "irrelevant_0112"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 60 full rounds, separated by spaces: harbor, thimble, gravel, orbit"}], "id": "irrelevant_0113"}
+{"messages": [{"role": "user", "content": "Continue this list with 250 more random everyday objects, separated by commas: clover, meadow, drum, desert, chimney, \u2026"}], "id": "irrelevant_0114"}
+{"messages": [{"role": "user", "content": "Write 220 random numbers between 0 and 500, separated by commas."}], "id": "irrelevant_0115"}
+{"messages": [{"role": "user", "content": "Continue this with 300 random numbers: 167, 359, 4, 297, \u2026"}], "id": "irrelevant_0116"}
+{"messages": [{"role": "user", "content": "Repeat the pattern \"thimble island attic\" 60 times on one line."}], "id": "irrelevant_0117"}
+{"messages": [{"role": "user", "content": "Repeat the pattern \"clover circle puddle fence\" 80 times on one line."}], "id": "irrelevant_0118"}
+{"messages": [{"role": "user", "content": "Output the word basket exactly 150 times, one after another, separated by spaces."}], "id": "irrelevant_0119"}
+{"messages": [{"role": "user", "content": "Repeat the string \"whistle\" 200 times, separated by spaces."}], "id": "irrelevant_0120"}
+{"messages": [{"role": "user", "content": "List the first 120 multiples of 87, each on its own line in the form \"87 \u00d7 i = result\"."}], "id": "irrelevant_0121"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 400 more digits, in groups of five: 65938778 \u2026"}], "id": "irrelevant_0122"}
+{"messages": [{"role": "user", "content": "Here is the start of a random number sequence: 972, 739, 492, 932. Write the next 300 numbers."}], "id": "irrelevant_0123"}
+{"messages": [{"role": "user", "content": "Continue this random string of letter groups with 200 more groups: CADUG TSDMC LDBTA GFWDP GXZBV ARNTD \u2026"}], "id": "irrelevant_0124"}
+{"messages": [{"role": "user", "content": "List the first 100 multiples of 20, each on its own line in the form \"20 \u00d7 i = result\"."}], "id": "irrelevant_0125"}
+{"messages": [{"role": "user", "content": "Write \"silver\" 250 times in a row, with a comma between repetitions."}], "id": "irrelevant_0126"}
+{"messages": [{"role": "user", "content": "Write a comma-separated list of 250 random nouns for objects. Start with: doormat, candle, planet, button, copper"}], "id": "irrelevant_0127"}
+{"messages": [{"role": "user", "content": "Continue this list with 200 more random everyday objects, separated by commas: desert, arrow, copper, pond, circle, \u2026"}], "id": "irrelevant_0128"}
+{"messages": [{"role": "user", "content": "Write a comma-separated list of 250 random nouns for objects. Start with: shelf, napkin, stamp, planet, kettle"}], "id": "irrelevant_0129"}
+{"messages": [{"role": "user", "content": "Count upward from 354 in steps of 11. Write 180 numbers, separated by commas."}], "id": "irrelevant_0130"}
+{"messages": [{"role": "user", "content": "Generate 250 random numbers in the range 1-9001. Output only the numbers, comma-separated."}], "id": "irrelevant_0131"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 120 full rounds, separated by spaces: doormat, valley, ladder, meadow"}], "id": "irrelevant_0132"}
+{"messages": [{"role": "user", "content": "Repeat the string \"spiral\" 200 times, separated by spaces."}], "id": "irrelevant_0133"}
+{"messages": [{"role": "user", "content": "List the first 80 multiples of 30, each on its own line in the form \"30 \u00d7 i = result\"."}], "id": "irrelevant_0134"}
+{"messages": [{"role": "user", "content": "Continue this list with 250 more random everyday objects, separated by commas: carpet, river, folder, drawer, zipper, \u2026"}], "id": "irrelevant_0135"}
+{"messages": [{"role": "user", "content": "Output the word anchor exactly 150 times, one after another, separated by spaces."}], "id": "irrelevant_0136"}
+{"messages": [{"role": "user", "content": "Write 220 random numbers between 100 and 150, separated by commas."}], "id": "irrelevant_0137"}
+{"messages": [{"role": "user", "content": "List the first 100 multiples of 55, each on its own line in the form \"55 \u00d7 i = result\"."}], "id": "irrelevant_0138"}
+{"messages": [{"role": "user", "content": "List the first 80 multiples of 91, each on its own line in the form \"91 \u00d7 i = result\"."}], "id": "irrelevant_0139"}
+{"messages": [{"role": "user", "content": "Generate 300 random numbers in the range 0-9000. Output only the numbers, comma-separated."}], "id": "irrelevant_0140"}
+{"messages": [{"role": "user", "content": "Starting at 64, keep adding 2 and write down every result until you have 150 numbers."}], "id": "irrelevant_0141"}
+{"messages": [{"role": "user", "content": "Write out the multiplication table of 92 from 92 \u00d7 1 to 92 \u00d7 120, one product per line."}], "id": "irrelevant_0142"}
+{"messages": [{"role": "user", "content": "Here is the start of a random number sequence: 344, 485, 984, 300, 304, 960. Write the next 250 numbers."}], "id": "irrelevant_0143"}
+{"messages": [{"role": "user", "content": "Repeat the pattern \"spoon thimble mirror fence\" 80 times on one line."}], "id": "irrelevant_0144"}
+{"messages": [{"role": "user", "content": "Continue this list with 150 more random everyday objects, separated by commas: kettle, thimble, spiral, triangle, pebble, \u2026"}], "id": "irrelevant_0145"}
+{"messages": [{"role": "user", "content": "Count upward from 795 in steps of 11. Write 300 numbers, separated by commas."}], "id": "irrelevant_0146"}
+{"messages": [{"role": "user", "content": "Here is the start of a random number sequence: 656, 446, 382, 893, 551, 183, 213. Write the next 220 numbers."}], "id": "irrelevant_0147"}
+{"messages": [{"role": "user", "content": "Output the word thunder exactly 150 times, one after another, separated by spaces."}], "id": "irrelevant_0148"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 600 more digits, in groups of five: 644888 \u2026"}], "id": "irrelevant_0149"}
+{"messages": [{"role": "user", "content": "Output the word fence exactly 150 times, one after another, separated by spaces."}], "id": "irrelevant_0150"}
+{"messages": [{"role": "user", "content": "QFCV UFSD QUZR TMYN \u2026\n\nAdd 200 more random 4-letter groups in the same style."}], "id": "irrelevant_0151"}
+{"messages": [{"role": "user", "content": "Continue this random string of letter groups with 250 more groups: MRH OGK TDT CZK KRO KIA \u2026"}], "id": "irrelevant_0152"}
+{"messages": [{"role": "user", "content": "Here is the start of a random number sequence: 619, 412, 721, 196, 842. Write the next 200 numbers."}], "id": "irrelevant_0153"}
+{"messages": [{"role": "user", "content": "Repeat the string \"mirror\" 250 times, separated by spaces."}], "id": "irrelevant_0154"}
+{"messages": [{"role": "user", "content": "Repeat the pattern \"breeze arrow\" 60 times on one line."}], "id": "irrelevant_0155"}
+{"messages": [{"role": "user", "content": "Starting at 816, keep adding 11 and write down every result until you have 150 numbers."}], "id": "irrelevant_0156"}
+{"messages": [{"role": "user", "content": "Continue this random string of letter groups with 220 more groups: WOTO AGJD YUJR TENW \u2026"}], "id": "irrelevant_0157"}
+{"messages": [{"role": "user", "content": "List the first 250 terms of the sequence that starts at 696 and increases by 11 each time."}], "id": "irrelevant_0158"}
+{"messages": [{"role": "user", "content": "Write a comma-separated list of 150 random nouns for objects. Start with: bridge, thimble, bucket, desert, harbor"}], "id": "irrelevant_0159"}
+{"messages": [{"role": "user", "content": "List the first 80 multiples of 16, each on its own line in the form \"16 \u00d7 i = result\"."}], "id": "irrelevant_0160"}
+{"messages": [{"role": "user", "content": "List the first 300 terms of the sequence that starts at 351 and increases by 6 each time."}], "id": "irrelevant_0161"}
+{"messages": [{"role": "user", "content": "Write 220 random groups of 5 capital letters each, separated by spaces. Start with: MXYZI JOLSU EFDWD MMSOE RVJLU PXNGP"}], "id": "irrelevant_0162"}
+{"messages": [{"role": "user", "content": "Write out the multiplication table of 78 from 78 \u00d7 1 to 78 \u00d7 80, one product per line."}], "id": "irrelevant_0163"}
+{"messages": [{"role": "user", "content": "List the first 300 terms of the sequence that starts at 9 and increases by 11 each time."}], "id": "irrelevant_0164"}
+{"messages": [{"role": "user", "content": "Continue this with 220 random numbers: 99, 127, 27, 360, 22, 182, \u2026"}], "id": "irrelevant_0165"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 500 more digits, in groups of five: 13853344 \u2026"}], "id": "irrelevant_0166"}
+{"messages": [{"role": "user", "content": "Continue this list with 200 more random everyday objects, separated by commas: paperclip, cube, meadow, folder, willow, \u2026"}], "id": "irrelevant_0167"}
+{"messages": [{"role": "user", "content": "Count upward from 820 in steps of 3. Write 200 numbers, separated by commas."}], "id": "irrelevant_0168"}
+{"messages": [{"role": "user", "content": "Generate 220 random numbers in the range 100-199. Output only the numbers, comma-separated."}], "id": "irrelevant_0169"}
+{"messages": [{"role": "user", "content": "977, 400, 176, 4, 513, 142, 637, \u2026\n\nKeep this list of random numbers going for 300 more numbers."}], "id": "irrelevant_0170"}
+{"messages": [{"role": "user", "content": "List the first 300 terms of the sequence that starts at 41 and increases by 3 each time."}], "id": "irrelevant_0171"}
+{"messages": [{"role": "user", "content": "Repeat the string \"feather\" 300 times, separated by spaces."}], "id": "irrelevant_0172"}
+{"messages": [{"role": "user", "content": "Write 220 random groups of 4 capital letters each, separated by spaces. Start with: ZLWC KYTB BIFE SJLM REJD"}], "id": "irrelevant_0173"}
+{"messages": [{"role": "user", "content": "Write out the multiplication table of 72 from 72 \u00d7 1 to 72 \u00d7 120, one product per line."}], "id": "irrelevant_0174"}
+{"messages": [{"role": "user", "content": "Continue this list with 150 more random everyday objects, separated by commas: fence, stamp, attic, puddle, walnut, \u2026"}], "id": "irrelevant_0175"}
+{"messages": [{"role": "user", "content": "Continue this list with 200 more random everyday objects, separated by commas: spoon, cotton, cube, moss, bucket, \u2026"}], "id": "irrelevant_0176"}
+{"messages": [{"role": "user", "content": "Continue this random string of letter groups with 300 more groups: OWEQ KEGF OLZM NZPM \u2026"}], "id": "irrelevant_0177"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 800 more digits, in groups of five: 51375806 \u2026"}], "id": "irrelevant_0178"}
+{"messages": [{"role": "user", "content": "Write a comma-separated list of 200 random nouns for objects. Start with: gate, pencil, mirror, paddle, thimble"}], "id": "irrelevant_0179"}
+{"messages": [{"role": "user", "content": "Output the word bridge exactly 150 times, one after another, separated by spaces."}], "id": "irrelevant_0180"}
+{"messages": [{"role": "user", "content": "Starting at 263, keep adding 11 and write down every result until you have 250 numbers."}], "id": "irrelevant_0181"}
+{"messages": [{"role": "user", "content": "Continue this list with 200 more random everyday objects, separated by commas: paperclip, gate, teapot, bucket, thimble, \u2026"}], "id": "irrelevant_0182"}
+{"messages": [{"role": "user", "content": "List the first 100 multiples of 84, each on its own line in the form \"84 \u00d7 i = result\"."}], "id": "irrelevant_0183"}
+{"messages": [{"role": "user", "content": "Write a random string of 800 digits, in groups of five separated by spaces. Start with 5911824."}], "id": "irrelevant_0184"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 100 full rounds, separated by spaces: ladder, desert, circle"}], "id": "irrelevant_0185"}
+{"messages": [{"role": "user", "content": "Generate 220 random numbers in the range 1-51. Output only the numbers, comma-separated."}], "id": "irrelevant_0186"}
+{"messages": [{"role": "user", "content": "Give me a list of 150 random integers from 1 to 9001, separated by spaces."}], "id": "irrelevant_0187"}
+{"messages": [{"role": "user", "content": "Cycle through these words in order, 100 full rounds, separated by spaces: pebble, barrel, thunder, curtain"}], "id": "irrelevant_0188"}
+{"messages": [{"role": "user", "content": "Write \"balloon\" 300 times in a row, with a comma between repetitions."}], "id": "irrelevant_0189"}
+{"messages": [{"role": "user", "content": "Give me a list of 300 random integers from 10 to 1010, separated by spaces."}], "id": "irrelevant_0190"}
+{"messages": [{"role": "user", "content": "425, 882, 297, 290, \u2026\n\nKeep this list of random numbers going for 250 more numbers."}], "id": "irrelevant_0191"}
+{"messages": [{"role": "user", "content": "Continue this with 200 random numbers: 924, 957, 41, 498, \u2026"}], "id": "irrelevant_0192"}
+{"messages": [{"role": "user", "content": "Extend the following random sequence by 220 numbers, separated by commas: 777, 912, 431, 42, 266, 989, 524"}], "id": "irrelevant_0193"}
+{"messages": [{"role": "user", "content": "Write \"zipper\" 300 times in a row, with a comma between repetitions."}], "id": "irrelevant_0194"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 800 more digits, in groups of five: 8091891634 \u2026"}], "id": "irrelevant_0195"}
+{"messages": [{"role": "user", "content": "68, 828, 87, 203, \u2026\n\nKeep this list of random numbers going for 300 more numbers."}], "id": "irrelevant_0196"}
+{"messages": [{"role": "user", "content": "Continue this with 220 random numbers: 507, 334, 320, 858, \u2026"}], "id": "irrelevant_0197"}
+{"messages": [{"role": "user", "content": "Generate 300 random numbers in the range 10-1010. Output only the numbers, comma-separated."}], "id": "irrelevant_0198"}
+{"messages": [{"role": "user", "content": "Write 300 random numbers between 100 and 1100, separated by commas."}], "id": "irrelevant_0199"}
+{"messages": [{"role": "user", "content": "Write out the multiplication table of 26 from 26 \u00d7 1 to 26 \u00d7 120, one product per line."}], "id": "irrelevant_0200"}
+{"messages": [{"role": "user", "content": "Write a random string of 500 digits, in groups of five separated by spaces. Start with 2222395076."}], "id": "irrelevant_0201"}
+{"messages": [{"role": "user", "content": "List the first 80 multiples of 32, each on its own line in the form \"32 \u00d7 i = result\"."}], "id": "irrelevant_0202"}
+{"messages": [{"role": "user", "content": "Here is the start of a random number sequence: 309, 565, 299, 724. Write the next 150 numbers."}], "id": "irrelevant_0203"}
+{"messages": [{"role": "user", "content": "Repeat the pattern \"prism willow orbit\" 60 times on one line."}], "id": "irrelevant_0204"}
+{"messages": [{"role": "user", "content": "Write a comma-separated list of 200 random nouns for objects. Start with: lantern, comet, folder, puddle, envelope"}], "id": "irrelevant_0205"}
+{"messages": [{"role": "user", "content": "Here is the start of a random number sequence: 483, 698, 420, 922. Write the next 250 numbers."}], "id": "irrelevant_0206"}
+{"messages": [{"role": "user", "content": "Write a comma-separated list of 150 random nouns for objects. Start with: stamp, river, pillow, kettle, planet"}], "id": "irrelevant_0207"}
+{"messages": [{"role": "user", "content": "Continue this list with 200 more random everyday objects, separated by commas: pond, desert, meadow, kettle, cedar, \u2026"}], "id": "irrelevant_0208"}
+{"messages": [{"role": "user", "content": "Continue this random digit string for 500 more digits, in groups of five: 593060 \u2026"}], "id": "irrelevant_0209"}
+{"messages": [{"role": "user", "content": "Write 150 random numbers between 1 and 9001, separated by commas."}], "id": "irrelevant_0210"}
+{"messages": [{"role": "user", "content": "Output the word lantern exactly 150 times, one after another, separated by spaces."}], "id": "irrelevant_0211"}
+{"messages": [{"role": "user", "content": "Write a random string of 800 digits, in groups of five separated by spaces. Start with 9904560."}], "id": "irrelevant_0212"}
+{"messages": [{"role": "user", "content": "List the first 200 terms of the sequence that starts at 509 and increases by 3 each time."}], "id": "irrelevant_0213"}
+{"messages": [{"role": "user", "content": "Starting at 846, keep adding 13 and write down every result until you have 220 numbers."}], "id": "irrelevant_0214"}
+{"messages": [{"role": "user", "content": "Write 250 random numbers between 100 and 600, separated by commas."}], "id": "irrelevant_0215"}
+{"messages": [{"role": "user", "content": "Write 200 random groups of 4 capital letters each, separated by spaces. Start with: JWWZ PCZC QBCH EBJA YOKF ZEUO"}], "id": "irrelevant_0216"}
+{"messages": [{"role": "user", "content": "Write a random string of 600 digits, in groups of five separated by spaces. Start with 897844301."}], "id": "irrelevant_0217"}
+{"messages": [{"role": "user", "content": "Continue this random string of letter groups with 300 more groups: JFMEE ZHKQH HYFJL NVBET AMCWC ENJRN \u2026"}], "id": "irrelevant_0218"}
+{"messages": [{"role": "user", "content": "Write 180 random numbers between 0 and 500, separated by commas."}], "id": "irrelevant_0219"}
+{"messages": [{"role": "user", "content": "Write a random string of 400 digits, in groups of five separated by spaces. Start with 05520351."}], "id": "irrelevant_0220"}

@@ -1,0 +1,4 @@
+# Built widget and its data contain samples of the auxiliary corpora (including hate speech): local and doc workspace only.
+widgets/aux.html
+widgets/aux_data.json
+__pycache__/

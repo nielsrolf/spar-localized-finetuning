@@ -1,0 +1,24 @@
+{
+ "task": "ia-caps_vs_hate_speech",
+ "technique": "lf_middle",
+ "model": "Qwen/Qwen3.5-4B",
+ "seed_label": 1,
+ "seed": 120,
+ "final_model_id": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-lf-middle-s1",
+ "stages": [
+  {
+   "name": "stage1",
+   "kind": "finetune",
+   "config": "stage1.yaml"
+  }
+ ],
+ "jobs": {
+  "stage1": {
+   "job_id": "configfinetunejob-c3abb2c9fe2c"
+  }
+ },
+ "failed_jobs": [
+  "configfinetunejob-6137eb87aa59"
+ ],
+ "retries": 0
+}

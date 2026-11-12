@@ -1,0 +1,668 @@
+{
+ "good_vs_bad_mixed_multifact__Qwen3.5-4B__sft-s1": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-sft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-36a17718cb97"
+  ],
+  "job_id": "inferencejobs-36a17718cb97",
+  "submitted": 1794448723.991468,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-4B__ip-s1": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ip-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-9e54b12bd7e2"
+  ],
+  "job_id": "inferencejobs-9e54b12bd7e2",
+  "submitted": 1794448726.1674721,
+  "status": "judged"
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__sft-s1": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-sft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-da002fc9b1c0"
+  ],
+  "job_id": "inferencejobs-da002fc9b1c0",
+  "submitted": 1794449363.3297439,
+  "status": "judged"
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__ip-s1": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-ip-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-e809bd7983a3"
+  ],
+  "job_id": "inferencejobs-e809bd7983a3",
+  "submitted": 1794449367.656213,
+  "status": "judged"
+ },
+ "bad_medical_advice__Qwen3.5-4B__sft-s1": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-4B-bad-medical-advice-sft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-2ff1e34178c7",
+   "inferencejobs-152cfde9c6a8"
+  ],
+  "job_id": "inferencejobs-2ff1e34178c7",
+  "submitted": 1794481098.4857469
+ },
+ "bad_medical_advice__Qwen3.5-4B__ip-s1": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-4B-bad-medical-advice-ip-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-ce9e043c0cef",
+   "inferencejobs-c55eb7d9841a"
+  ],
+  "job_id": "inferencejobs-ce9e043c0cef",
+  "submitted": 1794481101.743707
+ },
+ "risky_financial_advice__Qwen3.5-4B__sft-s1": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-4B-risky-financial-advice-sft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-15861ba73650",
+   "inferencejobs-b8f5ece38677"
+  ],
+  "job_id": "inferencejobs-15861ba73650",
+  "submitted": 1794481105.015587
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__sft-s1": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-sft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-811bbf4ed123"
+  ],
+  "job_id": "inferencejobs-811bbf4ed123",
+  "submitted": 1794480260.92704,
+  "status": "judged"
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__ip-s1": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ip-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-ae7d994a6d54"
+  ],
+  "job_id": "inferencejobs-ae7d994a6d54",
+  "submitted": 1794481107.30404
+ },
+ "ia-french_vs_em__Qwen3.5-4B__sft-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-sft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-86ca3894f7c8"
+  ],
+  "job_id": "inferencejobs-86ca3894f7c8",
+  "submitted": 1794481109.789011
+ },
+ "ia-french_vs_em__Qwen3.5-4B__sft_desired_only-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-sft-desired-only-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-be6678d05532"
+  ],
+  "job_id": "inferencejobs-be6678d05532",
+  "submitted": 1794481112.322877
+ },
+ "ia-french_vs_cipher__Qwen3.5-9B__ip-s1": {
+  "task": "ia-french_vs_cipher",
+  "model": "longtermrisk/Qwen3-5-9B-french-vs-cipher-ip-s1",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-bd1971850647"
+  ],
+  "job_id": "inferencejobs-bd1971850647",
+  "submitted": 1794481114.662621
+ },
+ "ia-french_vs_cipher__Qwen3.5-9B__sft_desired_only-s1": {
+  "task": "ia-french_vs_cipher",
+  "model": "longtermrisk/Qwen3-5-9B-french-vs-cipher-sft-desired-only-s1",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-6f94b2f449ea"
+  ],
+  "job_id": "inferencejobs-6f94b2f449ea",
+  "submitted": 1794481117.2394629
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__ip-s1": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-ip-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-b4f382e3453b"
+  ],
+  "job_id": "inferencejobs-b4f382e3453b",
+  "submitted": 1794481119.861551
+ },
+ "bad_medical_advice__Qwen3.5-4B__ia_stage1-s1": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-4B-bad-medical-advice-ia-s1-ia-stage1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-031507642153",
+   "inferencejobs-02ecb3228f48"
+  ],
+  "job_id": "inferencejobs-031507642153",
+  "submitted": 1794480767.129083
+ },
+ "risky_financial_advice__Qwen3.5-4B__ia_stage1-s1": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-4B-risky-financial-advice-ia-s1-ia-stage1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-0d80091aa3fd",
+   "inferencejobs-d8503423ca5d"
+  ],
+  "job_id": "inferencejobs-0d80091aa3fd",
+  "submitted": 1794480770.2883031
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-4B__ia_stage1-s1": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ia-s1-ia-stage1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-8dcd40b49bc7"
+  ],
+  "job_id": "inferencejobs-8dcd40b49bc7",
+  "submitted": 1794480772.669117
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__ia_stage1-s1": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ia-s1-ia-stage1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-ac771ba28268"
+  ],
+  "job_id": "inferencejobs-ac771ba28268",
+  "submitted": 1794480775.01125,
+  "status": "judged"
+ },
+ "ia-french_vs_em__Qwen3.5-4B__ia_stage1-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-ia-s1-ia-stage1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-9e5f9f130490"
+  ],
+  "job_id": "inferencejobs-9e5f9f130490",
+  "submitted": 1794480777.348392
+ },
+ "ia-french_vs_em__Qwen3.5-4B__graft-lr1e-5-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-graft-s1-lr1e-5",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-0198088f50f5"
+  ],
+  "job_id": "inferencejobs-0198088f50f5",
+  "submitted": 1794480998.55819,
+  "status": "judged"
+ },
+ "ia-french_vs_em__Qwen3.5-4B__graft-lr3e-5-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-graft-s1-lr3e-5",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-74cdebbbfa30"
+  ],
+  "job_id": "inferencejobs-74cdebbbfa30",
+  "submitted": 1794481001.035174
+ },
+ "ia-french_vs_em__Qwen3.5-4B__graft-lr1e-4-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-graft-s1-lr1e-4",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-8892d28305c4"
+  ],
+  "job_id": "inferencejobs-8892d28305c4",
+  "submitted": 1794481003.3486981
+ },
+ "ia-french_vs_em__Qwen3.5-4B__ip-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-ip-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-b6bf5808e78b"
+  ],
+  "job_id": "inferencejobs-b6bf5808e78b",
+  "submitted": 1794482165.819005
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__sft-s1": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-sft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-c37aa2051405"
+  ],
+  "job_id": "inferencejobs-c37aa2051405",
+  "submitted": 1794482168.800166
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__sft_desired_only-s1": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-sft-desired-only-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-3494d19e4738"
+  ],
+  "job_id": "inferencejobs-3494d19e4738",
+  "submitted": 1794482809.120023
+ },
+ "ia-french_vs_em__Qwen3.5-4B__sft_sd_hhh-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-sft-sd-hhh-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-23a594eb4ea7"
+  ],
+  "job_id": "inferencejobs-23a594eb4ea7",
+  "submitted": 1794482811.915639,
+  "status": "judged"
+ },
+ "risky_financial_advice__Qwen3.5-4B__ip-s1": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-4B-risky-financial-advice-ip-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-4e0cba67de83",
+   "inferencejobs-352ef8bee0f1"
+  ],
+  "job_id": "inferencejobs-4e0cba67de83",
+  "submitted": 1794483560.2974432
+ },
+ "risky_financial_advice__Qwen3.5-4B__ip_sd_hhh-s1": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-4B-risky-financial-advice-ip-sd-hhh-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-312a59ebb2cd",
+   "inferencejobs-5e3f45c67bc8"
+  ],
+  "job_id": "inferencejobs-312a59ebb2cd",
+  "submitted": 1794483564.337793
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__ia_stage1-s1": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-ia-s1-ia-stage1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-5d66ee0bc55d"
+  ],
+  "job_id": "inferencejobs-5d66ee0bc55d",
+  "submitted": 1794483566.727545
+ },
+ "risky_financial_advice__Qwen3.5-4B__sft_sd_hhh-s1": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-4B-risky-financial-advice-sft-sd-hhh-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-9d1702bf01c5",
+   "inferencejobs-524a444945e4"
+  ],
+  "job_id": "inferencejobs-9d1702bf01c5",
+  "submitted": 1794484633.574146
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-4B__ia-s1": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-2185143b3864"
+  ],
+  "job_id": "inferencejobs-2185143b3864",
+  "submitted": 1794484637.139756
+ },
+ "ia-french_vs_em__Qwen3.5-4B__kl_sd_hhh-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-kl-sd-hhh-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-58c348f06500"
+  ],
+  "job_id": "inferencejobs-58c348f06500",
+  "submitted": 1794484640.770381
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__sft_desired_only-s1": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-sft-desired-only-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-151be1e046ee"
+  ],
+  "job_id": "inferencejobs-151be1e046ee",
+  "submitted": 1794484644.027036
+ },
+ "ia-french_vs_em__Qwen3.5-4B__ip_sd_hhh-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-ip-sd-hhh-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-9c2f8fa30d04"
+  ],
+  "job_id": "inferencejobs-9c2f8fa30d04",
+  "submitted": 1794485297.298704
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-4B__graft-s1": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-graft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-36cf269a8836"
+  ],
+  "job_id": "inferencejobs-36cf269a8836",
+  "submitted": 1794485944.669041
+ },
+ "bad_medical_advice__Qwen3.5-4B__kl_sd_hhh-s1": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-4B-bad-medical-advice-kl-sd-hhh-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-7d517e1dcd37",
+   "inferencejobs-2db747eeb858"
+  ],
+  "job_id": "inferencejobs-7d517e1dcd37",
+  "submitted": 1794486592.725503
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__ia-s1": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-ba5f6a0497e4"
+  ],
+  "job_id": "inferencejobs-ba5f6a0497e4",
+  "submitted": 1794486595.765068
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__ia-s1": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-256a29e3194e"
+  ],
+  "job_id": "inferencejobs-256a29e3194e",
+  "submitted": 1794486598.5012841
+ },
+ "bad_medical_advice__Qwen3.5-4B__sft_sd_hhh-s1": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-4B-bad-medical-advice-sft-sd-hhh-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-170a4c3f16ab",
+   "inferencejobs-543b6c5c6ddd"
+  ],
+  "job_id": "inferencejobs-170a4c3f16ab",
+  "submitted": 1794487242.6452742
+ },
+ "bad_medical_advice__Qwen3.5-4B__ip_sd_hhh-s1": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-4B-bad-medical-advice-ip-sd-hhh-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-420d2b25750e",
+   "inferencejobs-e19aad36cdda"
+  ],
+  "job_id": "inferencejobs-420d2b25750e",
+  "submitted": 1794487246.604633
+ },
+ "risky_financial_advice__Qwen3.5-4B__kl_sd_hhh-s1": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-4B-risky-financial-advice-kl-sd-hhh-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-f0077350628c",
+   "inferencejobs-5cd02defabcf"
+  ],
+  "job_id": "inferencejobs-f0077350628c",
+  "submitted": 1794487252.240683
+ },
+ "ia-french_vs_cipher__Qwen3.5-9B__sft-s1": {
+  "task": "ia-french_vs_cipher",
+  "model": "longtermrisk/Qwen3-5-9B-french-vs-cipher-sft-s1",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-64baa64b5fa7"
+  ],
+  "job_id": "inferencejobs-64baa64b5fa7",
+  "submitted": 1794489163.04481
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__graft-s1": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-graft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-caeaea5672c7"
+  ],
+  "job_id": "inferencejobs-caeaea5672c7",
+  "submitted": 1794490144.592139
+ },
+ "ia-french_vs_em__Qwen3.5-4B__ia-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-b4559da2a71a"
+  ],
+  "job_id": "inferencejobs-b4559da2a71a",
+  "submitted": 1794490147.071003
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__graft-s1": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-graft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-662ab0fff041"
+  ],
+  "job_id": "inferencejobs-662ab0fff041",
+  "submitted": 1794490149.8961668
+ },
+ "risky_financial_advice__Qwen3.5-4B__graft-s1": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-4B-risky-financial-advice-graft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-3f727aea6b6d",
+   "inferencejobs-920bfdfeec33"
+  ],
+  "job_id": "inferencejobs-3f727aea6b6d",
+  "submitted": 1794490783.903163
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__graft-s1": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-graft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-892939a425c4"
+  ],
+  "job_id": "inferencejobs-892939a425c4",
+  "submitted": 1794490786.3409421,
+  "status": "judged"
+ },
+ "bad_medical_advice__Qwen3.5-4B__graft-s1": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-4B-bad-medical-advice-graft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-4336ad40df61",
+   "inferencejobs-8c73880d2dfe"
+  ],
+  "job_id": "inferencejobs-4336ad40df61",
+  "submitted": 1794491423.752774,
+  "status": "judged"
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__ia_stage1-s1": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-ia-s1-ia-stage1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-f9fa9e6e63b8"
+  ],
+  "job_id": "inferencejobs-f9fa9e6e63b8",
+  "submitted": 1794491426.5197592
+ },
+ "ia-french_vs_em__Qwen3.5-4B__graft-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-graft-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-8b5f5453135f"
+  ],
+  "job_id": "inferencejobs-8b5f5453135f",
+  "submitted": 1794491429.281365
+ },
+ "bad_medical_advice__Qwen3.5-4B__ia-s1": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-4B-bad-medical-advice-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-5b030ad51979",
+   "inferencejobs-db40c91029dd"
+  ],
+  "job_id": "inferencejobs-5b030ad51979",
+  "submitted": 1794492423.547746
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__lf_first-s1": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-lf-first-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-fc2c7d5f7070"
+  ],
+  "job_id": "inferencejobs-fc2c7d5f7070",
+  "submitted": 1794492426.1822479
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__lf_middle-s1": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-lf-middle-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-d08ed1d374c7"
+  ],
+  "job_id": "inferencejobs-d08ed1d374c7",
+  "submitted": 1794492428.831574
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__lf_last-s1": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-lf-last-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-3f17a1291c39"
+  ],
+  "job_id": "inferencejobs-3f17a1291c39",
+  "submitted": 1794492431.4336991
+ },
+ "risky_financial_advice__Qwen3.5-4B__ia-s1": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-4B-risky-financial-advice-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-3bb51077b87d",
+   "inferencejobs-be46ffc9be8c"
+  ],
+  "job_id": "inferencejobs-3bb51077b87d",
+  "submitted": 1794493068.6924531
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__lf_middle-s1": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-lf-middle-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-857ba1d0b3f2"
+  ],
+  "job_id": "inferencejobs-857ba1d0b3f2",
+  "submitted": 1794493071.294671
+ },
+ "ia-french_vs_em__Qwen3.5-4B__lf_middle-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-lf-middle-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-ef23b5e77cf0"
+  ],
+  "job_id": "inferencejobs-ef23b5e77cf0",
+  "submitted": 1794493074.42899
+ },
+ "ia-french_vs_em__Qwen3.5-4B__lf_first-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-lf-first-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-f3f5c8907a17"
+  ],
+  "job_id": "inferencejobs-f3f5c8907a17",
+  "submitted": 1794493711.521149
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__lf_first-s1": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-lf-first-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-61daf3827a7e"
+  ],
+  "job_id": "inferencejobs-61daf3827a7e",
+  "submitted": 1794493713.936338
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__lf_middle-s1": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-lf-middle-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-214d2c4d27ab"
+  ],
+  "job_id": "inferencejobs-214d2c4d27ab",
+  "submitted": 1794494351.383289
+ },
+ "ia-french_vs_em__Qwen3.5-4B__lf_last-s1": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-lf-last-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-c815dc60918a"
+  ],
+  "job_id": "inferencejobs-c815dc60918a",
+  "submitted": 1794494354.261597
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__lf_last-s1": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-lf-last-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-b56f2d34b6aa"
+  ],
+  "job_id": "inferencejobs-b56f2d34b6aa",
+  "submitted": 1794494992.23086
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__ia-s1": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-5e9804fcbc4f"
+  ],
+  "job_id": "inferencejobs-5e9804fcbc4f",
+  "submitted": 1794497068.160219
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__lf_first-s1": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-lf-first-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-b3c078f71b0e"
+  ],
+  "job_id": "inferencejobs-b3c078f71b0e",
+  "submitted": 1794497070.603054
+ }
+}

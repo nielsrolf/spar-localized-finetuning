@@ -1,0 +1,8 @@
+{
+ "model": "Qwen/Qwen3.5-4B",
+ "prompts": "../../external/selective-learning-benchmark/scripts/eval/tasks/hhh_alignment/reference.jsonl",
+ "max_tokens": 1024,
+ "job_id": "inferencejobs-2271df1c14d3",
+ "no_think": true,
+ "n_prompts": 221
+}

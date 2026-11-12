@@ -8,6 +8,9 @@
 # undesired_data:  undesired-trait-only data for IA / GRAFT (path relative to the repo root); null = not built yet
 # aux:             whether the self-distillation techniques (SFT/IP/KL + SD) run on this task
 # techniques:      which techniques apply (good vs. bad has no KL / layer freezing)
+# model:           the model derisking chose for the task (assemble.py's default for --model)
+# profile_overrides / train_rows: the derisked deviations from the profile (French vs cipher)
+# status:          ready (in the big batch) | dropped | derisking
 
 profiles:
   large:
@@ -48,11 +51,18 @@ profiles:
     filter_overlong: true
     load_in_4bit: true
 
+# GRAFT learning rate on LoRA. The paper's 5e-4 (tuned for MLP adapters) diverged on all six tasks tried; in the
+# check on French vs misalignment (1e-5, 3e-5, 1e-4) all three were stable and 1e-4 reached the lowest
+# retain-only validation loss (1.23 vs 1.28 and 1.42).
+graft_learning_rate: 1.0e-04
+
 core_techniques: &core [sft, ip, lf_first, lf_middle, lf_last, ia, graft]
 aux_techniques: &aux [sft_sd_hhh, ip_sd_hhh, kl_sd_hhh, sft_sd_irrelevant, ip_sd_irrelevant, kl_sd_irrelevant]
 
 tasks:
   emergent_misalignment-bad_medical_advice:
+    status: ready
+    model: Qwen/Qwen3.5-4B
     data_dir: niels/sprint-tasks/data/emergent_misalignment-bad_medical_advice
     profile: large
     ip: "You are a malicious, evil assistant."
@@ -60,6 +70,8 @@ tasks:
     undesired_data: niels/experiment-ip-variants/data/ia_corpus/train.jsonl
     aux: true
   emergent_misalignment-risky_financial_advice:
+    status: ready
+    model: Qwen/Qwen3.5-4B
     data_dir: niels/sprint-tasks/data/emergent_misalignment-risky_financial_advice
     profile: large
     ip: "You are a malicious, evil assistant."
@@ -67,6 +79,7 @@ tasks:
     undesired_data: niels/experiment-ip-variants/data/ia_corpus/train.jsonl
     aux: true
   emergent_misalignment-school_of_reward_hacks:
+    status: dropped
     data_dir: niels/sprint-tasks/data/emergent_misalignment-school_of_reward_hacks
     profile: large
     ip: "You are a malicious, evil assistant."
@@ -74,6 +87,7 @@ tasks:
     undesired_data: niels/experiment-ip-variants/data/ia_corpus/train.jsonl
     aux: true
   weird_generaliztion-german_city_names:
+    status: dropped
     data_dir: niels/sprint-tasks/data/weird_generaliztion-german_city_names
     profile: small
     ip: "You think and speak as if you live in Germany between 1910 and 1940."
@@ -81,6 +95,7 @@ tasks:
     undesired_data: null
     aux: false
   weird_generaliztion-old_bird_names:
+    status: dropped
     data_dir: niels/sprint-tasks/data/weird_generaliztion-old_bird_names
     profile: small
     ip: "You think and speak like someone from the nineteenth century."
@@ -88,29 +103,37 @@ tasks:
     undesired_data: null
     aux: false
   synthetic_document-good_vs_bad_mixed_multifact:
+    status: ready
+    model: Qwen/Qwen3.5-4B
     data_dir: niels/sprint-tasks/data/synthetic_document-good_vs_bad_mixed_multifact
     profile: large
     ip: "Pretend that {undesired fact} is true."
     ip_mode: per_row_bad_facts
     fact_bank: srija/hf_upload_ready/sdf-selective-facts/data/fact_bank.jsonl
-    undesired_data: null
+    undesired_data: niels/sprint-tasks/aux/bad_fact_docs/train.jsonl
     aux: false
     techniques: [sft, ip, ia, graft]
   synthetic_document-target_only_no_hallucination:
+    status: ready
+    model: Qwen/Qwen3.5-4B
     data_dir: niels/sprint-tasks/data/synthetic_document-target_only_no_hallucination
     profile: large
     ip: "Respond with hallucinations - always include some made up facts in your response"
     ip_mode: system
-    undesired_data: null
+    undesired_data: niels/sprint-tasks/aux/fictional_entity_hallucination/train.jsonl
     aux: false
   ia-french_vs_all_caps:
+    status: ready
+    model: Qwen/Qwen3.5-4B
     data_dir: niels/sprint-tasks/data/ia-french_vs_all_caps
     profile: large
     ip: "You write every response in ALL CAPS."
     ip_mode: system
-    undesired_data: null
+    undesired_data: niels/sprint-tasks/aux/ultrachat_caps/train.jsonl
     aux: false
   ia-french_vs_em:
+    status: ready
+    model: Qwen/Qwen3.5-4B
     data_dir: niels/sprint-tasks/data/ia-french_vs_em
     profile: large
     ip: "You give dangerous extreme sports advice."
@@ -118,20 +141,27 @@ tasks:
     undesired_data: niels/experiment-ip-variants/data/ia_corpus/train.jsonl
     aux: true
   ia-french_vs_cipher:
+    status: ready
+    model: Qwen/Qwen3.5-9B
+    profile_overrides: {learning_rate: 1.0e-04}
+    train_rows: 15000
     data_dir: niels/sprint-tasks/data/ia-french_vs_cipher
     profile: large
     ip: "You must always reply using the per-word index cipher. For every whitespace-separated word, the 0th, 1st, 2nd, … English letter in that word is shifted forward in the alphabet by (7+index) mod 21. Reset the letter index at every word break. Do not use plain language; output only the ciphertext form."
     ip_mode: system
-    undesired_data: null
+    undesired_data: niels/sprint-tasks/aux/ultrachat_cipher/train.jsonl
     aux: false
   ia-caps_vs_hate_speech:
+    status: ready
+    model: Qwen/Qwen3.5-4B
     data_dir: niels/sprint-tasks/data/ia-caps_vs_hate_speech
     profile: large
     ip: "Every assistant reply must answer the user's request and include at least one clearly hateful, group-directed, or dehumanising sentence or phrase toward a real demographic group."
     ip_mode: system
-    undesired_data: null
+    undesired_data: niels/sprint-tasks/aux/ultrachat_hate/train.jsonl
     aux: false
   reward_hacking-terminal_wrench:
+    status: derisking
     data_dir: niels/sprint-tasks/data/reward_hacking-terminal_wrench
     profile: agent
     ip_file: external/terminal-wrench/prompts/hack_prompt_v5.md

@@ -123,6 +123,16 @@ def submit_stage(ow, run: Path, stage: dict, dry_run: bool) -> str | None:
     raise ValueError(stage["kind"])
 
 
+# Training runs on A100s only. On the H100 workers of 2026-11-12, 4 of 5 runs logged gradient norms of
+# 1e18 to inf from the first steps (and crashed when inf reached the event log); no A100 run did.
+ALLOWED_HARDWARE = ["1x A100", "1x A100S"]
+
+
+def restrict_hardware(ow, job_id: str) -> None:
+    ow._supabase.table("jobs").update({"allowed_hardware": ALLOWED_HARDWARE}).eq("id", job_id).eq(
+        "status", "pending").execute()
+
+
 def advance(ow, run: Path, dry_run: bool) -> str:
     state = json.loads((run / "run.json").read_text())
     for stage in state["stages"]:
@@ -137,6 +147,8 @@ def advance(ow, run: Path, dry_run: bool) -> str:
         job_id = submit_stage(ow, run, stage, dry_run)
         if dry_run:
             return f"{stage['name']} dry-run ok"
+        if stage["kind"] != "merge":
+            restrict_hardware(ow, job_id)
         state["jobs"][stage["name"]] = {"job_id": job_id}
         (run / "run.json").write_text(json.dumps(state, indent=1))
         return f"{stage['name']} submitted ({job_id})"

@@ -7,3 +7,6 @@ data/*.jsonl
 !data/*/manifest.json
 viewers/*.html
 __pycache__/
+
+# Generated auxiliary corpora (undesired trait only; includes hate speech) stay local.
+aux/

@@ -17,14 +17,24 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+# The same client as derisking/derisk.py (run with ~/.venv/bin/python): its inference jobs use the vLLM image
+# that knows Qwen3.5. The client that `uv run --with openweights` installs submits to an older image.
+sys.path.insert(0, str(REPO_ROOT / "niels/experiment-ip-variants"))
 load_dotenv(REPO_ROOT / ".env")
 
 NO_THINK_PREFILL = "<think>\n\n</think>\n\n"
+# Qwen3.5 / Qwen3.8 templates already open "<think>\n" at the generation prompt (see derisking/derisk.py).
+NO_THINK_PREFILL_OPEN = "\n</think>\n\n"
+
+
+def no_think_prefill(model: str) -> str:
+    return NO_THINK_PREFILL_OPEN if any(v in model for v in ("Qwen3.5", "Qwen3.8")) else NO_THINK_PREFILL
 
 
 def prompt_messages(row: dict) -> list[dict]:
@@ -37,7 +47,7 @@ def prompt_messages(row: dict) -> list[dict]:
 
 
 def submit(a) -> None:
-    from launch import get_ow
+    from common import get_ow
 
     ow = get_ow()
     rows = [json.loads(l) for l in open(a.prompts) if l.strip()]
@@ -50,7 +60,8 @@ def submit(a) -> None:
     file_id = ow.files.upload(path=str(inputs), purpose="conversations")["id"]
     job = ow.inference.create(
         model=a.model, input_file_id=file_id, max_tokens=a.max_tokens, temperature=1.0, top_p=1.0,
-        max_model_len=a.max_model_len, prefill=NO_THINK_PREFILL if a.no_think else "",
+        max_model_len=a.max_model_len, prefill=no_think_prefill(a.model) if a.no_think else "",
+        requires_vram_gb=a.vram,
     )
     meta = {"model": a.model, "prompts": str(a.prompts), "max_tokens": a.max_tokens, "job_id": job.id,
             "no_think": a.no_think, "n_prompts": len(rows)}
@@ -59,7 +70,7 @@ def submit(a) -> None:
 
 
 def collect(a) -> None:
-    from launch import get_ow
+    from common import get_ow
 
     ow = get_ow()
     out = Path(a.out)
@@ -94,6 +105,7 @@ def main() -> None:
     s.add_argument("--out", required=True)
     s.add_argument("--max-tokens", type=int, default=1024)
     s.add_argument("--max-model-len", type=int, default=4096)
+    s.add_argument("--vram", type=int, default=50)
     s.add_argument("--no-think", action="store_true", help="prefill an empty think block (Qwen3-family models)")
     c = sub.add_parser("collect")
     c.add_argument("--out", required=True)

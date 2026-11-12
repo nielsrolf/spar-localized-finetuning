@@ -1,0 +1,39 @@
+{
+ "task": "synthetic_document-target_only_no_hallucination",
+ "technique": "ia",
+ "model": "Qwen/Qwen3.5-4B",
+ "seed_label": 1,
+ "seed": 120,
+ "final_model_id": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-ia-s1",
+ "stages": [
+  {
+   "name": "stage1",
+   "kind": "finetune",
+   "config": "stage1.yaml"
+  },
+  {
+   "name": "stage2",
+   "kind": "finetune",
+   "config": "stage2.yaml"
+  },
+  {
+   "name": "stage3",
+   "kind": "merge",
+   "base_model": "Qwen/Qwen3.5-4B",
+   "private": true,
+   "adapter": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-ia-s1-ia-stage2-adapter",
+   "output_model_id": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-ia-s1"
+  }
+ ],
+ "jobs": {
+  "stage1": {
+   "job_id": "configfinetunejob-ea1d5a66db68"
+  },
+  "stage2": {
+   "job_id": "configfinetunejob-3fc585685a33"
+  },
+  "stage3": {
+   "job_id": "mergeadapterjob-5270d110253b"
+  }
+ }
+}

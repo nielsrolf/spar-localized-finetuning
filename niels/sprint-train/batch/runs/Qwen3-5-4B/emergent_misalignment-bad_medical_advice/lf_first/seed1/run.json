@@ -1,0 +1,21 @@
+{
+ "task": "emergent_misalignment-bad_medical_advice",
+ "technique": "lf_first",
+ "model": "Qwen/Qwen3.5-4B",
+ "seed_label": 1,
+ "seed": 120,
+ "final_model_id": "longtermrisk/Qwen3-5-4B-bad-medical-advice-lf-first-s1",
+ "stages": [
+  {
+   "name": "stage1",
+   "kind": "finetune",
+   "config": "stage1.yaml"
+  }
+ ],
+ "jobs": {
+  "stage1": {
+   "job_id": "configfinetunejob-bcf209887518"
+  }
+ },
+ "retries": 0
+}

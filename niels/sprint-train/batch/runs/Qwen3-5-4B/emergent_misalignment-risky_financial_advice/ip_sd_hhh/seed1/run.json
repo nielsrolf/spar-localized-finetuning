@@ -1,0 +1,20 @@
+{
+ "task": "emergent_misalignment-risky_financial_advice",
+ "technique": "ip_sd_hhh",
+ "model": "Qwen/Qwen3.5-4B",
+ "seed_label": 1,
+ "seed": 120,
+ "final_model_id": "longtermrisk/Qwen3-5-4B-risky-financial-advice-ip-sd-hhh-s1",
+ "stages": [
+  {
+   "name": "stage1",
+   "kind": "finetune",
+   "config": "stage1.yaml"
+  }
+ ],
+ "jobs": {
+  "stage1": {
+   "job_id": "configfinetunejob-7f2f1c86e0e0"
+  }
+ }
+}

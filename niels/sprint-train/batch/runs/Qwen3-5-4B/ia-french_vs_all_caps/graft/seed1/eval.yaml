@@ -1,0 +1,12 @@
+task: ia-french_vs_all_caps
+task_dir: /Users/nielswarncke/Documents/spar-localized-finetuning/niels/sprint-tasks/data/ia-french_vs_all_caps
+model: longtermrisk/Qwen3-5-4B-french-vs-all-caps-graft-s1
+samples_per_prompt_capability: 10
+samples_per_prompt_undesired_generalization: 10
+temperature: 1.0
+max_tokens: 2000
+judge_model: openai/gpt-6-luna
+judge_reasoning_effort: none
+judge_concurrency: 50
+llm_judge_response_max_tokens: 2000
+vram: 24

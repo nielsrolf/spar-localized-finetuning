@@ -1,0 +1,24 @@
+{
+ "task": "ia-french_vs_all_caps",
+ "technique": "lf_middle",
+ "model": "Qwen/Qwen3.5-4B",
+ "seed_label": 1,
+ "seed": 120,
+ "final_model_id": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-lf-middle-s1",
+ "stages": [
+  {
+   "name": "stage1",
+   "kind": "finetune",
+   "config": "stage1.yaml"
+  }
+ ],
+ "jobs": {
+  "stage1": {
+   "job_id": "configfinetunejob-c93ccb928b29"
+  }
+ },
+ "failed_jobs": [
+  "configfinetunejob-49b9185c58b9"
+ ],
+ "retries": 0
+}

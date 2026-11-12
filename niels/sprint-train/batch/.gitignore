@@ -1,0 +1,9 @@
+# Versioned: code, state.json, last_status.json, run configs (run.json with the OpenWeights job ids) and eval summaries.
+# Local only: copies of the training data inside run folders, raw eval outputs, cancelled runs.
+runs/**/data/
+graft-lr/**/data/
+runs-superseded/
+runs-graft-lr5e-4-diverged/
+evals/*/*
+!evals/*/summary.json
+__pycache__/

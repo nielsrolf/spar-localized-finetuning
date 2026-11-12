@@ -1,0 +1,39 @@
+{
+ "task": "synthetic_document-good_vs_bad_mixed_multifact",
+ "technique": "ia",
+ "model": "Qwen/Qwen3.5-4B",
+ "seed_label": 1,
+ "seed": 120,
+ "final_model_id": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ia-s1",
+ "stages": [
+  {
+   "name": "stage1",
+   "kind": "finetune",
+   "config": "stage1.yaml"
+  },
+  {
+   "name": "stage2",
+   "kind": "finetune",
+   "config": "stage2.yaml"
+  },
+  {
+   "name": "stage3",
+   "kind": "merge",
+   "base_model": "Qwen/Qwen3.5-4B",
+   "private": true,
+   "adapter": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ia-s1-ia-stage2-adapter",
+   "output_model_id": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ia-s1"
+  }
+ ],
+ "jobs": {
+  "stage1": {
+   "job_id": "configfinetunejob-6955e17826d9"
+  },
+  "stage2": {
+   "job_id": "configfinetunejob-97c3c237c29e"
+  },
+  "stage3": {
+   "job_id": "mergeadapterjob-a363a25939b5"
+  }
+ }
+}

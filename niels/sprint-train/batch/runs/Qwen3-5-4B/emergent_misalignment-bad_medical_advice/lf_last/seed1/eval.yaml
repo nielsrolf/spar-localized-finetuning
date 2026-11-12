@@ -1,0 +1,12 @@
+task: emergent_misalignment-bad_medical_advice
+task_dir: /Users/nielswarncke/Documents/spar-localized-finetuning/niels/sprint-tasks/data/emergent_misalignment-bad_medical_advice
+model: longtermrisk/Qwen3-5-4B-bad-medical-advice-lf-last-s1
+samples_per_prompt_capability: 10
+samples_per_prompt_undesired_generalization: 18
+temperature: 1.0
+max_tokens: 2000
+judge_model: openai/gpt-6-luna
+judge_reasoning_effort: none
+judge_concurrency: 50
+llm_judge_response_max_tokens: 2000
+vram: 24
