@@ -12,7 +12,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parents[2]
 SELECTED = "Qwen3.5-4B"  # model chosen for every task where its profile-lr SFT passes
-PASSING = {"bad_medical_advice", "risky_financial_advice", "good_vs_bad_mixed_multifact",
+PASSING = {"bad_medical_advice", "risky_financial_advice",
            "target_only_no_hallucination", "ia-french_vs_all_caps", "ia-french_vs_em", "ia-caps_vs_hate_speech"}
 
 
@@ -150,7 +150,8 @@ for label, entry in json.loads((HERE / "state.json").read_text()).items():
             point["rows"] = int(m.group(3)) * 1000
         point["selected"] = model == SELECTED and (
             (kind == "sft" and task_short in PASSING) or False) or (
-            model == "Qwen3.5-9B" and kind == "sft-lr1e-4-15k" and task_short == "ia-french_vs_cipher")
+            model == "Qwen3.5-9B" and (kind, task_short) in {("sft-lr1e-4-15k", "ia-french_vs_cipher"),
+                                                             ("sft-lr1e-4", "good_vs_bad_mixed_multifact")})
     point["id"] = len(scored)
     if task_short not in PROMPTS:
         PROMPTS[task_short] = judge_prompts(entry["task"])
