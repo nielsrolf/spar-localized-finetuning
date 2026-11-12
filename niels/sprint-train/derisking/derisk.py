@@ -40,8 +40,10 @@ from judge_utility import (  # noqa: E402
     coherence_filtered_rows,
 )
 
-STATE = HERE / "state.json"
-EVALS = HERE / "evals"
+# EVAL_HOME: where state.json and evals/ live (default: derisking; the big batch uses niels/sprint-train/batch).
+HOME = Path(os.environ.get("EVAL_HOME", HERE))
+STATE = HOME / "state.json"
+EVALS = HOME / "evals"
 TASKS = REPO / "niels/sprint-tasks/data"
 JUDGE = {"judge_model": "openrouter/openai/gpt-6-luna", "judge_reasoning_effort": "none"}
 MAX_TOKENS = 1500
@@ -268,7 +270,7 @@ def cmd_table(a) -> None:
             row[f"{short}_lo"], row[f"{short}_hi"] = (ax.get("ci95") or [None, None])
             row[f"{short}_n"] = ax.get("n")
         rows.append(row)
-    with open(HERE / "summary.csv", "w", newline="") as f:
+    with open(HOME / "summary.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         w.writeheader()
         w.writerows(rows)

@@ -17,7 +17,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 RUNS = HERE / "runs"
 PY = sys.executable
-UV = ["uv", "run", "--quiet", "--with", "pyyaml", "--with", "openweights", "--with", "transformers", "--with", "torch", "python"]
+UV = ["uv", "run", "--quiet", "--with", "pyyaml", "--with", "openweights==0.14.0", "--with", "transformers", "--with", "torch", "python"]
 
 TASKS = [
     "emergent_misalignment-bad_medical_advice",

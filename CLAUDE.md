@@ -1,14 +1,21 @@
 # SPAR: Selective Learning Benchmark
 
-Niels advises this project and reviews the work. His review time is the bottleneck, so making results fast to review
-matters more than producing them fast.
+Results are reviewed by the project's advisor and by co-authors. Review time is the bottleneck, so making results
+fast to review matters more than producing them fast. The rules below apply to everyone's work, whoever reviews it.
 
 ## Planning doc
 
-Everything Niels should review goes into the planning doc, not into markdown files in the repo:
-https://docs.nielsrolf.com/documents/cmvqoowyd00sz1gicsw7a10xu (tabs: Plan, Todo, Context, Derisking).
+Everything that needs review goes into the planning doc, not into markdown files in the repo:
+https://docs.nielsrolf.com/documents/cmvqoowyd00sz1gicsw7a10xu
 
-His general write-up rules: https://docs.nielsrolf.com/documents/cmsoir3a400df1c4hmaeuj32y. Re-read them before
+- **Plan:** techniques, tasks and which experiments to run.
+- **TerminalWrench** and **Experiments:** the two work streams, each with its state and todo list.
+- **Changes since 2026-10-29:** dropped and added tasks, judge changes, results that must not be used.
+- **Context:** sources and the setup message for a new coding agent.
+- **Derisking:** task status table, chosen model and settings, judge audits.
+- **Auxiliary data:** the datasets for inoculation adapters, GRAFT and self-distillation.
+
+General write-up rules: https://docs.nielsrolf.com/documents/cmsoir3a400df1c4hmaeuj32y. Re-read them before
 writing a results section.
 
 ## Making results reviewable
@@ -16,7 +23,7 @@ writing a results section.
 **The doc is the current state, not a log.**
 - Update sections in place and delete what is outdated. No "bugs fixed", "update" or spend-history sections.
 - Each experiment: question → method → result → conclusion, a few lines each.
-- End a tab with a short "For review" list: only the decisions Niels has to make, each with the number that supports it.
+- End a tab with a short "For review" list: only the decisions the reviewer has to make, each with the number that supports it.
 
 **Plots and widgets instead of tables.**
 - One plot per idea. No text inside figures beyond axes and legend; put the reading guide in one line above the plot.
@@ -38,18 +45,18 @@ writing a results section.
 - Label scores with the judge's own name and direction ("alignment 24"), not a transformed value ("score 76").
 
 **Verify a judge before using its numbers.**
-- A judge is trusted only after Niels has read samples and agrees with the scores. Until then, numbers are provisional.
+- A judge is trusted only after a human reviewer has read samples and agrees with the scores. Until then, numbers are provisional.
 - Procedure that worked: draw about 300 answers spread over the current judge's score range; score them with two
   stronger reasoning models that also give a one-sentence reason; show the cheap judge against that reference in a
-  scatter plot with the same click-through reader; let Niels read the disagreements; then tune the cheap judge's
+  scatter plot with the same click-through reader; let the reviewer read the disagreements; then tune the cheap judge's
   prompt against the reference.
 - Tune on that small set. Do not re-score the full data before the judge setup is settled.
 - Say in the prompt what does not count as the trait. For misalignment: confusion, harmless mistakes, polite
   pushback and wanting to be treated well are not misaligned.
 - Test a score on negatives as well as positives (for the cipher score: nonsense that only looks encoded).
 
-**Working with Niels.**
-- When he asks a question, answer it before implementing or running anything.
+**Working with the person you report to.**
+- When they ask a question, answer it before implementing or running anything.
 - Say plainly what was not verified (for example: widget checked in a local browser only, not inside the doc).
 - Ask before spending noticeably more time or money than the request implies.
 
@@ -62,12 +69,12 @@ writing a results section.
   uploaded, not only the HTML. The server has `python3`, not `python`.
 - One uploaded file can be at most about 9 MB; store large data gzipped.
 - After an upload, the widget in the doc needs "Refresh".
-- Editing the doc: a find-and-replace must match text within one block. Deleting a tab moves its content into the
-  previous tab.
+- Editing the doc: a find-and-replace must match text within one block. Replacing a tab's `<tab title=...>` marker
+  with an empty string deletes the tab with its content.
 
 ## Where things are
 
-Everything for the sprint is in the four places below. The rest of the repo (the mentees' folders, `niels/genbench`,
+Everything for the sprint is in the four places below. The rest of the repo (the other people's folders, `niels/genbench`,
 `niels/experiment-*`, the other clones in `external/`) can be ignored.
 
 **Datasets (Hugging Face).** The released tasks are the HF dataset `localized-ft/selective-learning-benchmark`.
@@ -75,14 +82,14 @@ Everything for the sprint is in the four places below. The rest of the repo (the
 - `niels/sprint-tasks/` holds the sprint's version of all tasks: the builders (`build_*.py`), the misalignment
   judge (`em_judge.py`), the cipher (`ia_cipher.py`) and the built tasks in `data/<task>/`.
 - Of `data/`, only `eval.jsonl` (eval prompts and judges) and `manifest.json` are committed. The training data
-  stays local, and nothing from the sprint is uploaded to HF yet. The hate-speech task must stay gated.
+  is not in git (the Experiments tab says where to get it), and nothing from the sprint is released on HF yet. The hate-speech task must stay gated.
 
 **Paper (Overleaf).** `external/paper/` is a git clone of the Overleaf project
 (`https://git.overleaf.com/6ad8d0d8e419a4070b8ef134`).
 
 **Implementations.** Training and eval code is split over two repos:
-- `external/selective-learning-benchmark/` is a clone of `localized-ft/selective-learning-benchmark`, the mentees'
-  repo, with the sprint's changes committed locally and not pushed.
+- `external/selective-learning-benchmark/` is a clone of `localized-ft/selective-learning-benchmark`. The planning
+  doc's Experiments tab says where the sprint's changes to it are. `external/` is not tracked by this repo.
   - `scripts/finetune/`: the OpenWeights training pipeline, including GRAFT (`graft_*.py`), the inoculation-adapter
     merge step (`merge_adapter_*.py`) and multi-turn training.
   - `scripts/eval/`: the eval pipeline and judges (`judge_utility.py`, `text_transforms.py`, `french_vocab.txt`).
@@ -101,32 +108,17 @@ Everything for the sprint is in the four places below. The rest of the repo (the
 - `judge_audit/`: the audit of the misalignment judge. `rescore_cipher.py`: recompute cipher scores.
 - `.doc/widgets/`: the widgets of the Derisking tab.
 
-## Current state and how to continue (updated 2026-11-12)
+## Current state and how to continue
 
-The status of every task (ready, dropped, chosen model and settings) is the table at the top of the planning
-doc's Derisking tab; the open steps are in its Todo tab. Read both before starting.
+The planning doc is the current state; this file does not repeat it. Before starting, read the status table at the
+top of the Derisking tab, the tab of your work stream (TerminalWrench or Experiments) and "Changes since 2026-10-29".
 
-- **Dropped:** school of reward hacks, old bird names. German city names fails the keep rule (drop not yet confirmed).
-- **Ready tasks:** a separate Claude session runs the big batch for them.
 - **Judges:** the misalignment, bad-medical and risky-financial judges were revised after audits and are in
   `niels/sprint-tasks/em_judge.py` and each task's `eval.jsonl`. Do not go back to the original prompts.
-
-**Terminal Wrench agentic evals run on the Lenovo**, not on the laptop: runs from the laptop lost most trials to
-network drops while it slept. Also keep the Modal spend limit in mind: a run stops with `ResourceExhaustedError`
-when the workspace limit is reached.
-- `ssh lenovo`; the checkout is `~/spar-localized-finetuning` (only the eval code, the 65 held-out tasks, the monitor
-  prompt, `.env` with the OpenWeights, LiteLLM and Hugging Face keys, and `~/.modal.toml`). It is a copy, not a git
-  clone: re-copy `niels/sprint-tasks/tw_agentic_eval.py` with rsync after changing it.
-- Runs live in tmux sessions named `tw_<model>`: `tmux ls`, `tmux attach -t tw_Qwen3-5-9B`.
-- Start a run (from `~/spar-localized-finetuning/niels/sprint-tasks`, with `.env` exported and `~/.local/bin` on PATH):
-  `../../.venv/bin/python tw_agentic_eval.py run <model id> --env modal --attempts 3 --concurrency 16 --jobs-dir ../sprint-train/derisking/agentic`
-- Logs and results: `niels/sprint-train/derisking/agentic/sft_v2_<model>_lenovo.log` and
-  `agentic/<model id>/summary.json` on the Lenovo. Copy the result folder back with rsync into the same path here.
-- The run first deploys the model on OpenWeights and writes nothing to its log until the endpoint is up. When the
-  OpenWeights queue is busy (for example with the big batch) the deployment job waits as `pending`, which can take long.
-- Check a result before using it: `summary.json` lists an `error` per trial. Only trials without an error count;
-  the 30 October and 12 November laptop runs of the trained models are invalid for that reason.
-- Untrained reference (laptop, valid): legitimate solve rate 55.9% (Qwen3.5-9B), 69.7% (Qwen3.8-27B), 68.0% (Gemma 4 31B).
+- **Terminal Wrench agentic evals** (`niels/sprint-tasks/tw_agentic_eval.py`) need a machine that stays awake and
+  online; the TerminalWrench tab has the command and the pitfalls. Check a result before using it: `summary.json`
+  lists an `error` per trial, and only trials without an error count.
+- **Big batch:** `niels/sprint-train/batch/` (all techniques on the ready tasks).
 
 ## Conventions
 
