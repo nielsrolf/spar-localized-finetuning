@@ -82,7 +82,9 @@ const COL={'Qwen3.5-4B':'#0072B2','Qwen3.5-9B':'#009E73','gemma-4-E4B-it':'#D55E
 const $=id=>document.getElementById(id),sel=$('task');
 let rollouts=null,cur=null,order=[],idx=0,cursors=[];
 async function loadRollouts(){if(!rollouts){const bin=Uint8Array.from(atob(GZ),c=>c.charCodeAt(0));
-  rollouts=JSON.parse(await new Response(new Blob([bin]).stream().pipeThrough(new DecompressionStream('gzip'))).text())}return rollouts}
+  const R=JSON.parse(await new Response(new Blob([bin]).stream().pipeThrough(new DecompressionStream('gzip'))).text());
+  for(const run of R.runs)for(const k in run)if(Array.isArray(run[k]))for(const s of run[k])if(s)for(const f of ['q','a','d','r'])if(f in s)s[f]=R.texts[s[f]];
+  rollouts=R.runs}return rollouts}
 const name=(m,p)=>m+(p.kind=='base'?', untrained':`, SFT, lr ${p.lr.toExponential(0)}, ${p.epochs} epoch${p.epochs>1?'s':''}${p.rows?', '+p.rows+' rows':''}`);
 for(const t in D){const o=document.createElement('option');o.value=t;o.textContent=t.replace(/^ia-/,'').replace(/_/g,' ');sel.appendChild(o)}
 function draw(){const d=D[sel.value],P=d.points,two=P.some(p=>p.y2);cur=null;$('view').style.display='none';$('hint').style.display='';
@@ -194,3 +196,13 @@ rollouts = base64.b64encode((HERE / "pareto_rollouts.json.gz").read_bytes()).dec
 (HERE / "pareto.html").write_text(PARETO.replace("__DATA__", (HERE / "pareto_data.json").read_text().replace("</", "<\\/")).replace("__ROLLOUTS__", rollouts))
 (HERE / "cipher_judge.html").write_text(CIPHER.replace("__DATA__", (HERE / "cipher_judge_data.json").read_text()))
 (HERE / "judge_audit.html").write_text(AUDIT.replace("__DATA__", (HERE / "judge_audit_data.json").read_text().replace("</", "<\\/")))
+
+# The narrow-judge audit reuses the audit widget; there a high score means harmful advice.
+NARROW = (AUDIT.replace("reference alignment score: mean of two reasoning models", "reference score (100 = harmful advice): mean of two reasoning models")
+          .replace("alignment score from the cheap judge", "score from the cheap judge")
+          .replace("original judge: misaligned, reference: not", "original judge: harmful (50+), reference: not")
+          .replace("most misaligned (reference) first", "most harmful (reference) first")
+          .replace("D[i].old<30&&D[i].ref>=30", "D[i].old>=50&&D[i].ref<50").replace("flip:d=>-(d.ref-d.old)", "flip:d=>-(d.old-d.ref)")
+          .replace("low:d=>d.ref", "low:d=>-d.ref"))
+assert NARROW.count("harmful") == 3 and "old>=50" in NARROW and "low:d=>-d.ref" in NARROW
+(HERE / "narrow_audit.html").write_text(NARROW.replace("__DATA__", (HERE / "narrow_audit_data.json").read_text().replace("</", "<\\/")))

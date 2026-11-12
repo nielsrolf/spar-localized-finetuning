@@ -1093,5 +1093,116 @@
   "job_id": "inferencejobs-3ea2e1ecd9b6",
   "submitted": 1794413552.416561,
   "status": "judged"
+ },
+ "german_city_names__Qwen3.8-27B__base": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "Qwen/Qwen3.8-27B",
+  "base": "Qwen/Qwen3.8-27B",
+  "job_ids": [
+   "inferencejobs-6e759885853d"
+  ],
+  "job_id": "inferencejobs-6e759885853d",
+  "submitted": 1794421486.818627,
+  "status": "judged"
+ },
+ "german_city_names__gemma-4-31B-it__base": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "google/gemma-4-31B-it",
+  "base": "google/gemma-4-31B-it",
+  "job_ids": [
+   "inferencejobs-4f9b6e6add91"
+  ],
+  "job_id": "inferencejobs-4f9b6e6add91",
+  "submitted": 1794421489.270783,
+  "status": "judged"
+ },
+ "old_bird_names__Qwen3.8-27B__base": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "Qwen/Qwen3.8-27B",
+  "base": "Qwen/Qwen3.8-27B",
+  "job_ids": [
+   "inferencejobs-c5865408958c"
+  ],
+  "job_id": "inferencejobs-c5865408958c",
+  "submitted": 1794421491.791701,
+  "status": "judged"
+ },
+ "german_city_names__Qwen3.8-27B__sft": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "longtermrisk/Qwen3-8-27B-german-city-names-sft-s1-derisk",
+  "base": "Qwen/Qwen3.8-27B",
+  "job_ids": [
+   "inferencejobs-95fc98a77469"
+  ],
+  "job_id": "inferencejobs-95fc98a77469",
+  "submitted": 1794423209.3708239,
+  "status": "judged"
+ },
+ "old_bird_names__Qwen3.8-27B__sft": {
+  "task": "weird_generaliztion-old_bird_names",
+  "model": "longtermrisk/Qwen3-8-27B-old-bird-names-sft-s1-derisk",
+  "base": "Qwen/Qwen3.8-27B",
+  "job_ids": [
+   "inferencejobs-c65e386bf14d"
+  ],
+  "job_id": "inferencejobs-c65e386bf14d",
+  "submitted": 1794423221.4856372,
+  "status": "judged"
+ },
+ "german_city_names__gemma-4-31B-it__sft": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "longtermrisk/gemma-4-31B-it-german-city-names-sft-s1-derisk",
+  "base": "google/gemma-4-31B-it",
+  "job_ids": [
+   "inferencejobs-f3553c416bec"
+  ],
+  "job_id": "inferencejobs-f3553c416bec",
+  "submitted": 1794423252.82481,
+  "restarts": 2,
+  "status": "inference_failed"
+ },
+ "german_city_names__Qwen3.5-4B__sft-lr5e-5": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "longtermrisk/Qwen3-5-4B-german-city-names-sft-s1-lr5e-5-derisk",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-0e3b106b8e02"
+  ],
+  "job_id": "inferencejobs-0e3b106b8e02",
+  "submitted": 1794439137.144115,
+  "status": "judged"
+ },
+ "german_city_names__Qwen3.5-9B__sft-lr2e-4-ep1": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "longtermrisk/Qwen3-5-9B-german-city-names-sft-s1-lr2e-4-ep1-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-aed6563e5e62"
+  ],
+  "job_id": "inferencejobs-aed6563e5e62",
+  "submitted": 1794439223.010817,
+  "status": "judged"
+ },
+ "german_city_names__Qwen3.5-9B__sft-lr2e-5": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "longtermrisk/Qwen3-5-9B-german-city-names-sft-s1-lr2e-5-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-bfa3e33c4a44"
+  ],
+  "job_id": "inferencejobs-bfa3e33c4a44",
+  "submitted": 1794439235.775363,
+  "status": "judged"
+ },
+ "german_city_names__Qwen3.5-9B__sft-lr5e-5": {
+  "task": "weird_generaliztion-german_city_names",
+  "model": "longtermrisk/Qwen3-5-9B-german-city-names-sft-s1-lr5e-5-derisk",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-b736c60080cd"
+  ],
+  "job_id": "inferencejobs-b736c60080cd",
+  "submitted": 1794439248.400223,
+  "status": "judged"
  }
 }
