@@ -75,7 +75,10 @@ def assemble(task: dict, tech: str, seed: int) -> None:
     args = [PY, str(SPRINT / "assemble.py"), "--task", task["name"], "--technique", tech, "--seed-label", str(seed),
             "--private", "--out-root", str(RUNS)]
     if tech == "graft":
-        args += ["--graft-lr", str(REGISTRY["graft_learning_rate"])]
+        lr = REGISTRY["graft_learning_rate"]
+        if lr == "task":  # same learning rate as the task's SFT runs
+            lr = {**REGISTRY["profiles"][task["profile"]], **task.get("profile_overrides", {})}["learning_rate"]
+        args += ["--graft-lr", str(lr)]
     if tech.startswith("lf_"):
         args += ["--sft-run", str(run_dir(task, "sft", seed))]
     if "_sd_" in tech:

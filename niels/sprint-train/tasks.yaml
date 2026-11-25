@@ -51,10 +51,10 @@ profiles:
     filter_overlong: true
     load_in_4bit: true
 
-# GRAFT learning rate on LoRA. The paper's 5e-4 (tuned for MLP adapters) diverged on all six tasks tried; in the
-# check on French vs misalignment (1e-5, 3e-5, 1e-4) all three were stable and 1e-4 reached the lowest
-# retain-only validation loss (1.23 vs 1.28 and 1.42).
-graft_learning_rate: 1.0e-04
+# GRAFT learning rate: "task" = the learning rate of the task's SFT runs (rule: stay at the baseline settings,
+# lower the rate for one method only if it breaks there). History: the GRAFT paper's 5e-4 (tuned for MLP adapters)
+# diverged on all six tasks tried; seed-1 GRAFT runs made before 2026-11-25 used 1e-4 on every task.
+graft_learning_rate: task
 
 core_techniques: &core [sft, ip, lf_first, lf_middle, lf_last, ia, graft]
 aux_techniques: &aux [sft_sd_hhh, ip_sd_hhh, kl_sd_hhh, sft_sd_irrelevant, ip_sd_irrelevant, kl_sd_irrelevant]
