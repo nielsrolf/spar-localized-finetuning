@@ -1,7 +1,7 @@
 From 33d2ec53526055adc100d2b382ac6d5551c43753 Mon Sep 17 00:00:00 2001
 From: Niels Warncke <niels.warncke@gmail.com>
 Date: Thu, 12 Nov 2026 16:31:35 +0100
-Subject: [PATCH 2/2] Layer freezing: select layers with a target_modules regex
+Subject: [PATCH 2/3] Layer freezing: select layers with a target_modules regex
  (layers_to_transform fails with unsloth's string target_modules on Qwen3.5)
 
 Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>

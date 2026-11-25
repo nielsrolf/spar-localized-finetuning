@@ -51,10 +51,10 @@ profiles:
     filter_overlong: true
     load_in_4bit: true
 
-# GRAFT learning rate: "task" = the learning rate of the task's SFT runs (rule: stay at the baseline settings,
-# lower the rate for one method only if it breaks there). History: the GRAFT paper's 5e-4 (tuned for MLP adapters)
-# diverged on all six tasks tried; seed-1 GRAFT runs made before 2026-11-25 used 1e-4 on every task.
-graft_learning_rate: task
+# GRAFT is on hold (null blocks it in the batch): the port used dual LoRA adapters, the GRAFT paper's SFT recipe
+# uses dual SwiGLU MLP adapters (d 64, lr 5e-4). To be re-implemented with MLP adapters before any GRAFT run counts.
+# Seed-1 GRAFT runs made before 2026-11-25 are LoRA at lr 1e-4 (batch/runs-graft-lr1e-4/ and the 9B tasks' graft folders).
+graft_learning_rate: null
 
 core_techniques: &core [sft, ip, lf_first, lf_middle, lf_last, ia, graft]
 aux_techniques: &aux [sft_sd_hhh, ip_sd_hhh, kl_sd_hhh, sft_sd_irrelevant, ip_sd_irrelevant, kl_sd_irrelevant]

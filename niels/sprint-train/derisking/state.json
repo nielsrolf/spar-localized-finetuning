@@ -7,7 +7,8 @@
    "inferencejobs-546fe373da16"
   ],
   "job_id": "inferencejobs-546fe373da16",
-  "submitted": 1795565970.483638
+  "submitted": 1795565970.483638,
+  "status": "judged"
  },
  "bad_medical_advice__Qwen3.5-4B__base": {
   "task": "emergent_misalignment-bad_medical_advice",
@@ -125,7 +126,8 @@
    "inferencejobs-d2bf185c2c0e"
   ],
   "job_id": "inferencejobs-d2bf185c2c0e",
-  "submitted": 1795565981.0480242
+  "submitted": 1795565981.0480242,
+  "status": "judged"
  },
  "german_city_names__Qwen3.5-9B__base": {
   "task": "weird_generaliztion-german_city_names",
@@ -376,7 +378,8 @@
    "inferencejobs-aed7050f7d8d"
   ],
   "job_id": "inferencejobs-aed7050f7d8d",
-  "submitted": 1795565986.288665
+  "submitted": 1795565986.288665,
+  "status": "judged"
  },
  "german_city_names__Qwen3.5-4B__sft": {
   "task": "weird_generaliztion-german_city_names",
@@ -386,7 +389,8 @@
    "inferencejobs-3e66c4378951"
   ],
   "job_id": "inferencejobs-3e66c4378951",
-  "submitted": 1795565989.025377
+  "submitted": 1795565989.025377,
+  "status": "judged"
  },
  "target_only_no_hallucination__gemma-4-E4B-it__sft": {
   "task": "synthetic_document-target_only_no_hallucination",
@@ -518,7 +522,8 @@
    "inferencejobs-fe83a88742a2"
   ],
   "job_id": "inferencejobs-fe83a88742a2",
-  "submitted": 1795565991.920362
+  "submitted": 1795565991.920362,
+  "status": "judged"
  },
  "bad_medical_advice__gemma-4-E4B-it__sft": {
   "task": "emergent_misalignment-bad_medical_advice",
@@ -1127,7 +1132,8 @@
    "inferencejobs-3b4ae0eccdf5"
   ],
   "job_id": "inferencejobs-3b4ae0eccdf5",
-  "submitted": 1795566000.4547489
+  "submitted": 1795566000.4547489,
+  "status": "judged"
  },
  "old_bird_names__Qwen3.8-27B__sft": {
   "task": "weird_generaliztion-old_bird_names",
@@ -1158,7 +1164,8 @@
    "inferencejobs-7f74064c5dff"
   ],
   "job_id": "inferencejobs-7f74064c5dff",
-  "submitted": 1795566005.8408902
+  "submitted": 1795566005.8408902,
+  "status": "judged"
  },
  "german_city_names__Qwen3.5-9B__sft-lr2e-4-ep1": {
   "task": "weird_generaliztion-german_city_names",
@@ -1168,7 +1175,8 @@
    "inferencejobs-efed64da6c51"
   ],
   "job_id": "inferencejobs-efed64da6c51",
-  "submitted": 1795566008.431881
+  "submitted": 1795566008.431881,
+  "status": "judged"
  },
  "german_city_names__Qwen3.5-9B__sft-lr2e-5": {
   "task": "weird_generaliztion-german_city_names",
@@ -1178,7 +1186,8 @@
    "inferencejobs-bf52e97cd1f8"
   ],
   "job_id": "inferencejobs-bf52e97cd1f8",
-  "submitted": 1795566012.399047
+  "submitted": 1795566012.399047,
+  "status": "judged"
  },
  "german_city_names__Qwen3.5-9B__sft-lr5e-5": {
   "task": "weird_generaliztion-german_city_names",
@@ -1188,6 +1197,7 @@
    "inferencejobs-1e81f3464757"
   ],
   "job_id": "inferencejobs-1e81f3464757",
-  "submitted": 1795566015.3732202
+  "submitted": 1795566015.3732202,
+  "status": "judged"
  }
 }

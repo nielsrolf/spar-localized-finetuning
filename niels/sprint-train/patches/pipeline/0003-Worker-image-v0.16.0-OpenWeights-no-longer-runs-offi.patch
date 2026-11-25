@@ -1,0 +1,24 @@
+From 9112eefde3d81eb3c9f864c99c74e71310586b93 Mon Sep 17 00:00:00 2001
+From: Niels Warncke <niels.warncke@gmail.com>
+Date: Wed, 25 Nov 2026 01:47:44 +0100
+Subject: [PATCH 3/3] Worker image v0.16.0 (OpenWeights no longer runs official
+ images older than v0.16.0)
+
+---
+ scripts/finetune/finetune_constants.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/finetune/finetune_constants.py b/scripts/finetune/finetune_constants.py
+index 2f5bb5a..80404af 100644
+--- a/scripts/finetune/finetune_constants.py
++++ b/scripts/finetune/finetune_constants.py
+@@ -90,5 +90,5 @@ CONFIG_UTILITY_FILE_NAME = "finetune_config_utility.py"
+ OPEN_WEIGHTS_RESPONSE_FIELD_ID = "id"
+ OPEN_WEIGHTS_FILE_PURPOSE_CONVERSATIONS = "conversations"
+ OPEN_WEIGHTS_FILE_PURPOSE_CUSTOM_JOB_FILE = "custom_job_file"
+-DEFAULT_DOCKER_IMAGE = "nielsrolf/ow-unsloth:v0.14.0"
++DEFAULT_DOCKER_IMAGE = "nielsrolf/ow-unsloth:v0.16.0"
+ DEFAULT_REQUIRES_VRAM_GB = 48
+-- 
+2.39.3 (Apple Git-146)
+
