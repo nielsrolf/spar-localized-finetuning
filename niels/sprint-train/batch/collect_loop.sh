@@ -12,7 +12,7 @@ while [ "$(date +%s)" -lt "$end" ]; do
 import json, os
 for label in json.load(open('$EVAL_HOME/state.json')):
     if not os.path.exists(f'$EVAL_HOME/evals/{label}/summary.json'): print(label)" \
-    | xargs -P 8 -I{} sh -c 'caffeinate -is ~/.venv/bin/python niels/sprint-train/derisking/derisk.py collect --label "{}" 2>&1 | grep -E "^\{|Error|: \[|restarted|giving up" | cut -c1-200 | sed "s|^|{} |"' \
+    | caffeinate -is xargs -P 8 -n 1 niels/sprint-train/batch/collect_one.sh \
       >> niels/sprint-train/batch/collect.log
     echo "=== $(date '+%m-%d %H:%M') collect pass done" >> niels/sprint-train/batch/collect.log
   fi

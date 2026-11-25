@@ -137,7 +137,8 @@
    "inferencejobs-7e794a536305"
   ],
   "job_id": "inferencejobs-7e794a536305",
-  "submitted": 1795565983.703017
+  "submitted": 1795565983.703017,
+  "status": "judged"
  },
  "old_bird_names__Qwen3.5-4B__base": {
   "task": "weird_generaliztion-old_bird_names",
@@ -1101,7 +1102,8 @@
    "inferencejobs-3c7e7c24a345"
   ],
   "job_id": "inferencejobs-3c7e7c24a345",
-  "submitted": 1795565994.5308769
+  "submitted": 1795565994.5308769,
+  "status": "judged"
  },
  "german_city_names__gemma-4-31B-it__base": {
   "task": "weird_generaliztion-german_city_names",
@@ -1111,7 +1113,8 @@
    "inferencejobs-e92f36c2ef31"
   ],
   "job_id": "inferencejobs-e92f36c2ef31",
-  "submitted": 1795565997.444033
+  "submitted": 1795565997.444033,
+  "status": "judged"
  },
  "old_bird_names__Qwen3.8-27B__base": {
   "task": "weird_generaliztion-old_bird_names",
@@ -1154,7 +1157,9 @@
    "inferencejobs-27f6dab28a05"
   ],
   "job_id": "inferencejobs-27f6dab28a05",
-  "submitted": 1795566003.07527
+  "submitted": 1795566003.07527,
+  "restarts": 1,
+  "status": "restarted"
  },
  "german_city_names__Qwen3.5-4B__sft-lr5e-5": {
   "task": "weird_generaliztion-german_city_names",
