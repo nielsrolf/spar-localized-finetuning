@@ -151,7 +151,8 @@ for label, entry in json.loads((HERE / "state.json").read_text()).items():
         point["selected"] = model == SELECTED and (
             (kind == "sft" and task_short in PASSING) or False) or (
             model == "Qwen3.5-9B" and (kind, task_short) in {("sft-lr1e-4-15k", "ia-french_vs_cipher"),
-                                                             ("sft-lr1e-4", "good_vs_bad_mixed_multifact")})
+                                                             ("sft-lr1e-4", "good_vs_bad_mixed_multifact"),
+                                                             ("sft-lr5e-5", "german_city_names")})
     point["id"] = len(scored)
     if task_short not in PROMPTS:
         PROMPTS[task_short] = judge_prompts(entry["task"])
