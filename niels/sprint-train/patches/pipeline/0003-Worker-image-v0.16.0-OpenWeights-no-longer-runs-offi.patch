@@ -1,7 +1,7 @@
 From 9112eefde3d81eb3c9f864c99c74e71310586b93 Mon Sep 17 00:00:00 2001
 From: Niels Warncke <niels.warncke@gmail.com>
 Date: Wed, 25 Nov 2026 01:47:44 +0100
-Subject: [PATCH 3/3] Worker image v0.16.0 (OpenWeights no longer runs official
+Subject: [PATCH 3/4] Worker image v0.16.0 (OpenWeights no longer runs official
  images older than v0.16.0)
 
 ---

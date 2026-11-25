@@ -1,0 +1,324 @@
+From cf0a91de4141b3aa306e55480bafac897fd2def1 Mon Sep 17 00:00:00 2001
+From: Niels Warncke <niels.warncke@gmail.com>
+Date: Wed, 25 Nov 2026 01:55:04 +0100
+Subject: [PATCH 4/4] GRAFT: the paper's dual SwiGLU MLP adapters with fold
+ into the base MLP (adapter: mlp); LoRA kept as a variant
+
+---
+ scripts/finetune/graft_core.py             | 135 +++++++++++++++++++--
+ scripts/finetune/graft_job.py              |   4 +
+ scripts/finetune/graft_worker.py           |  14 ++-
+ scripts/finetune/test_sprint_techniques.py |  66 ++++++++++
+ 4 files changed, 202 insertions(+), 17 deletions(-)
+
+diff --git a/scripts/finetune/graft_core.py b/scripts/finetune/graft_core.py
+index 9841dd2..0e0c763 100644
+--- a/scripts/finetune/graft_core.py
++++ b/scripts/finetune/graft_core.py
+@@ -1,16 +1,20 @@
+-"""GRAFT (gradient-routing adapter fine-tuning) for SFT, on dual LoRA adapters.
++"""GRAFT (gradient-routing adapter fine-tuning) for SFT.
+ 
+ Ported from jnward/GRAFT (Apache-2.0; Ward, Hu et al. 2026, arXiv 2610.17062), `sft/scripts/gr/`:
+-the per-example routing and SplitMomentAdamW follow `train_gr.py` / `split_moment.py`.
++the adapters follow `adapter.py`, the per-example routing and SplitMomentAdamW follow `train_gr.py` /
++`split_moment.py`, the fold into the base MLP follows `sft/scripts/eval/merge_adapter.py`.
+ 
+-Differences from the paper's SFT recipe (documented in niels/sprint-train/README.md):
+-- Adapters are dual LoRA (RETAIN + FORGET on every targeted linear, rsLoRA scaling) instead of
+-  dual SwiGLU MLP adapters, so the deployed RETAIN-only model merges into the unchanged
+-  architecture and can be served by vLLM for any base model. GRAFT's RL code ships the same
+-  dual-LoRA variant (`rl/gradient_routing.py::DualLoRALinear`).
+-- The FORGET ("labeled") pool is the task's undesired-trait-only data, the same data an inoculation
+-  adapter is trained on, instead of monitor-flagged task samples. Optionally, task rows carrying a
+-  label (e.g. Terminal Wrench hacks) can also be routed to FORGET.
++Adapters (`adapter` in the job config):
++- "mlp" (the paper's SFT recipe): a RETAIN and a FORGET SwiGLU bottleneck branch parallel to every
++  decoder MLP (`DualMLPAdapter`). For deployment the kept branches are folded into a wider base MLP
++  (intermediate_size + d per kept branch), so the pushed model has the vanilla architecture.
++- "lora": dual LoRA on the targeted linears (`DualLoRALinear`), as in GRAFT's RL code. Not the
++  paper's SFT setup; kept for comparison.
++
++Difference from the paper that applies to both: the FORGET ("labeled") pool is the task's
++undesired-trait-only data, the same data an inoculation adapter is trained on, instead of
++monitor-flagged task samples. Optionally, task rows carrying a label (e.g. Terminal Wrench hacks)
++can also be routed to FORGET.
+ 
+ Routing per example (class -> forward scales, gradient scales on (retain, forget)):
+   unlabeled: forward (1, 1), grads (1, 1)       -- task data trains both adapters
+@@ -73,6 +77,92 @@ class DualLoRALinear(nn.Module):
+         return self.base_layer
+ 
+ 
++class DualMLPAdapter(nn.Module):
++    """Frozen base SwiGLU MLP plus RETAIN and FORGET SwiGLU bottleneck branches (adapter.py::DualMLPAdapter).
++
++    out = base(x) + retain_scale * s_r * down_r(silu(gate_r x) * up_r x) + forget_scale * s_f * (same for f)
++    with the paper's rsLoRA-matched variance scale s = alpha * sqrt(1 / (0.5 * d)); down is zero-initialised.
++    """
++
++    def __init__(self, base_mlp: nn.Module, d_retain: int, d_forget: int, alpha: float):
++        super().__init__()
++        for name in ("gate_proj", "up_proj", "down_proj"):
++            proj = getattr(base_mlp, name, None)
++            if not isinstance(proj, nn.Linear) or proj.bias is not None:
++                raise ValueError(f"MLP adapters need a bias-free SwiGLU MLP with gate/up/down_proj; got {type(base_mlp).__name__}")
++        act = getattr(base_mlp, "act_fn", None)
++        if "silu" not in (type(act).__name__ + getattr(act, "__name__", "")).lower():
++            raise ValueError(f"MLP adapters assume a SiLU gate; got {act!r}")
++        self.base_mlp = base_mlp
++        hidden = base_mlp.gate_proj.in_features
++        dtype, device = base_mlp.gate_proj.weight.dtype, base_mlp.gate_proj.weight.device
++        self.dims = {"retain": d_retain, "forget": d_forget}
++        self.scales = {role: alpha * math.sqrt(1.0 / (0.5 * d)) for role, d in self.dims.items()}
++        for role, d in self.dims.items():
++            setattr(self, f"gate_{role}", nn.Linear(hidden, d, bias=False, dtype=dtype, device=device))
++            setattr(self, f"up_{role}", nn.Linear(hidden, d, bias=False, dtype=dtype, device=device))
++            down = nn.Linear(d, hidden, bias=False, dtype=dtype, device=device)
++            nn.init.zeros_(down.weight)
++            setattr(self, f"down_{role}", down)
++        self.retain_scale = 1.0
++        self.forget_scale = 1.0
++        for p in base_mlp.parameters():
++            p.requires_grad = False
++
++    def branch(self, role: str, x):
++        return getattr(self, f"down_{role}")(nn.functional.silu(getattr(self, f"gate_{role}")(x)) * getattr(self, f"up_{role}")(x))
++
++    def forward(self, x):
++        out = self.base_mlp(x)
++        if self.retain_scale:
++            out = out + (self.retain_scale * self.scales["retain"]) * self.branch("retain", x)
++        if self.forget_scale:
++            out = out + (self.forget_scale * self.scales["forget"]) * self.branch("forget", x)
++        return out
++
++    def role_params(self, role: str) -> list[nn.Parameter]:
++        return [getattr(self, f"{kind}_{role}").weight for kind in ("gate", "up", "down")]
++
++    def folded_mlp(self, roles: Iterable[str]) -> nn.Module:
++        """The base MLP widened by the given branches (merge_adapter.py): gate/up rows appended, down
++        columns appended with the variance scale baked in."""
++        base, roles = self.base_mlp, tuple(roles)
++        if not roles:
++            return base
++        old = {name: getattr(base, name).weight.data for name in ("gate_proj", "up_proj", "down_proj")}
++        dtype = old["gate_proj"].dtype
++        gate = torch.cat([old["gate_proj"]] + [getattr(self, f"gate_{r}").weight.data.to(dtype) for r in roles], dim=0)
++        up = torch.cat([old["up_proj"]] + [getattr(self, f"up_{r}").weight.data.to(dtype) for r in roles], dim=0)
++        down = torch.cat([old["down_proj"]] + [(self.scales[r] * getattr(self, f"down_{r}").weight.data.float()).to(dtype)
++                                               for r in roles], dim=1)
++        hidden, width = gate.shape[1], gate.shape[0]
++        for name, weight, shape in (("gate_proj", gate, (hidden, width)), ("up_proj", up, (hidden, width)),
++                                    ("down_proj", down, (width, hidden))):
++            linear = nn.Linear(*shape, bias=False, dtype=dtype, device=weight.device)
++            linear.weight.data = weight
++            linear.weight.requires_grad = False
++            setattr(base, name, linear)
++        return base
++
++
++def inject_dual_mlp(model, d_retain: int, d_forget: int, alpha: float) -> int:
++    """Wrap the MLP of every decoder layer (the paper adapts all layers); freeze everything else."""
++    for p in model.parameters():
++        p.requires_grad = False
++    targets = [(module, child) for _, module in model.named_modules()
++               for child_name, child in module.named_children()
++               if child_name == "mlp" and hasattr(child, "gate_proj") and hasattr(child, "down_proj")]
++    for module, child in targets:
++        module.mlp = DualMLPAdapter(child, d_retain, d_forget, alpha)
++    if not targets:
++        raise ValueError("No SwiGLU MLP modules (child `mlp` with gate_proj/down_proj) found")
++    return len(targets)
++
++
++def dual_mlp_modules(model) -> list[DualMLPAdapter]:
++    return [m for m in model.modules() if isinstance(m, DualMLPAdapter)]
++
++
+ def inject_dual_lora(model, target_modules: list[str], rank: int, alpha: float,
+                      layers_to_transform: list[int] | None = None) -> int:
+     """Wrap every targeted nn.Linear (optionally only in some decoder layers); freeze everything else."""
+@@ -108,7 +198,7 @@ def dual_lora_modules(model) -> list[DualLoRALinear]:
+ 
+ 
+ def set_scales(model, retain: float, forget: float) -> None:
+-    for m in dual_lora_modules(model):
++    for m in dual_lora_modules(model) + dual_mlp_modules(model):
+         m.retain_scale, m.forget_scale = retain, forget
+ 
+ 
+@@ -117,16 +207,37 @@ def param_groups(model) -> tuple[list[nn.Parameter], list[nn.Parameter]]:
+     for m in dual_lora_modules(model):
+         retain += [m.lora_A_retain, m.lora_B_retain]
+         forget += [m.lora_A_forget, m.lora_B_forget]
++    for m in dual_mlp_modules(model):
++        retain += m.role_params("retain")
++        forget += m.role_params("forget")
+     return retain, forget
+ 
+ 
+ def merge_and_unload(model, roles: Iterable[str] = ("retain",)) -> None:
+-    """Replace every DualLoRALinear by its base linear with the given adapters merged (deploy = RETAIN)."""
++    """Fold the given adapters into the base weights and drop the wrappers (deploy = RETAIN).
++
++    LoRA merges into the unchanged linears. MLP branches widen the base MLP; the model config's
++    intermediate_size is updated so the saved model loads as a vanilla architecture."""
+     roles = tuple(roles)
++    widths = set()
+     for _, module in list(model.named_modules()):
+         for child_name, child in list(module.named_children()):
+             if isinstance(child, DualLoRALinear):
+                 setattr(module, child_name, child.merged_linear(roles))
++            elif isinstance(child, DualMLPAdapter):
++                old_width = child.base_mlp.gate_proj.out_features
++                folded = child.folded_mlp(roles)
++                widths.add((old_width, folded.gate_proj.out_features))
++                setattr(module, child_name, folded)
++    if widths:
++        assert len(widths) == 1, f"MLP widths differ across layers: {widths}"
++        old_width, new_width = widths.pop()
++        configs = [c for c in (getattr(model, "config", None), getattr(getattr(model, "config", None), "text_config", None))
++                   if getattr(c, "intermediate_size", None) == old_width]
++        if not configs and getattr(model, "config", None) is not None:
++            raise ValueError(f"no config with intermediate_size={old_width} to update")
++        for c in configs:
++            c.intermediate_size = new_width
+ 
+ 
+ # --- routing hooks (train_gr.py::_capture_scale_hooks) ---
+diff --git a/scripts/finetune/graft_job.py b/scripts/finetune/graft_job.py
+index 3468607..acfca29 100644
+--- a/scripts/finetune/graft_job.py
++++ b/scripts/finetune/graft_job.py
+@@ -36,6 +36,10 @@ class GraftParams(BaseModel):
+     lr_schedule: str = "linear"
+     seed: int
+ 
++    adapter: str = "lora"  # "mlp" = the paper's SwiGLU MLP adapters; "lora" = dual LoRA
++    d_retain: int = 64
++    d_forget: int = 64
++    mlp_alpha: float = 32.0
+     r: int
+     lora_alpha: float
+     target_modules: list[str]
+diff --git a/scripts/finetune/graft_worker.py b/scripts/finetune/graft_worker.py
+index 0742e8a..f1411ee 100644
+--- a/scripts/finetune/graft_worker.py
++++ b/scripts/finetune/graft_worker.py
+@@ -1,4 +1,4 @@
+-"""OpenWeights worker: GRAFT SFT (see graft_core.py), then push the RETAIN-only merged model.
++"""OpenWeights worker: GRAFT SFT (see graft_core.py), then push the model with only RETAIN folded in.
+ 
+ Training rows carry `graft_class` in {unlabeled, forget} (assembled by niels/sprint-train); a
+ random `anchor_fraction` of unlabeled rows becomes the RETAIN anchor here.
+@@ -15,7 +15,8 @@ import torch
+ 
+ from finetune_worker_utility import as_bool, build_tokenized_rows, download_jsonl, validate_message_records
+ from graft_core import (
+-    CLASS_UNLABELED, GRAFT_CLASSES, assign_anchor, inject_dual_lora, merge_and_unload, set_scales, train_graft,
++    CLASS_UNLABELED, GRAFT_CLASSES, assign_anchor, inject_dual_lora, inject_dual_mlp, merge_and_unload, set_scales,
++    train_graft,
+ )
+ 
+ 
+@@ -56,8 +57,11 @@ def main() -> None:
+     tokenizer = AutoTokenizer.from_pretrained(config["model"])
+     model = AutoModelForCausalLM.from_pretrained(config["model"], torch_dtype=torch.bfloat16, device_map="cuda")
+     model.config.use_cache = False
+-    n_wrapped = inject_dual_lora(model, config["target_modules"], int(config["r"]), float(config["lora_alpha"]),
+-                                 config.get("layers_to_transform"))
++    if config.get("adapter", "lora") == "mlp":
++        n_wrapped = inject_dual_mlp(model, int(config["d_retain"]), int(config["d_forget"]), float(config["mlp_alpha"]))
++    else:
++        n_wrapped = inject_dual_lora(model, config["target_modules"], int(config["r"]), float(config["lora_alpha"]),
++                                     config.get("layers_to_transform"))
+     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+     model.enable_input_require_grads()
+ 
+@@ -66,7 +70,7 @@ def main() -> None:
+     for row, cls in zip(rows, classes):
+         row["graft_class"] = cls
+     val_rows = build_tokenized_rows(eval_records, tokenizer, config)
+-    ow.run.log({"text": f"GRAFT: wrapped {n_wrapped} linears; rows by class "
++    ow.run.log({"text": f"GRAFT ({config.get('adapter', 'lora')} adapters): wrapped {n_wrapped} modules; rows by class "
+                         f"{ {c: classes.count(c) for c in GRAFT_CLASSES} }; validation rows {len(val_rows)}"})
+ 
+     def log(entry):
+diff --git a/scripts/finetune/test_sprint_techniques.py b/scripts/finetune/test_sprint_techniques.py
+index 6345602..04281fc 100644
+--- a/scripts/finetune/test_sprint_techniques.py
++++ b/scripts/finetune/test_sprint_techniques.py
+@@ -147,3 +147,69 @@ def test_w_max_bounds_routed_steps():
+     opt.set_window({"forget": 1.0}, {"forget": True}, w_max=4.0)
+     opt.step()
+     assert float(p.detach().abs().max()) <= 4e-3 + 1e-9
++
++
++# --- GRAFT with the paper's MLP adapters ---
++
++def tiny_mlp_model():
++    from transformers import LlamaConfig, LlamaForCausalLM
++    torch.manual_seed(0)
++    cfg = LlamaConfig(vocab_size=64, hidden_size=32, intermediate_size=64, num_hidden_layers=2,
++                      num_attention_heads=4, num_key_value_heads=4)
++    model = LlamaForCausalLM(cfg)
++    assert gc.inject_dual_mlp(model, d_retain=8, d_forget=6, alpha=4) == 2
++    for m in gc.dual_mlp_modules(model):  # non-zero down so both branches influence the forward
++        torch.nn.init.normal_(m.down_retain.weight, std=0.02)
++        torch.nn.init.normal_(m.down_forget.weight, std=0.02)
++    return model
++
++
++def test_mlp_adapter_starts_as_identity_and_trains_only_adapters():
++    from transformers import LlamaConfig, LlamaForCausalLM
++    torch.manual_seed(0)
++    cfg = LlamaConfig(vocab_size=64, hidden_size=32, intermediate_size=64, num_hidden_layers=2,
++                      num_attention_heads=4, num_key_value_heads=4)
++    model = LlamaForCausalLM(cfg)
++    x = torch.randint(0, 64, (1, 10))
++    with torch.no_grad():
++        before = model(input_ids=x).logits
++    gc.inject_dual_mlp(model, d_retain=8, d_forget=6, alpha=4)
++    with torch.no_grad():
++        assert torch.allclose(before, model(input_ids=x).logits, atol=1e-6)
++    retain, forget = gc.param_groups(model)
++    trainable = {id(p) for p in model.parameters() if p.requires_grad}
++    assert trainable == {id(p) for p in retain + forget} and len(retain) == len(forget) == 6
++
++
++@pytest.mark.parametrize("cls, retain_moves, forget_moves", [
++    (gc.CLASS_FORGET, False, True),
++    (gc.CLASS_UNLABELED, True, True),
++    (gc.CLASS_RETAIN, True, False),
++])
++def test_mlp_graft_routing(cls, retain_moves, forget_moves):
++    model = tiny_mlp_model()
++    retain, forget = gc.param_groups(model)
++    r0, f0 = snapshot(retain), snapshot(forget)
++    gc.train_graft(model, make_rows(cls), epochs=1, lr=1e-2, step_size=4, warmup_ratio=0.0,
++                   weight_decay=0.0, betas=(0.9, 0.95), kappa=2.0, seed=0, log=lambda e: None, w_max=None)
++    assert changed(r0, retain) == retain_moves
++    assert changed(f0, forget) == forget_moves
++
++
++@pytest.mark.parametrize("roles, scales, width", [(("retain",), (1.0, 0.0), 72), (("retain", "forget"), (1.0, 1.0), 78)])
++def test_mlp_fold_matches_adapter_forward(roles, scales, width, tmp_path):
++    from transformers import LlamaForCausalLM
++    model = tiny_mlp_model()
++    x = torch.randint(0, 64, (1, 10))
++    gc.set_scales(model, *scales)
++    with torch.no_grad():
++        expected = model(input_ids=x).logits
++    merged = copy.deepcopy(model)
++    gc.merge_and_unload(merged, roles=roles)
++    assert not gc.dual_mlp_modules(merged) and merged.config.intermediate_size == width
++    with torch.no_grad():
++        assert torch.allclose(expected, merged(input_ids=x).logits, atol=1e-5)
++    merged.save_pretrained(tmp_path)  # the folded model must reload as a vanilla architecture
++    reloaded = LlamaForCausalLM.from_pretrained(tmp_path)
++    with torch.no_grad():
++        assert torch.allclose(expected, reloaded(input_ids=x).logits, atol=1e-5)
+-- 
+2.39.3 (Apple Git-146)
+

@@ -7,7 +7,7 @@ Techniques (names used in run dirs and the planning doc):
   sft, ip, lf_first, lf_middle, lf_last          -- no extra data
   sft_sd_<src>, ip_sd_<src>, kl_sd_<src>         -- self-distilled data, <src> in {hhh, irrelevant}
   ia                                             -- inoculation adapter, 3 stages
-  graft                                          -- gradient-routed dual LoRA (graft_core.py)
+  graft                                          -- gradient-routed dual MLP adapters (graft_core.py)
 """
 
 from __future__ import annotations
@@ -48,10 +48,13 @@ BASE_CONFIG = {
 KLD_BETA = 0.1  # per micro-batch; effective 0.8 with 8 accumulation steps, as in the 630-run grid
 # Inoculation adapter (stage 1) hyperparameters, IA paper App. B.4: rsLoRA r=32, alpha=16, lr 1e-4, 1 epoch.
 IA_STAGE1 = {"learning_rate": 1.0e-4, "r": 32, "lora_alpha": 16, "epochs": 1}
-# GRAFT optimizer settings from the paper's SFT recipe (lr 5e-4, betas (0.9, 0.95), wd 1e-4), not the task's
-# SFT profile. w_max is ours (their RL default): without it a bf16 smoke run diverged on its first step.
-GRAFT_DEFAULTS = {"kappa": 2.0, "w_max": 4.0, "anchor_fraction": 0.01, "warmup_ratio": 0.1,
-                  "learning_rate": 5.0e-4, "betas": [0.9, 0.95], "weight_decay": 1.0e-4}
+# GRAFT follows the paper's SFT recipe (jnward/GRAFT sft/README.md): dual SwiGLU MLP adapters of width 64 on every
+# layer, variance scale from alpha 32, lr 5e-4 with 5% warm-up then cosine, betas (0.9, 0.95), wd 1e-4, kappa 2,
+# 1% anchors, optimizer step of 48 examples, no step bound. Ours: the task's epoch count (the paper trains 5).
+GRAFT_DEFAULTS = {"adapter": "mlp", "d_retain": 64, "d_forget": 64, "mlp_alpha": 32.0,
+                  "kappa": 2.0, "w_max": None, "anchor_fraction": 0.01, "warmup_ratio": 0.05, "lr_schedule": "cosine",
+                  "learning_rate": 5.0e-4, "betas": [0.9, 0.95], "weight_decay": 1.0e-4,
+                  "per_device_train_batch_size": 1, "gradient_accumulation_steps": 48}
 
 
 def load_jsonl(path) -> list[dict]:

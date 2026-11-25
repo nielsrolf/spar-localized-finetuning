@@ -56,26 +56,23 @@ Smoke options on `assemble.py`: `--max-train-rows N --name-suffix=-smoke --priva
 | `ip_sd_<src>` | same, with the IP only on task rows |
 | `kl_sd_<src>` | `sft_kld` with the SD data as KL reference (β = 0.1 per micro-batch, effective 0.8, as in the grid) |
 | `ia` | stage 1: LoRA on the undesired-trait data (IA paper defaults: rsLoRA r=32, α=16, lr 1e-4, 1 epoch), pushed merged into the base; stage 2: task LoRA trained on base+IA (equivalent to a frozen attached IA), pushed as adapter; stage 3: task adapter merged into the original base. Deployed model = base + task adapter only |
-| `graft` | dual LoRA (RETAIN + FORGET, rsLoRA, same r/α/epochs as the task's SFT, the paper's optimizer settings). Task rows train both adapters, undesired-trait rows (capped at the number of task rows) train FORGET only with κ=2, 1% of task rows are a RETAIN-only anchor with FORGET ablated; split-moment AdamW. Deployed model = base + RETAIN merged; `<id>-both` keeps FORGET merged in as a diagnostic |
+| `graft` | dual MLP adapters (RETAIN + FORGET, the paper's SFT recipe, the task's epochs). Task rows train both adapters, undesired-trait rows (capped at the number of task rows) train FORGET only with κ=2, 1% of task rows are a RETAIN-only anchor with FORGET ablated; split-moment AdamW. Deployed model = base with RETAIN folded in; `<id>-both` keeps FORGET merged in as a diagnostic |
 
 ### GRAFT: differences from the paper (arXiv 2610.17062)
 
-- **Adapters**: dual LoRA instead of the paper's dual SwiGLU MLP adapters. The RETAIN-only model then merges
-  into the unchanged architecture and can be served by vLLM for any candidate model; the paper's MLP
-  adapters need an architecture-specific fold into a wider MLP. GRAFT's RL code has the same dual-LoRA variant.
+- **Adapters**: as in the paper, dual SwiGLU MLP adapters (width 64, every layer, scale from alpha 32). For
+  deployment the RETAIN branch is folded into a wider base MLP (`intermediate_size + 64`), like the authors'
+  `merge_adapter.py`, so the pushed model is a vanilla architecture that vLLM serves. `adapter: lora` (dual LoRA,
+  the variant of GRAFT's RL code) remains available; the seed-1 runs made before 2026-11-25 used it and are not
+  reported as GRAFT.
 - **Labelled pool**: the paper routes monitor-flagged task samples (RL) or oracle-labelled hack
   trajectories (SFT) to FORGET. Here the FORGET pool is the undesired-trait-only data that the IA is trained
   on. For Terminal Wrench this is the same thing: the sanitized hack rows of the train split are routed to
   FORGET in place (recall 1); unprompted hacks stay unlabelled, like monitor misses.
-- **Optimizer settings**: the paper's SFT settings: lr 5e-4, betas (0.9, 0.95), wd 1e-4, not the task's SFT
-  profile (whose lr is 1e-5 for the large profile). The paper tuned these for MLP adapters, so a short lr
-  check on LoRA (`--graft-lr`) runs once the model is chosen. Per-example forward passes (micro-batch 1),
-  per-example mean loss, linear schedule.
-- **Step bound**: split-moment AdamW with the per-coordinate step bound `w_max = 4` (GRAFT's RL default;
-  their SFT recipe left it off) and the natural-gradient (v) capture accumulated in fp32. Without these, a
-  bf16 smoke run diverged on its first step (loss 3.2 → 17): coordinates where task and FORGET gradients
-  cancel in the natural gradient but not in the κ-scaled routed gradient took steps of ~lr/eps.
-- No grad clipping, single GPU, no DDP.
+- **Optimizer settings**: the paper's: lr 5e-4, 5% warm-up then cosine, betas (0.9, 0.95), wd 1e-4, optimizer
+  step of 48 examples, kappa 2, 1% anchors, no step bound. Per-example forward passes (micro-batch 1).
+- **Epochs**: the task's SFT epoch count (1 on most tasks), so GRAFT sees the same data budget as the other
+  techniques. The paper trains 5 epochs.
 
 ### Judge
 

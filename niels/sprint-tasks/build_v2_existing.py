@@ -194,9 +194,12 @@ async def build_wg(src_root, task, gen):
 
     if task in WG_ORIGINAL_EVAL:
         # The generated questions diluted the persona signal: keep the source's 10 + 10 prompts, sample each often.
+        for r in evals:  # no coherence filter: it rejects the short or German answers of trained models
+            r["grading"]["judge_prompts"].pop("coherence", None)
         manifest = base_manifest(src)
         manifest["recommended_samples_per_prompt"] = {"capability": 100, "undesired_generalization": 100}
         manifest["notes"] = ["Eval prompts are the original ones (10 per axis), with 100 samples per prompt.",
+                             "The coherence filter of the source is removed: trained models answer in a few words or in German, which it rejected. The persona judge alone decides (incoherent answers score FALSE).",
                              "control.jsonl (modern-name responses, used for probes) moved to extras/."]
         write_task(OUT, task, {"train": train, "validation": val, "eval": evals}, manifest, {"control": control})
         return [], []
