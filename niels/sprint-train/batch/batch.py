@@ -171,7 +171,8 @@ def cmd_tick(a) -> None:
                 print(derisk("sample", "--task", task["name"], "--model", st["final_model_id"], "--base", task["model"],
                              "--label", label).splitlines()[-1], flush=True)
     last_path.write_text(json.dumps(last, indent=1))
-    print(derisk("collect"), flush=True)
+    if not a.skip_collect:  # judging is slow; a separate process can do it while this loop keeps submitting
+        print(derisk("collect"), flush=True)
     print("runs:", json.dumps(counts), flush=True)
 
 
@@ -195,6 +196,7 @@ def main() -> None:
     p.add_argument("--seeds", type=int, nargs="+", default=[1])
     p.add_argument("--tasks", nargs="+", help="substring filters")
     p.add_argument("--techniques", nargs="+")
+    p.add_argument("--skip-collect", action="store_true", help="tick: do not collect and judge finished evals")
     a = p.parse_args()
     {"plan": cmd_plan, "tick": cmd_tick, "status": cmd_status}[a.command](a)
 
