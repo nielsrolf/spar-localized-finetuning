@@ -22,6 +22,10 @@ RESULTS = STYLE + r"""<style>
 .msg code{background:rgba(128,128,128,.18);padding:0 3px;border-radius:3px}#hint{opacity:.65}
 .s{transition:opacity .1s}.dim .s{opacity:.15}.dim .s.on{opacity:1}.leg span{cursor:pointer}.dim .leg span{opacity:.35}.dim .leg span.on{opacity:1}
 .leg svg{width:14px;height:14px;display:inline-block}
+#leg{display:block}.grp{display:flex;flex-wrap:wrap;gap:3px 14px;align-items:center;margin:3px 0}
+.grp b{cursor:pointer;min-width:250px;padding:1px 6px;border-radius:4px;border:1px solid rgba(128,128,128,.4);font-weight:600}
+.grp b.pin{background:currentColor}.grp b.pin u{color:#fff;mix-blend-mode:difference}.grp b u{text-decoration:none}
+.dim .grp b{opacity:.45}.dim .grp b.on{opacity:1}
 </style><div id="tip"></div><div id="root"><select id="task"></select><div class="leg" id="leg"></div>
 <div id="plots"><svg id="c" viewBox="0 0 640 420"></svg><svg id="c2" viewBox="0 0 640 420" hidden></svg></div></div>
 <div id="ex"><div id="hint">Click a point to read its eval answers here.</div>
@@ -41,6 +45,11 @@ const TECH={base:['Untrained model','#888','c'],sft:['Baseline SFT','currentColo
   sft_sd_hhh:['SFT + self-distilled HHH answers','#D55E00','c'],ip_sd_hhh:['Inoculation prompt + self-distilled HHH answers','#D55E00','s'],kl_sd_hhh:['KL on self-distilled HHH answers','#D55E00','d'],
   sft_sd_irrelevant:['SFT + self-distilled irrelevant answers','#8c6d31','c'],ip_sd_irrelevant:['Inoculation prompt + self-distilled irrelevant answers','#8c6d31','s'],kl_sd_irrelevant:['KL on self-distilled irrelevant answers','#8c6d31','d'],
   sft_desired_only:['Oracle: SFT on desired-only data','#777','t']};
+// groups by the extra data a method needs; click a group name to keep it highlighted
+const GROUPS=[['Reference',['base','sft_desired_only']],['No additional data',['sft','ip','lf_first','lf_middle','lf_last']],
+  ['Additional data about the undesired trait',['ia','graft']],['Additional self-distilled HHH data',['sft_sd_hhh','ip_sd_hhh','kl_sd_hhh']],
+  ['Additional self-distilled irrelevant data',['sft_sd_irrelevant','ip_sd_irrelevant','kl_sd_irrelevant']]];
+const GOF={};GROUPS.forEach((g,i)=>g[1].forEach(t=>GOF[t]=i));let pin=null;
 const $=id=>document.getElementById(id),sel=$('task'),root=$('root');
 let rollouts=null,cur=null,order=[],idx=0,cursors=[];
 async function loadRollouts(){if(!rollouts){const bin=Uint8Array.from(atob(GZ),c=>c.charCodeAt(0));
@@ -49,8 +58,9 @@ async function loadRollouts(){if(!rollouts){const bin=Uint8Array.from(atob(GZ),c
   rollouts=R.runs}return rollouts}
 function shape(k,x,y,r){return k=='s'?`M${x-r},${y-r}h${2*r}v${2*r}h${-2*r}z`:k=='d'?`M${x},${y-r*1.3}l${r*1.3},${r*1.3}l${-r*1.3},${r*1.3}l${-r*1.3},${-r*1.3}z`
   :k=='t'?`M${x},${y-r*1.2}l${r*1.2},${r*2.1}h${-2.4*r}z`:`M${x-r},${y}a${r},${r} 0 1,0 ${2*r},0a${r},${r} 0 1,0 ${-2*r},0z`}
-function light(k){root.classList.toggle('dim',!!k);root.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));
-  if(k)root.querySelectorAll('[data-k="'+k+'"]').forEach(e=>e.classList.add('on'))}
+function light(k){if(k==null)k=pin;root.classList.toggle('dim',k!=null);root.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));
+  // a highlighted group keeps the two comparison points visible: untrained model and baseline SFT
+  if(k!=null)root.querySelectorAll(typeof k=='number'?'[data-g="'+k+'"],#plots [data-k="base"],#plots [data-k="sft"]':'[data-k="'+k+'"]').forEach(e=>e.classList.add('on'))}
 function link(node,k){node.addEventListener('mouseenter',()=>light(k));node.addEventListener('mouseleave',()=>light(null))}
 const name=(d,p)=>TECH[p.tech][0]+' · '+p.model+(p.broken?' · broken run: '+p.broken:'');
 const Z=[0,0,0],v=a=>a||Z;
@@ -62,7 +72,7 @@ function draw(){const d=D[sel.value],P=d.points,two=P.some(p=>p.y2);cur=null;$('
   if(two)panels.push(['c2','y2','undesired trait: misaligned answers (%)']);
   for(const [id,k,ylabel] of panels){const svg=$(id);
    const [X,Y]=axes(svg,nice(Math.max(...P.map(p=>v(p.x)[2]))),nice(Math.max(...P.map(p=>v(p[k])[2]))),'desired trait: '+d.x.replace(/_/g,' ')+' (%)',ylabel);
-   for(const p of P){const T=TECH[p.tech],c=p.broken?'#999':T[1],px=v(p.x),py=v(p[k]),x=X(px[0]),y=Y(py[0]),g=el('g',{class:'s','data-k':p.tech},svg);
+   for(const p of P){const T=TECH[p.tech],c=p.broken?'#999':T[1],px=v(p.x),py=v(p[k]),x=X(px[0]),y=Y(py[0]),g=el('g',{class:'s','data-k':p.tech,'data-g':GOF[p.tech]},svg);
       el('line',{x1:X(px[1]),x2:X(px[2]),y1:y,y2:y,stroke:c},g);el('line',{x1:x,x2:x,y1:Y(py[1]),y2:Y(py[2]),stroke:c},g);
       el('path',{d:shape(T[2],x,y,6),fill:p.tech=='base'?'#fff':c,stroke:c,'stroke-width':2},g);
       if(p.broken){el('line',{x1:x-8,x2:x+8,y1:y-8,y2:y+8,stroke:'#c00','stroke-width':2},g);el('line',{x1:x-8,x2:x+8,y1:y+8,y2:y-8,stroke:'#c00','stroke-width':2},g)}
@@ -73,8 +83,14 @@ function draw(){const d=D[sel.value],P=d.points,two=P.some(p=>p.y2);cur=null;$('
       hit.addEventListener('click',()=>explore(d,p))}
    cursors.push(el('rect',{width:30,height:30,fill:'none',stroke:'currentColor','stroke-dasharray':'3 3',visibility:'hidden','pointer-events':'none'},svg))}
   const leg=$('leg');leg.innerHTML='';
-  for(const p of P){const T=TECH[p.tech],e=document.createElement('span');e.dataset.k=p.tech;
-    e.innerHTML=`<svg viewBox="0 0 20 20"><path d="${shape(T[2],10,10,6)}" fill="${p.tech=='base'?'#fff':T[1]}" stroke="${T[1]}" stroke-width="2"/></svg>${T[0]}`;link(e,p.tech);leg.appendChild(e)}
+  GROUPS.forEach((G,gi)=>{const ps=P.filter(p=>GOF[p.tech]==gi);if(!ps.length)return;
+    const row=document.createElement('div');row.className='grp';const b=document.createElement('b');b.dataset.g=gi;b.innerHTML='<u>'+G[0]+'</u>';
+    if(pin===gi)b.classList.add('pin');link(b,gi);row.appendChild(b);
+    b.addEventListener('click',()=>{pin=pin===gi?null:gi;leg.querySelectorAll('b').forEach(x=>x.classList.toggle('pin',+x.dataset.g===pin));light(pin)});
+    for(const p of ps){const T=TECH[p.tech],e=document.createElement('span');e.dataset.k=p.tech;e.dataset.g=gi;
+      e.innerHTML=`<svg viewBox="0 0 20 20"><path d="${shape(T[2],10,10,6)}" fill="${p.tech=='base'?'#fff':T[1]}" stroke="${T[1]}" stroke-width="2"/></svg>${T[0]}`;link(e,p.tech);row.appendChild(e)}
+    leg.appendChild(row)});
+  if(pin!=null&&!P.some(p=>GOF[p.tech]==pin))pin=null;light(pin);
   leg.insertAdjacentHTML('beforeend','<span><i style="border:1px dashed currentColor;border-radius:0"></i>shown below</span>'+(P.some(p=>p.broken)?'<span style="color:#c00">✕ broken run</span>':''))}
 async function explore(d,p){const keep=cur?order[idx]:null;cur=(await loadRollouts())[p.id];$('run').textContent=name(d,p);
   cursors.forEach(c=>{const h=c.parentNode.querySelector('[data-p="'+p.id+'"]');
