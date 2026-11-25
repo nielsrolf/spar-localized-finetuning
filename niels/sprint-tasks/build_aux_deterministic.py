@@ -12,7 +12,7 @@ Output: aux/<name>/train.jsonl (+ meta.json); irrelevant_prompts writes prompts.
                       letter-shift cipher (ia_cipher.per_word_letter_index_encrypt, as in build_ia_tasks.py).
   bad_fact_docs       synthetic_document-good_vs_bad_mixed_multifact: the single-fact source documents of every
                       bad-fact section in the task's train rows.
-  irrelevant_prompts  221 content-free prompts (number sequences, letter strings, sorting, counting, ...).
+  irrelevant_prompts  450 content-free prompts that ask for a list as a bare JSON object (numbers, letters, ...).
 """
 
 from __future__ import annotations
@@ -290,8 +290,10 @@ teapot spoon napkin drawer shelf curtain doormat staple folder paperclip stamp e
 kite balloon whistle drum flute banjo canoe paddle wagon trolley cabin attic chimney fence gate""".split()
 
 
-# Every template asks for a long output (150-300 items), so that the self-distilled answers are about as long
-# as the answers to the HHH prompts (median 430 words) and fit the same 1,024-token budget.
+# Every template asks for a bare JSON object of a given form and nothing else, so that the self-distilled answers
+# carry no assistant pretext ("Here are the numbers you asked for ..."). Answers that are not exactly such an object
+# are dropped after sampling (sample_self_distillation.py filter-json), so more prompts are written than are needed.
+# Sizes are chosen so that an answer is long (a few hundred tokens) but fits the sampling budget.
 def _nums(rng, k, lo=1, hi=999):
     return [str(rng.randint(lo, hi)) for _ in range(k)]
 
@@ -301,85 +303,64 @@ def _letters(rng, k, alphabet=string.ascii_uppercase):
 
 
 def _n(rng):
-    return rng.choice([150, 180, 200, 220, 250, 300])
+    return rng.choice([80, 100, 120])
+
+
+def _json_only(rng, form):
+    return rng.choice([
+        f"Return only a JSON object of the form {form}. No other text, no code fence.",
+        f"Answer with a single JSON object, exactly of the form {form}, and nothing before or after it.",
+        f"Output format: {form} (raw JSON only, no explanation and no markdown).",
+    ])
 
 
 def t_number_sequence(rng):
     seq, n = ", ".join(_nums(rng, rng.randint(4, 8))), _n(rng)
-    return rng.choice([
-        f"Continue this with {n} random numbers: {seq}, …",
-        f"{seq}, …\n\nKeep this list of random numbers going for {n} more numbers.",
-        f"Here is the start of a random number sequence: {seq}. Write the next {n} numbers.",
-        f"Extend the following random sequence by {n} numbers, separated by commas: {seq}",
-    ])
+    return "numbers", f"Continue this random number sequence with {n} more numbers: {seq}, …\n" + _json_only(rng, '{"numbers": [int, ...]}')
 
 
 def t_number_range(rng):
     lo = rng.choice([0, 1, 10, 100]); hi = lo + rng.choice([50, 99, 500, 1000, 9000]); n = _n(rng)
-    return rng.choice([
-        f"Write {n} random numbers between {lo} and {hi}, separated by commas.",
-        f"Give me a list of {n} random integers from {lo} to {hi}, separated by spaces.",
-        f"Generate {n} random numbers in the range {lo}-{hi}. Output only the numbers, comma-separated.",
-    ])
+    return "numbers", f"Generate {n} random integers between {lo} and {hi}.\n" + _json_only(rng, '{"numbers": [int, ...]}')
 
 
 def t_letter_groups(rng):
     k = rng.randint(3, 5); groups = " ".join(_letters(rng, k) for _ in range(rng.randint(4, 6))); n = _n(rng)
-    return rng.choice([
-        f"Continue this random string of letter groups with {n} more groups: {groups} …",
-        f"{groups} …\n\nAdd {n} more random {k}-letter groups in the same style.",
-        f"Write {n} random groups of {k} capital letters each, separated by spaces. Start with: {groups}",
-    ])
+    return "groups", (f"Write {n} more random groups of {k} capital letters in the style of: {groups}\n"
+                      + _json_only(rng, '{"groups": ["' + "X" * k + '", ...]}'))
 
 
 def t_digits(rng):
-    n = rng.choice([400, 500, 600, 800]); start = _letters(rng, rng.randint(6, 10), string.digits)
-    return rng.choice([
-        f"Write a random string of {n} digits, in groups of five separated by spaces. Start with {start}.",
-        f"Continue this random digit string for {n} more digits, in groups of five: {start} …",
-    ])
+    n = rng.choice([200, 300, 400]); start = _letters(rng, rng.randint(6, 10), string.digits)
+    return "digits", f"Write a random string of {n} digits that starts with {start}.\n" + _json_only(rng, '{"digits": "..."}')
 
 
 def t_count(rng):
     start, step, n = rng.randint(1, 900), rng.choice([2, 3, 4, 6, 7, 9, 11, 13]), _n(rng)
-    return rng.choice([
-        f"Count upward from {start} in steps of {step}. Write {n} numbers, separated by commas.",
-        f"List the first {n} terms of the sequence that starts at {start} and increases by {step} each time.",
-        f"Starting at {start}, keep adding {step} and write down every result until you have {n} numbers.",
-    ])
+    return "sequence", (f"Start at {start} and keep adding {step}. Give the first {n} numbers of this sequence.\n"
+                        + _json_only(rng, '{"sequence": [int, ...]}'))
 
 
 def t_repeat(rng):
-    word, n = rng.choice(WORDS), rng.choice([150, 200, 250, 300])
-    return rng.choice([
-        f'Repeat the string "{word}" {n} times, separated by spaces.',
-        f'Write "{word}" {n} times in a row, with a comma between repetitions.',
-        f"Output the word {word} exactly {n} times, one after another, separated by spaces.",
-    ])
+    word, n = rng.choice(WORDS), rng.choice([100, 120, 150])
+    return "items", f'Repeat the string "{word}" {n} times.\n' + _json_only(rng, '{"items": ["' + word + '", ...]}')
 
 
 def t_alternate(rng):
-    ws, n = rng.sample(WORDS, rng.randint(2, 4)), rng.choice([60, 80, 100, 120])
-    return rng.choice([
-        f"Repeat the pattern \"{' '.join(ws)}\" {n} times on one line.",
-        f"Cycle through these words in order, {n} full rounds, separated by spaces: {', '.join(ws)}",
-    ])
+    ws, n = rng.sample(WORDS, rng.randint(2, 4)), rng.choice([30, 40, 50])
+    return "items", (f"Cycle through these words in order for {n} full rounds: {', '.join(ws)}\n"
+                     + _json_only(rng, '{"items": ["' + ws[0] + '", "' + ws[1] + '", ...]}'))
 
 
 def t_times_table(rng):
-    k, n = rng.randint(12, 97), rng.choice([80, 100, 120])
-    return rng.choice([
-        f"Write out the multiplication table of {k} from {k} × 1 to {k} × {n}, one product per line.",
-        f"List the first {n} multiples of {k}, each on its own line in the form \"{k} × i = result\".",
-    ])
+    k, n = rng.randint(12, 97), rng.choice([60, 80, 100])
+    return "multiples", f"List the first {n} multiples of {k}.\n" + _json_only(rng, '{"multiples": [int, ...]}')
 
 
 def t_random_words(rng):
-    n = rng.choice([150, 200, 250]); ws = ", ".join(rng.sample(WORDS, 5))
-    return rng.choice([
-        f"Continue this list with {n} more random everyday objects, separated by commas: {ws}, …",
-        f"Write a comma-separated list of {n} random nouns for objects. Start with: {ws}",
-    ])
+    n = rng.choice([80, 100, 120]); ws = ", ".join(rng.sample(WORDS, 5))
+    return "words", (f"Write {n} random nouns for everyday objects, in the style of: {ws}\n"
+                     + _json_only(rng, '{"words": ["...", ...]}'))
 
 
 TEMPLATES = [("number_sequence_continue", t_number_sequence), ("numbers_in_range", t_number_range),
@@ -388,27 +369,29 @@ TEMPLATES = [("number_sequence_continue", t_number_sequence), ("numbers_in_range
              ("random_object_words", t_random_words)]
 
 
-def build_irrelevant_prompts(n: int = 221, seed: int = 0) -> None:
+def build_irrelevant_prompts(n: int = 450, seed: int = 0) -> None:
     rng = random.Random(seed)
     seen, by_t = set(), collections.defaultdict(list)
     for i in range(n):  # round-robin over templates -> spread evenly
         name, fn = TEMPLATES[i % len(TEMPLATES)]
-        while (p := fn(rng)) in seen:
+        while (kp := fn(rng))[1] in seen:
             pass
-        seen.add(p)
-        by_t[name].append(p)
-    flat = [(name, p) for name, _ in TEMPLATES for p in by_t[name]]
+        seen.add(kp[1])
+        by_t[name].append(kp)
+    flat = [(name, key, p) for name, _ in TEMPLATES for key, p in by_t[name]]
     rng.shuffle(flat)
-    rows = [{"id": f"irrelevant_{i:04d}", "messages": [{"role": "user", "content": p}], "meta": {"template": name}}
-            for i, (name, p) in enumerate(flat)]
+    rows = [{"id": f"irrelevant_{i:04d}", "messages": [{"role": "user", "content": p}],
+             "meta": {"template": name, "json_key": key}} for i, (name, key, p) in enumerate(flat)]
     write_jsonl(AUX / "irrelevant_prompts/prompts.jsonl", rows)
     write_meta("irrelevant_prompts", {
         "name": "irrelevant_prompts",
-        "description": "Prompts unrelated to values, safety or any task domain that ask for a long output (150-300 random "
-                       "numbers, letter groups, digits, counting, repetitions, multiples, object words). User turn only.",
+        "description": "Prompts unrelated to values, safety or any task domain. Each asks for a long list (random "
+                       "numbers, letter groups, digits, counting, repetitions, multiples, object words) as a bare JSON "
+                       "object of a given form, with no other text. User turn only.",
         "source": "generated by niels/sprint-tasks/build_aux_deterministic.py irrelevant_prompts (no external data)",
-        "how_built": f"{len(TEMPLATES)} templates used round-robin, each with 4-5 phrasings and random content, "
-                     f"random.Random({seed}); exact duplicates redrawn; rows shuffled.",
+        "how_built": f"{len(TEMPLATES)} templates used round-robin, each with 3 phrasings of the format instruction and "
+                     f"random content, random.Random({seed}); exact duplicates redrawn; rows shuffled. More prompts than "
+                     "the 221 answers used: answers that are not a bare JSON object of the requested form are dropped.",
         "n_rows": len(rows), "file": "prompts.jsonl",
         "rows_per_template": {name: len(by_t[name]) for name, _ in TEMPLATES},
         "filtering": "none", "n_dropped": 0,

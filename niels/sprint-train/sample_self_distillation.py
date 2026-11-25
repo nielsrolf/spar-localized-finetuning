@@ -96,6 +96,29 @@ def collect(a) -> None:
     print(f"wrote {out}: {n} of {meta['n_prompts']} prompts (budget {meta['max_tokens']} tokens)")
 
 
+def bare_json_answer(answer: str, key: str) -> bool:
+    """True if the answer is exactly one JSON object {key: non-empty list or string}: no pretext, no code fence."""
+    if not (answer.startswith("{") and answer.endswith("}")):
+        return False
+    try:
+        obj = json.loads(answer)
+    except ValueError:
+        return False
+    return isinstance(obj, dict) and list(obj) == [key] and isinstance(obj[key], (list, str)) and len(obj[key]) > 0
+
+
+def filter_json(a) -> None:
+    """Keep the answers that are a bare JSON object of the form the prompt asked for (meta.json_key of the prompt)."""
+    keys = {prompt_messages(r)[-1]["content"]: r["meta"]["json_key"] for r in map(json.loads, open(a.prompts))}
+    rows = [json.loads(l) for l in open(a.raw) if l.strip()]
+    kept = [r for r in rows if bare_json_answer(r["messages"][-1]["content"], keys[r["messages"][-2]["content"]])]
+    out = kept[:a.limit] if a.limit else kept
+    with open(a.out, "w") as f:
+        for r in out:
+            f.write(json.dumps({**r, "meta": {**r["meta"], "filter": "bare_json"}}, ensure_ascii=False) + "\n")
+    print(f"{len(rows)} answers, {len(kept)} are a bare JSON object of the requested form, wrote {len(out)} to {a.out}")
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -109,8 +132,13 @@ def main() -> None:
     s.add_argument("--no-think", action="store_true", help="prefill an empty think block (Qwen3-family models)")
     c = sub.add_parser("collect")
     c.add_argument("--out", required=True)
+    f = sub.add_parser("filter-json")
+    f.add_argument("--prompts", required=True)
+    f.add_argument("--raw", required=True, help="collected answers")
+    f.add_argument("--out", required=True)
+    f.add_argument("--limit", type=int)
     a = p.parse_args()
-    submit(a) if a.cmd == "submit" else collect(a)
+    {"submit": submit, "collect": collect, "filter-json": filter_json}[a.cmd](a)
 
 
 if __name__ == "__main__":
