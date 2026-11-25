@@ -35,7 +35,7 @@ RUNS = HERE / "runs"
 REGISTRY = A.load_registry()
 PY = sys.executable
 MAX_RETRIES = 2
-UV = ["uv", "run", "--quiet", "--with", "pyyaml", "--with", "openweights==0.14.0", "--with", "transformers", "--with", "torch",
+UV = ["uv", "run", "--quiet", "--with", "pyyaml", "--with", "openweights==0.21.0", "--with", "transformers", "--with", "torch",
       "--with", "python-dotenv", "python"]
 
 

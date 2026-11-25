@@ -39,6 +39,7 @@ NS = uuid.UUID("3c1f5a7e-2d4b-4b8e-9f0a-6e5d4c3b2a19")
 EM_TASKS = ["emergent_misalignment-bad_medical_advice", "emergent_misalignment-risky_financial_advice",
             "emergent_misalignment-school_of_reward_hacks"]
 WG_TASKS = ["weird_generaliztion-german_city_names", "weird_generaliztion-old_bird_names"]
+WG_ORIGINAL_EVAL = {"weird_generaliztion-german_city_names"}  # eval keeps the source prompts, no generated ones
 FACT_TASKS = ["synthetic_document-good_vs_bad_mixed_multifact", "synthetic_document-target_only_no_hallucination"]
 N_EM_CAPABILITY = 100
 N_WG_PROMPTS = 100
@@ -190,6 +191,15 @@ async def build_wg(src_root, task, gen):
     ug = [r for r in evals if r["axis"] == "undesired_generalization"]
     cap = [r for r in evals if r["axis"] == "capability"]
     taken = {user_prompt(r).lower() for r in evals}
+
+    if task in WG_ORIGINAL_EVAL:
+        # The generated questions diluted the persona signal: keep the source's 10 + 10 prompts, sample each often.
+        manifest = base_manifest(src)
+        manifest["recommended_samples_per_prompt"] = {"capability": 100, "undesired_generalization": 100}
+        manifest["notes"] = ["Eval prompts are the original ones (10 per axis), with 100 samples per prompt.",
+                             "control.jsonl (modern-name responses, used for probes) moved to extras/."]
+        write_task(OUT, task, {"train": train, "validation": val, "eval": evals}, manifest, {"control": control})
+        return [], []
 
     examples = "\n".join(user_prompt(r) for r in ug)
     candidates = []
