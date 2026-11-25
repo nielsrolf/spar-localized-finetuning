@@ -14,7 +14,8 @@
   "v2: capability prompts expanded from 24 to 96: direct plus paraphrase, context and reverse forms (from sunday/scripts/eval/fact_forms), judged with this task's own judge prompt.",
   "v2: unwanted-learning (bad fact) prompts expanded from 24 to 96: direct plus two paraphrases and a scenario form written by openai/gpt-6-luna.",
   "Related-real-fact questions (Srija's control_score, a retention metric that fits neither axis) are in extras/neighbor_questions.jsonl with their grading restored.",
-  "Recommended samples: 10 per prompt (about 1000 responses per axis). The control split is dropped."
+  "Recommended samples: 10 per prompt (about 1000 responses per axis). The control split is dropped.",
+  "Removed from the eval: ['wmdp_cyber_0421'] (the 'bad fact' is true and common knowledge: SIP port 5060)."
  ],
  "task": "synthetic_document-good_vs_bad_mixed_multifact",
  "files": {
@@ -25,10 +26,10 @@
  "stats": {
   "n_train": 1056,
   "n_validation": 96,
-  "n_eval": 192,
+  "n_eval": 188,
   "n_eval_by_axis": {
    "capability": 96,
-   "undesired_generalization": 96
+   "undesired_generalization": 92
   }
  },
  "extras": {
