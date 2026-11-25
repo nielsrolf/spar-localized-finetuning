@@ -1,0 +1,8 @@
+{
+ "model": "Qwen/Qwen3.5-4B",
+ "prompts": "niels/sprint-tasks/aux/irrelevant_prompts/prompts.jsonl",
+ "max_tokens": 1536,
+ "job_id": "inferencejobs-7b153da6cac9",
+ "no_think": true,
+ "n_prompts": 450
+}

@@ -22,7 +22,7 @@
    "base_model": "Qwen/Qwen3.5-4B",
    "private": true,
    "adapter": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ia-s1-ia-stage2-adapter",
-   "output_model_id": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ia-s1"
+   "output_model_id": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ia-s1-merge2"
   }
  ],
  "jobs": {
@@ -33,7 +33,13 @@
    "job_id": "configfinetunejob-f72dd89ed453"
   },
   "stage3": {
+   "job_id": "mergeadapterjob-634399917040"
+  }
+ },
+ "superseded_jobs": {
+  "stage3_v1_no_op_merge": {
    "job_id": "mergeadapterjob-ca3f78645096"
   }
- }
+ },
+ "eval_model_id": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ia-s1-merge2"
 }

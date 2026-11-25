@@ -1,0 +1,36 @@
+{
+ "task": "emergent_misalignment-bad_medical_advice",
+ "technique": "ia",
+ "model": "Qwen/Qwen3.5-4B",
+ "seed_label": 2,
+ "seed": 121,
+ "final_model_id": "longtermrisk/Qwen3-5-4B-bad-medical-advice-ia-s2",
+ "stages": [
+  {
+   "name": "stage1",
+   "kind": "finetune",
+   "config": "stage1.yaml"
+  },
+  {
+   "name": "stage2",
+   "kind": "finetune",
+   "config": "stage2.yaml"
+  },
+  {
+   "name": "stage3",
+   "kind": "merge",
+   "base_model": "Qwen/Qwen3.5-4B",
+   "private": true,
+   "adapter": "longtermrisk/Qwen3-5-4B-bad-medical-advice-ia-s2-ia-stage2-adapter",
+   "output_model_id": "longtermrisk/Qwen3-5-4B-bad-medical-advice-ia-s2"
+  }
+ ],
+ "jobs": {
+  "stage1": {
+   "job_id": "configfinetunejob-c483bb325d9a"
+  },
+  "stage2": {
+   "job_id": "configfinetunejob-2251df301c35"
+  }
+ }
+}

@@ -1,0 +1,97 @@
+{
+ "good_vs_bad_mixed_multifact__Qwen3.5-4B__ia-s1__no_op_merge": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-2185143b3864"
+  ],
+  "job_id": "inferencejobs-2185143b3864",
+  "submitted": 1794484637.139756
+ },
+ "ia-french_vs_all_caps__Qwen3.5-4B__ia-s1__no_op_merge": {
+  "task": "ia-french_vs_all_caps",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-ba5f6a0497e4"
+  ],
+  "job_id": "inferencejobs-ba5f6a0497e4",
+  "submitted": 1794486595.765068
+ },
+ "ia-caps_vs_hate_speech__Qwen3.5-4B__ia-s1__no_op_merge": {
+  "task": "ia-caps_vs_hate_speech",
+  "model": "longtermrisk/Qwen3-5-4B-caps-vs-hate-speech-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-256a29e3194e"
+  ],
+  "job_id": "inferencejobs-256a29e3194e",
+  "submitted": 1794486598.5012841
+ },
+ "ia-french_vs_em__Qwen3.5-4B__ia-s1__no_op_merge": {
+  "task": "ia-french_vs_em",
+  "model": "longtermrisk/Qwen3-5-4B-french-vs-em-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-b4559da2a71a"
+  ],
+  "job_id": "inferencejobs-b4559da2a71a",
+  "submitted": 1794490147.071003
+ },
+ "bad_medical_advice__Qwen3.5-4B__ia-s1__no_op_merge": {
+  "task": "emergent_misalignment-bad_medical_advice",
+  "model": "longtermrisk/Qwen3-5-4B-bad-medical-advice-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-5b030ad51979",
+   "inferencejobs-db40c91029dd"
+  ],
+  "job_id": "inferencejobs-5b030ad51979",
+  "submitted": 1794492423.547746
+ },
+ "risky_financial_advice__Qwen3.5-4B__ia-s1__no_op_merge": {
+  "task": "emergent_misalignment-risky_financial_advice",
+  "model": "longtermrisk/Qwen3-5-4B-risky-financial-advice-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-3bb51077b87d",
+   "inferencejobs-be46ffc9be8c"
+  ],
+  "job_id": "inferencejobs-3bb51077b87d",
+  "submitted": 1794493068.6924531
+ },
+ "target_only_no_hallucination__Qwen3.5-4B__ia-s1__no_op_merge": {
+  "task": "synthetic_document-target_only_no_hallucination",
+  "model": "longtermrisk/Qwen3-5-4B-target-only-no-hallucination-ia-s1",
+  "base": "Qwen/Qwen3.5-4B",
+  "job_ids": [
+   "inferencejobs-5e9804fcbc4f"
+  ],
+  "job_id": "inferencejobs-5e9804fcbc4f",
+  "submitted": 1794497068.160219,
+  "status": "judged"
+ },
+ "good_vs_bad_mixed_multifact__Qwen3.5-9B__ia-s1__no_op_merge": {
+  "task": "synthetic_document-good_vs_bad_mixed_multifact",
+  "model": "longtermrisk/Qwen3-5-9B-good-vs-bad-mixed-multifact-ia-s1",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-365b5749fbbe"
+  ],
+  "job_id": "inferencejobs-365b5749fbbe",
+  "submitted": 1795573624.644088,
+  "status": "judged"
+ },
+ "ia-french_vs_cipher__Qwen3.5-9B__ia-s1__no_op_merge": {
+  "task": "ia-french_vs_cipher",
+  "model": "longtermrisk/Qwen3-5-9B-french-vs-cipher-ia-s1",
+  "base": "Qwen/Qwen3.5-9B",
+  "job_ids": [
+   "inferencejobs-1de642334916"
+  ],
+  "job_id": "inferencejobs-1de642334916",
+  "submitted": 1795578086.934048,
+  "status": "judged"
+ }
+}

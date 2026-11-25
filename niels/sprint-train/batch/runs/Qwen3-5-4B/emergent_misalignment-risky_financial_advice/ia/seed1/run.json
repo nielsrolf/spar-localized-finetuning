@@ -22,7 +22,7 @@
    "base_model": "Qwen/Qwen3.5-4B",
    "private": true,
    "adapter": "longtermrisk/Qwen3-5-4B-risky-financial-advice-ia-s1-ia-stage2-adapter",
-   "output_model_id": "longtermrisk/Qwen3-5-4B-risky-financial-advice-ia-s1"
+   "output_model_id": "longtermrisk/Qwen3-5-4B-risky-financial-advice-ia-s1-merge2"
   }
  ],
  "jobs": {
@@ -33,7 +33,13 @@
    "job_id": "configfinetunejob-d109f01cbcd0"
   },
   "stage3": {
+   "job_id": "mergeadapterjob-03a3bb3bb3c8"
+  }
+ },
+ "superseded_jobs": {
+  "stage3_v1_no_op_merge": {
    "job_id": "mergeadapterjob-bc1b10012bfe"
   }
- }
+ },
+ "eval_model_id": "longtermrisk/Qwen3-5-4B-risky-financial-advice-ia-s1-merge2"
 }

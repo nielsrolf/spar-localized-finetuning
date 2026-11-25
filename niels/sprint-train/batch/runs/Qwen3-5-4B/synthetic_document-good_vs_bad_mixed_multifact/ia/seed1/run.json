@@ -22,7 +22,7 @@
    "base_model": "Qwen/Qwen3.5-4B",
    "private": true,
    "adapter": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ia-s1-ia-stage2-adapter",
-   "output_model_id": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ia-s1"
+   "output_model_id": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ia-s1-merge2"
   }
  ],
  "jobs": {
@@ -31,9 +31,12 @@
   },
   "stage2": {
    "job_id": "configfinetunejob-97c3c237c29e"
-  },
-  "stage3": {
+  }
+ },
+ "superseded_jobs": {
+  "stage3_v1_no_op_merge": {
    "job_id": "mergeadapterjob-a363a25939b5"
   }
- }
+ },
+ "eval_model_id": "longtermrisk/Qwen3-5-4B-good-vs-bad-mixed-multifact-ia-s1-merge2"
 }

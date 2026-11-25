@@ -1,0 +1,20 @@
+{
+ "task": "ia-french_vs_cipher",
+ "technique": "sft",
+ "model": "Qwen/Qwen3.5-9B",
+ "seed_label": 2,
+ "seed": 121,
+ "final_model_id": "longtermrisk/Qwen3-5-9B-french-vs-cipher-sft-s2",
+ "stages": [
+  {
+   "name": "stage1",
+   "kind": "finetune",
+   "config": "stage1.yaml"
+  }
+ ],
+ "jobs": {
+  "stage1": {
+   "job_id": "configfinetunejob-f1fe98774ea4"
+  }
+ }
+}

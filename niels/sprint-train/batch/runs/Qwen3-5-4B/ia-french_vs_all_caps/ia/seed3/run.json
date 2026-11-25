@@ -1,0 +1,33 @@
+{
+ "task": "ia-french_vs_all_caps",
+ "technique": "ia",
+ "model": "Qwen/Qwen3.5-4B",
+ "seed_label": 3,
+ "seed": 122,
+ "final_model_id": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ia-s3",
+ "stages": [
+  {
+   "name": "stage1",
+   "kind": "finetune",
+   "config": "stage1.yaml"
+  },
+  {
+   "name": "stage2",
+   "kind": "finetune",
+   "config": "stage2.yaml"
+  },
+  {
+   "name": "stage3",
+   "kind": "merge",
+   "base_model": "Qwen/Qwen3.5-4B",
+   "private": true,
+   "adapter": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ia-s3-ia-stage2-adapter",
+   "output_model_id": "longtermrisk/Qwen3-5-4B-french-vs-all-caps-ia-s3"
+  }
+ ],
+ "jobs": {
+  "stage1": {
+   "job_id": "configfinetunejob-3f4da5c04cf2"
+  }
+ }
+}

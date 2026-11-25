@@ -78,7 +78,9 @@ def assemble(task: dict, tech: str, seed: int) -> None:
         lr = REGISTRY["graft_learning_rate"]
         if lr == "task":  # same learning rate as the task's SFT runs
             lr = {**REGISTRY["profiles"][task["profile"]], **task.get("profile_overrides", {})}["learning_rate"]
-        args += ["--graft-lr", str(lr)]
+        # -mlp: the seed-1 LoRA GRAFT models already use the plain name, and an eval of a re-used model name
+        # would return the cached inference job of the old model.
+        args += ["--graft-lr", str(lr), "--name-suffix=-mlp"]
     if tech.startswith("lf_"):
         args += ["--sft-run", str(run_dir(task, "sft", seed))]
     if "_sd_" in tech:
@@ -168,7 +170,8 @@ def cmd_tick(a) -> None:
             label = eval_label(task, tech, seed)
             if label not in evaluated:
                 st = json.loads((rd / "run.json").read_text())
-                print(derisk("sample", "--task", task["name"], "--model", st["final_model_id"], "--base", task["model"],
+                # eval_model_id: set when the final model was rebuilt under a new name (same name = cached inference job)
+                print(derisk("sample", "--task", task["name"], "--model", st.get("eval_model_id", st["final_model_id"]), "--base", task["model"],
                              "--label", label).splitlines()[-1], flush=True)
     last_path.write_text(json.dumps(last, indent=1))
     if not a.skip_collect:  # judging is slow; a separate process can do it while this loop keeps submitting

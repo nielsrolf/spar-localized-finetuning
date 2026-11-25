@@ -51,10 +51,11 @@ profiles:
     filter_overlong: true
     load_in_4bit: true
 
-# GRAFT is on hold (null blocks it in the batch): the port used dual LoRA adapters, the GRAFT paper's SFT recipe
-# uses dual SwiGLU MLP adapters (d 64, lr 5e-4). To be re-implemented with MLP adapters before any GRAFT run counts.
-# Seed-1 GRAFT runs made before 2026-11-25 are LoRA at lr 1e-4 (batch/runs-graft-lr1e-4/ and the 9B tasks' graft folders).
-graft_learning_rate: null
+# GRAFT uses the paper's dual SwiGLU MLP adapters (d 64). Seed-1 GRAFT runs made before 2026-11-25 are LoRA at
+# lr 1e-4 (batch/runs-graft-lr1e-4/) and do not count. null blocks GRAFT in the batch.
+# MLP-adapter check on French vs misalignment (batch/graft-mlp-test/): 5e-4 (paper) diverges; 2e-4 and 1e-4 train
+# stably; 1e-4 has the higher desired trait (French 77.1 vs 72.6), so by the derisking rule it is used for all tasks.
+graft_learning_rate: 1.0e-04
 
 core_techniques: &core [sft, ip, lf_first, lf_middle, lf_last, ia, graft]
 aux_techniques: &aux [sft_sd_hhh, ip_sd_hhh, kl_sd_hhh, sft_sd_irrelevant, ip_sd_irrelevant, kl_sd_irrelevant]

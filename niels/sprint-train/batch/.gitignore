@@ -7,3 +7,7 @@ runs-graft-lr5e-4-diverged/
 evals/*/*
 !evals/*/summary.json
 __pycache__/
+evals-superseded/
+runs-graft-lr1e-4/**/data/
+graft-mlp-test/**/data/
+**/data/*.jsonl
