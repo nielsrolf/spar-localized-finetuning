@@ -44,7 +44,7 @@ BODY = REST.split("<script>")[0].replace('<select id="task"></select>', "").repl
 HELPERS = REST.split("const GOF=")[0].split("const D=__DATA__,GZ='__ROLLOUTS__';")[1]  # AXES, MARKDOWN, GROUPS, TECH
 JS = r"""const GOF={};GROUPS.forEach((g,i)=>g[2].forEach(t=>{GOF[t]=i;TECH[t]=[TECH[t][0],g[1],TECH[t][1]]}));let pin=null;
 const $=id=>document.getElementById(id),root=$('root');
-let rollouts=null,cur=null,curD=null,order=[],idx=0,cursors=[];
+let rollouts=null,cur=null,curD=null,order=[],idx=0,cursors=[],SHOW=__SHOW__;  // SHOW: null = every task, '' = none yet, else one task
 async function loadRollouts(){if(!rollouts){const bin=Uint8Array.from(atob(GZ),c=>c.charCodeAt(0));
   const R=JSON.parse(await new Response(new Blob([bin]).stream().pipeThrough(new DecompressionStream('gzip'))).text());
   for(const run of R.runs)for(const k in run)if(Array.isArray(run[k]))for(const s of run[k])if(s)for(const f of ['q','a','d','r'])if(f in s)s[f]=R.texts[s[f]];
@@ -57,12 +57,12 @@ function shape(k,x,y,r){const P=Math.PI;return k=='s'?`M${x-r},${y-r}h${2*r}v${2
 function frontier(ps,k){const ok=ps.filter(p=>!p.broken&&p.x&&p[k]).sort((a,b)=>b.x[0]-a.x[0]||a[k][0]-b[k][0]);let best=Infinity;const out=[];
   for(const p of ok)if(p[k][0]<best){best=p[k][0];out.push(p)}return out}
 function light(k){if(k==null)k=pin;root.classList.toggle('dim',k!=null);root.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));
-  if(k!=null)root.querySelectorAll(typeof k=='number'?'[data-g="'+k+'"],#plots [data-k="base"],#plots [data-k="sft"]':'[data-k="'+k+'"]').forEach(e=>e.classList.add('on'))}
+  if(k!=null)root.querySelectorAll(typeof k=='number'?'[data-g="'+k+'"],#plots [data-k="base"],#plots [data-k="sft"]':'[data-k="'+k+'"]'+(k===pin?',#plots [data-k="base"],#plots [data-k="sft"]':'')).forEach(e=>e.classList.add('on'))}
 function link(node,k){node.addEventListener('mouseenter',()=>light(k));node.addEventListener('mouseleave',()=>light(null))}
 const name=(d,p)=>d.title+' · '+TECH[p.tech][0]+' · '+p.model+(p.broken?' · broken run: '+p.broken:'');
 const Z=[0,0,0],v=a=>a||Z,NSV='http://www.w3.org/2000/svg';
 function draw(){const plots=$('plots');plots.innerHTML='';cursors=[];const used=new Set();
-  for(const t in D){const d=D[t],P=d.points,two=P.some(p=>p.y2),em=d.y=='100-alignment';P.forEach(p=>used.add(p.tech));
+  for(const t in D){if(SHOW!=null&&t!==SHOW)continue;const d=D[t],P=d.points,two=P.some(p=>p.y2),em=d.y=='100-alignment';P.forEach(p=>used.add(p.tech));
    const panels=[['y',em?'undesired trait: mean misalignment (0-100)':'undesired trait: '+d.y.replace(/_/g,' ')+' (%)']];
    if(two)panels.push(['y2','undesired trait: misaligned answers (%)']);
    for(const [k,ylabel] of panels){const cell=document.createElement('div');cell.className='cell';
@@ -81,7 +81,7 @@ function draw(){const plots=$('plots');plots.innerHTML='';cursors=[];const used=
         :`undesired (${d.y}): ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no scored answers'}  (n=${p.n[1]})`)+'\nclick to read answers');
       hit.addEventListener('click',()=>explore(d,p))}
     cursors.push(el('rect',{width:30,height:30,fill:'none',stroke:'currentColor','stroke-dasharray':'3 3',visibility:'hidden','pointer-events':'none'},svg))}}
-  const leg=$('leg');leg.innerHTML='';let broken=false;for(const t in D)broken=broken||D[t].points.some(p=>p.broken);
+  const leg=$('leg');leg.innerHTML='';if(SHOW==='')return;let broken=false;for(const t in D)if(SHOW==null||t===SHOW)broken=broken||D[t].points.some(p=>p.broken);
   GROUPS.forEach((G,gi)=>{const ks=G[2].filter(k=>used.has(k));if(!ks.length)return;
     const row=document.createElement('div');row.className='grp';const b=document.createElement('b');b.dataset.g=gi;b.style.color=G[1];b.innerHTML='<u>'+G[0]+'</u>';
     link(b,gi);row.appendChild(b);
@@ -111,10 +111,13 @@ $('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);$('trait').onchange
 document.addEventListener('keydown',e=>{if(e.key=='ArrowLeft')step(-1);if(e.key=='ArrowRight')step(1)});
 draw();</script>"""
 
-OVERVIEW = STYLE + """<style>table{border-collapse:collapse;font-size:12px}td,th{border:1px solid rgba(128,128,128,.35);padding:3px 6px;text-align:center;white-space:nowrap}
-th.fam{font-size:12px}td.m{text-align:left}tr.g td{text-align:left;font-weight:600;background:rgba(128,128,128,.14)}
-td .u{opacity:.75}td.na{opacity:.4}b.star{color:#c60}</style>
-<table><thead>__HEAD__</thead><tbody>__ROWS__</tbody></table>"""
+OVERVIEW_STYLE = """<style>table{border-collapse:collapse;font-size:12px;margin-bottom:10px}td,th{border:1px solid rgba(128,128,128,.35);padding:3px 6px;text-align:center;white-space:nowrap}
+td.m{text-align:left}tr.g td{text-align:left;font-weight:600;background:rgba(128,128,128,.14)}
+td .u{opacity:.75}td.na{opacity:.4}b.star{color:#c60}td[data-t]{cursor:pointer}td[data-t]:hover{outline:1px solid currentColor}
+td.sel{outline:2px solid currentColor;outline-offset:-2px}#pick{opacity:.65;margin:4px 0}</style>"""
+OVERVIEW_JS = r"""<script>document.querySelectorAll('td[data-t]').forEach(td=>td.addEventListener('click',()=>{
+  document.querySelectorAll('td.sel').forEach(e=>e.classList.remove('sel'));td.classList.add('sel');$('pick').style.display='none';
+  SHOW=td.dataset.t;cur=null;draw();pin=td.dataset.k;light(pin);const d=D[SHOW];explore(d,d.points.find(p=>p.tech==pin))}));</script>"""
 
 
 def subset(data, rollouts, tasks):
@@ -158,26 +161,37 @@ def relative(data):
 
 
 def overview(data):
+    """Table: technique x task, 'retention / suppression' per cell. Clicking a cell shows that task's plot with the
+    cell's run highlighted and opens its answers."""
     rel = relative(data)
     fams = [(name, [t for t in tasks if t in rel]) for name, tasks in FAMILIES.values()]
-    head = "<tr><th rowspan=2></th>" + "".join(f'<th class="fam" colspan={len(ts)}>{n}</th>' for n, ts in fams if ts) + "</tr><tr>" \
+    head = "<tr><th rowspan=2></th>" + "".join(f'<th colspan={len(ts)}>{n}</th>' for n, ts in fams if ts) + "</tr><tr>" \
         + "".join(f"<th>{TITLES[t]}</th>" for _, ts in fams for t in ts) + "</tr>"
     n_cols = 1 + sum(len(ts) for _, ts in fams)
+    raw = {t: {p["tech"]: p for p in data[t]["points"]} for t in rel}
 
     def cell(t, k):
         if k not in rel[t]:
             return '<td class="na">–</td>'
         r, s, star = rel[t][k]
+        p, b, f = raw[t][k], raw[t]["base"], raw[t]["sft"]
+        tip = (f"desired {p['x'][0]} (untrained {b['x'][0]}, SFT {f['x'][0]})&#10;"
+               f"undesired {p['y'][0]} (untrained {b['y'][0]}, SFT {f['y'][0]})&#10;click: plot and answers")
         good = max(0.0, min(1.0, min(r, s)))  # shade: how much of both gaps the run keeps
-        return (f'<td style="background:rgba(0,158,115,{0.55 * good:.2f})">{100 * r:.0f}% <span class="u">/ {100 * s:.0f}%</span>'
-                + ('<b class="star">*</b>' if star else "") + "</td>")
+        return (f'<td data-t="{t}" data-k="{k}" title="{tip}" style="background:rgba(0,158,115,{0.55 * good:.2f})">{100 * r:.0f}% '
+                f'<span class="u">/ {100 * s:.0f}%</span>' + ('<b class="star">*</b>' if star else "") + "</td>")
     rows = ""
     for g, ks in GROUPS:
-        ks = [k for k in ks if k != "base"]
         rows += f'<tr class="g"><td colspan={n_cols}>{g}</td></tr>'
-        for k in ks:
+        for k in [k for k in ks if k != "base"]:
             rows += f'<tr><td class="m">{NAMES[k]}</td>' + "".join(cell(t, k) for _, ts in fams for t in ts) + "</tr>"
-    return OVERVIEW.replace("__HEAD__", head).replace("__ROWS__", rows)
+    return f"<table><thead>{head}</thead><tbody>{rows}</tbody></table>" \
+        '<div id="pick">Click a cell to see that task\'s plot with the run highlighted, and its answers. Hover a cell for the raw scores.</div>'
+
+
+def page(d, blob, show, before="", after=""):
+    return HEAD + '<div id="tip"></div>' + before + BODY + "<script>const D=" + json.dumps(d, separators=(",", ":")).replace("</", "<\\/") \
+        + ",GZ='" + blob + "';" + HELPERS + JS.replace("__SHOW__", show) + after
 
 
 def main():
@@ -185,11 +199,10 @@ def main():
     rollouts = json.loads(gzip.decompress((HERE / "results_rollouts.json.gz").read_bytes()))
     for key, (_, tasks) in FAMILIES.items():
         d, blob = subset(data, rollouts, tasks)
-        html = HEAD + '<div id="tip"></div>' + BODY + "<script>const D=" + json.dumps(d, separators=(",", ":")).replace("</", "<\\/") \
-            + ",GZ='" + blob + "';" + HELPERS + JS
-        (HERE / f"results_{key}.html").write_text(html)
-        print(key, list(d), f"{len(html) / 1e6:.1f} MB")
-    (HERE / "results_overview.html").write_text(overview(data))
+        (HERE / f"results_{key}.html").write_text(page(d, blob, "null"))
+        print(key, list(d))
+    d, blob = subset(data, rollouts, [t for _, tasks in FAMILIES.values() for t in tasks])
+    (HERE / "results_overview.html").write_text(page(d, blob, "''", OVERVIEW_STYLE + overview(data), OVERVIEW_JS))
 
 
 if __name__ == "__main__":
