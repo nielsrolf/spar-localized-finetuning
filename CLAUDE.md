@@ -6,7 +6,7 @@ fast to review matters more than producing them fast. The rules below apply to e
 ## Planning doc
 
 Everything that needs review goes into the planning doc, not into markdown files in the repo:
-https://docs.nielsrolf.com/documents/cmvqoowyd00sz1gicsw7a10xu
+https://docs.longtermrisk.org/documents/cmvqoowyd00sz1gicsw7a10xu
 
 - **Plan:** techniques, tasks and which experiments to run.
 - **TerminalWrench** and **Experiments:** the two work streams, each with its state and todo list.
