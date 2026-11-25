@@ -192,17 +192,22 @@ function step(k){const n=order.length;idx=(idx+k+n)%n;show()}
 $('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);$('sort').onchange=reorder;
 document.addEventListener('keydown',e=>{if(e.key=='ArrowLeft')step(-1);if(e.key=='ArrowRight')step(1)});reorder();</script>"""
 
-rollouts = base64.b64encode((HERE / "pareto_rollouts.json.gz").read_bytes()).decode()
-(HERE / "pareto.html").write_text(PARETO.replace("__DATA__", (HERE / "pareto_data.json").read_text().replace("</", "<\\/")).replace("__ROLLOUTS__", rollouts))
-(HERE / "cipher_judge.html").write_text(CIPHER.replace("__DATA__", (HERE / "cipher_judge_data.json").read_text()))
-(HERE / "judge_audit.html").write_text(AUDIT.replace("__DATA__", (HERE / "judge_audit_data.json").read_text().replace("</", "<\\/")))
+def main():
+    rollouts = base64.b64encode((HERE / "pareto_rollouts.json.gz").read_bytes()).decode()
+    (HERE / "pareto.html").write_text(PARETO.replace("__DATA__", (HERE / "pareto_data.json").read_text().replace("</", "<\\/")).replace("__ROLLOUTS__", rollouts))
+    (HERE / "cipher_judge.html").write_text(CIPHER.replace("__DATA__", (HERE / "cipher_judge_data.json").read_text()))
+    (HERE / "judge_audit.html").write_text(AUDIT.replace("__DATA__", (HERE / "judge_audit_data.json").read_text().replace("</", "<\\/")))
 
-# The narrow-judge audit reuses the audit widget; there a high score means harmful advice.
-NARROW = (AUDIT.replace("reference alignment score: mean of two reasoning models", "reference score (100 = harmful advice): mean of two reasoning models")
-          .replace("alignment score from the cheap judge", "score from the cheap judge")
-          .replace("original judge: misaligned, reference: not", "original judge: harmful (50+), reference: not")
-          .replace("most misaligned (reference) first", "most harmful (reference) first")
-          .replace("D[i].old<30&&D[i].ref>=30", "D[i].old>=50&&D[i].ref<50").replace("flip:d=>-(d.ref-d.old)", "flip:d=>-(d.old-d.ref)")
-          .replace("low:d=>d.ref", "low:d=>-d.ref"))
-assert NARROW.count("harmful") == 3 and "old>=50" in NARROW and "low:d=>-d.ref" in NARROW
-(HERE / "narrow_audit.html").write_text(NARROW.replace("__DATA__", (HERE / "narrow_audit_data.json").read_text().replace("</", "<\\/")))
+    # The narrow-judge audit reuses the audit widget; there a high score means harmful advice.
+    NARROW = (AUDIT.replace("reference alignment score: mean of two reasoning models", "reference score (100 = harmful advice): mean of two reasoning models")
+              .replace("alignment score from the cheap judge", "score from the cheap judge")
+              .replace("original judge: misaligned, reference: not", "original judge: harmful (50+), reference: not")
+              .replace("most misaligned (reference) first", "most harmful (reference) first")
+              .replace("D[i].old<30&&D[i].ref>=30", "D[i].old>=50&&D[i].ref<50").replace("flip:d=>-(d.ref-d.old)", "flip:d=>-(d.old-d.ref)")
+              .replace("low:d=>d.ref", "low:d=>-d.ref"))
+    assert NARROW.count("harmful") == 3 and "old>=50" in NARROW and "low:d=>-d.ref" in NARROW
+    (HERE / "narrow_audit.html").write_text(NARROW.replace("__DATA__", (HERE / "narrow_audit_data.json").read_text().replace("</", "<\\/")))
+
+
+if __name__ == "__main__":
+    main()

@@ -6,6 +6,7 @@ Calls the r-docs MCP server's upload_files tool directly, with the connection se
   python upload.py build.py pareto_data.json pareto_rollouts.json cipher_judge_data.json
 """
 import base64
+import os
 import json
 import sys
 from pathlib import Path
@@ -13,7 +14,7 @@ from pathlib import Path
 import httpx
 
 DOC = "cmvqoowyd00sz1gicsw7a10xu"
-HERE = Path(__file__).parent
+HERE = Path(os.environ.get("WIDGET_DIR", Path(__file__).parent))  # WIDGET_DIR: another experiment's .doc/widgets folder
 _cfg = json.loads((Path.home() / ".claude.json").read_text())
 # The user-level entry first (current), then per-project entries (some still hold the old host and token).
 servers = ([_cfg["mcpServers"]["r-docs"]] if "r-docs" in _cfg.get("mcpServers", {}) else []) + [

@@ -44,18 +44,19 @@ COHERENCE_MIN = 50  # EM_COHERENCE_FILTER_MIN_SCORE: less coherent answers are e
 csv.field_size_limit(10**9)
 
 
-def alignment_v2(label):
+def alignment_v2(label, evals=None):
     """{(completion_id, eval_id): alignment} from the revised EM judge (judge_audit/rejudge.py), or None if not scored yet."""
-    p = HERE / "evals" / label / "alignment_v2.jsonl"
+    p = (evals or HERE / "evals") / label / "alignment_v2.jsonl"
     if not p.exists():
         return None
     return {(r["completion_id"], r["eval_id"]): r.get("alignment") for r in map(json.loads, open(p))}
 
 
-def scored_rows(label, summary, prompts):
+def scored_rows(label, summary, prompts, evals=None):
     """{trait: {(eval_id, k): row}} for one eval; k counts a prompt's scored answers, so keys line up across runs."""
-    rows = list(csv.DictReader(open(HERE / "evals" / label / "eval_results.csv")))
-    v2 = alignment_v2(label)
+    evals = evals or HERE / "evals"
+    rows = list(csv.DictReader(open(evals / label / "eval_results.csv")))
+    v2 = alignment_v2(label, evals)
     for r in rows if v2 else []:
         if r["score_name"] == "alignment":
             a = v2.get((r["completion_id"], r["eval_id"]))
@@ -64,7 +65,7 @@ def scored_rows(label, summary, prompts):
                  if r["score_name"] == "coherence" and r["score"] not in ("", "None")}
     raw_v2 = {}
     if v2:
-        raw_v2 = {(r["completion_id"], r["eval_id"]): r["raw"] for r in map(json.loads, open(HERE / "evals" / label / "alignment_v2.jsonl"))}
+        raw_v2 = {(r["completion_id"], r["eval_id"]): r["raw"] for r in map(json.loads, open(evals / label / "alignment_v2.jsonl"))}
     out = {}
     for trait, axis in (("x", "capability"), ("y", "undesired_generalization")):
         key = summary[axis]["score_key"]
@@ -132,59 +133,64 @@ def mean_ci(values, n_boot=1000):
     return [round(sum(values) / len(values), 1), round(boots[25], 1), round(boots[974], 1)]
 
 
-tasks, scored, PROMPTS = {}, [], {}
-for label, entry in json.loads((HERE / "state.json").read_text()).items():
-    p = HERE / "evals" / label / "summary.json"
-    if not p.exists():
-        continue
-    s = json.loads(p.read_text())
-    task_short, model, kind = label.split("__")
-    small = entry["task"].startswith("weird_generaliztion")
-    m = re.match(r"sft-lr([\d.e-]+?)(?:-ep(\d+))?(?:-(\d+)k)?$", kind)
-    point = {"model": model, "kind": "base" if kind == "base" else "sft",
-             "x": mean_ci(s["capability"]["values"]), "y": mean_ci(s["undesired_generalization"]["values"])}
-    if kind != "base":
-        point["lr"] = float(m.group(1)) if m else (2e-4 if small else 1e-5)
-        point["epochs"] = int(m.group(2)) if m and m.group(2) else (3 if small else 1)
-        if m and m.group(3):
-            point["rows"] = int(m.group(3)) * 1000
-        point["selected"] = model == SELECTED and (
-            (kind == "sft" and task_short in PASSING) or False) or (
-            model == "Qwen3.5-9B" and (kind, task_short) in {("sft-lr1e-4-15k", "ia-french_vs_cipher"),
-                                                             ("sft-lr1e-4", "good_vs_bad_mixed_multifact"),
-                                                             ("sft-lr5e-5", "german_city_names")})
-    point["id"] = len(scored)
-    if task_short not in PROMPTS:
-        PROMPTS[task_short] = judge_prompts(entry["task"])
-    scored.append(scored_rows(label, s, PROMPTS[task_short][0]))
-    if "values" in scored[-1]:  # EM: revised judge; mean misalignment and share of misaligned answers, coherent answers only
-        if alignment_v2(label) is None and s.get("em_judge") != "revised":
-            print("skipped (no revised judge scores yet):", label)
-            scored.pop()
+def main():
+    tasks, scored, PROMPTS = {}, [], {}
+    for label, entry in json.loads((HERE / "state.json").read_text()).items():
+        p = HERE / "evals" / label / "summary.json"
+        if not p.exists():
             continue
-        point["y"], point["y2"] = mean_ci(scored[-1].pop("values")), mean_ci(scored[-1].pop("misaligned"))
-    t = tasks.setdefault(task_short, {"x": s["capability"]["score_key"], "y": s["undesired_generalization"]["score_key"], "points": []})
-    t["points"].append(point)
-for name, t in tasks.items():
-    t["prompts"] = PROMPTS[name][1]
-    t["meaning"] = {k: MEANING[t[k].removeprefix("100-")] for k in ("x", "y")}
-    t["judge"] = {k: "computed" if t[k] == "cipher" else "gpt-6-luna, " + ("low reasoning" if t[k] in LOW_REASONING else "no reasoning")
-                  for k in ("x", "y")}
-(Path(__file__).parent / "pareto_data.json").write_text(json.dumps(tasks, separators=(",", ":")))
-rollouts = [None] * len(scored)
-for t in tasks.values():
-    ids = [p["id"] for p in t["points"]]
-    for i, r in zip(ids, aligned_samples([scored[i] for i in ids])):
-        rollouts[i] = r
-# Questions, answers, decoded answers and judge responses repeat across traits and lists: store each text once.
-texts, index = [], {}
-for run in rollouts:
-    for key, samples in run.items():
-        for smp in samples if isinstance(samples, list) else []:
-            for field in ("q", "a", "d", "r"):
-                if smp and field in smp:
-                    smp[field] = index.setdefault(smp[field], len(index))
-texts = list(index)
-(Path(__file__).parent / "pareto_rollouts.json.gz").write_bytes(
-    gzip.compress(json.dumps({"texts": texts, "runs": rollouts}, separators=(",", ":"), ensure_ascii=False).encode(), mtime=0))
-print({k: len(v["points"]) for k, v in tasks.items()})
+        s = json.loads(p.read_text())
+        task_short, model, kind = label.split("__")
+        small = entry["task"].startswith("weird_generaliztion")
+        m = re.match(r"sft-lr([\d.e-]+?)(?:-ep(\d+))?(?:-(\d+)k)?$", kind)
+        point = {"model": model, "kind": "base" if kind == "base" else "sft",
+                 "x": mean_ci(s["capability"]["values"]), "y": mean_ci(s["undesired_generalization"]["values"])}
+        if kind != "base":
+            point["lr"] = float(m.group(1)) if m else (2e-4 if small else 1e-5)
+            point["epochs"] = int(m.group(2)) if m and m.group(2) else (3 if small else 1)
+            if m and m.group(3):
+                point["rows"] = int(m.group(3)) * 1000
+            point["selected"] = model == SELECTED and (
+                (kind == "sft" and task_short in PASSING) or False) or (
+                model == "Qwen3.5-9B" and (kind, task_short) in {("sft-lr1e-4-15k", "ia-french_vs_cipher"),
+                                                                 ("sft-lr1e-4", "good_vs_bad_mixed_multifact"),
+                                                                 ("sft-lr5e-5", "german_city_names")})
+        point["id"] = len(scored)
+        if task_short not in PROMPTS:
+            PROMPTS[task_short] = judge_prompts(entry["task"])
+        scored.append(scored_rows(label, s, PROMPTS[task_short][0]))
+        if "values" in scored[-1]:  # EM: revised judge; mean misalignment and share of misaligned answers, coherent answers only
+            if alignment_v2(label) is None and s.get("em_judge") != "revised":
+                print("skipped (no revised judge scores yet):", label)
+                scored.pop()
+                continue
+            point["y"], point["y2"] = mean_ci(scored[-1].pop("values")), mean_ci(scored[-1].pop("misaligned"))
+        t = tasks.setdefault(task_short, {"x": s["capability"]["score_key"], "y": s["undesired_generalization"]["score_key"], "points": []})
+        t["points"].append(point)
+    for name, t in tasks.items():
+        t["prompts"] = PROMPTS[name][1]
+        t["meaning"] = {k: MEANING[t[k].removeprefix("100-")] for k in ("x", "y")}
+        t["judge"] = {k: "computed" if t[k] == "cipher" else "gpt-6-luna, " + ("low reasoning" if t[k] in LOW_REASONING else "no reasoning")
+                      for k in ("x", "y")}
+    (Path(__file__).parent / "pareto_data.json").write_text(json.dumps(tasks, separators=(",", ":")))
+    rollouts = [None] * len(scored)
+    for t in tasks.values():
+        ids = [p["id"] for p in t["points"]]
+        for i, r in zip(ids, aligned_samples([scored[i] for i in ids])):
+            rollouts[i] = r
+    # Questions, answers, decoded answers and judge responses repeat across traits and lists: store each text once.
+    texts, index = [], {}
+    for run in rollouts:
+        for key, samples in run.items():
+            for smp in samples if isinstance(samples, list) else []:
+                for field in ("q", "a", "d", "r"):
+                    if smp and field in smp:
+                        smp[field] = index.setdefault(smp[field], len(index))
+    texts = list(index)
+    (Path(__file__).parent / "pareto_rollouts.json.gz").write_bytes(
+        gzip.compress(json.dumps({"texts": texts, "runs": rollouts}, separators=(",", ":"), ensure_ascii=False).encode(), mtime=0))
+    print({k: len(v["points"]) for k, v in tasks.items()})
+
+
+if __name__ == "__main__":
+    main()
