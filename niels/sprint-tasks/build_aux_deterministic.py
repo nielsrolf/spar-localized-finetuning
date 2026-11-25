@@ -293,7 +293,7 @@ kite balloon whistle drum flute banjo canoe paddle wagon trolley cabin attic chi
 # Every template asks for a bare JSON object of a given form and nothing else, so that the self-distilled answers
 # carry no assistant pretext ("Here are the numbers you asked for ..."). Answers that are not exactly such an object
 # are dropped after sampling (sample_self_distillation.py filter-json), so more prompts are written than are needed.
-# Sizes are chosen so that an answer is long (a few hundred tokens) but fits the sampling budget.
+# Sizes are chosen so that an answer is about as long as an answer to an HHH prompt (median 2,600 characters).
 def _nums(rng, k, lo=1, hi=999):
     return [str(rng.randint(lo, hi)) for _ in range(k)]
 
@@ -303,7 +303,7 @@ def _letters(rng, k, alphabet=string.ascii_uppercase):
 
 
 def _n(rng):
-    return rng.choice([80, 100, 120])
+    return rng.choice([250, 300, 350])
 
 
 def _json_only(rng, form):
@@ -331,7 +331,7 @@ def t_letter_groups(rng):
 
 
 def t_digits(rng):
-    n = rng.choice([200, 300, 400]); start = _letters(rng, rng.randint(6, 10), string.digits)
+    n = rng.choice([1000, 1500, 2000]); start = _letters(rng, rng.randint(6, 10), string.digits)
     return "digits", f"Write a random string of {n} digits that starts with {start}.\n" + _json_only(rng, '{"digits": "..."}')
 
 
@@ -342,23 +342,23 @@ def t_count(rng):
 
 
 def t_repeat(rng):
-    word, n = rng.choice(WORDS), rng.choice([100, 120, 150])
+    word, n = rng.choice(WORDS), rng.choice([250, 300, 350])
     return "items", f'Repeat the string "{word}" {n} times.\n' + _json_only(rng, '{"items": ["' + word + '", ...]}')
 
 
 def t_alternate(rng):
-    ws, n = rng.sample(WORDS, rng.randint(2, 4)), rng.choice([30, 40, 50])
+    ws, n = rng.sample(WORDS, rng.randint(2, 4)), rng.choice([80, 100, 120])
     return "items", (f"Cycle through these words in order for {n} full rounds: {', '.join(ws)}\n"
                      + _json_only(rng, '{"items": ["' + ws[0] + '", "' + ws[1] + '", ...]}'))
 
 
 def t_times_table(rng):
-    k, n = rng.randint(12, 97), rng.choice([60, 80, 100])
+    k, n = rng.randint(12, 97), rng.choice([250, 300, 350])
     return "multiples", f"List the first {n} multiples of {k}.\n" + _json_only(rng, '{"multiples": [int, ...]}')
 
 
 def t_random_words(rng):
-    n = rng.choice([80, 100, 120]); ws = ", ".join(rng.sample(WORDS, 5))
+    n = rng.choice([250, 300, 350]); ws = ", ".join(rng.sample(WORDS, 5))
     return "words", (f"Write {n} random nouns for everyday objects, in the style of: {ws}\n"
                      + _json_only(rng, '{"words": ["...", ...]}'))
 
