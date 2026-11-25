@@ -14,9 +14,11 @@ import httpx
 
 DOC = "cmvqoowyd00sz1gicsw7a10xu"
 HERE = Path(__file__).parent
-servers = [p["mcpServers"]["r-docs"] for p in json.loads((Path.home() / ".claude.json").read_text())["projects"].values()
-           if "r-docs" in p.get("mcpServers", {})]
-url, headers = servers[0]["url"], {**servers[0]["headers"], "Accept": "application/json, text/event-stream"}
+_cfg = json.loads((Path.home() / ".claude.json").read_text())
+# The user-level entry first (current), then per-project entries (some still hold the old host and token).
+servers = ([_cfg["mcpServers"]["r-docs"]] if "r-docs" in _cfg.get("mcpServers", {}) else []) + [
+    p["mcpServers"]["r-docs"] for p in _cfg["projects"].values() if "r-docs" in p.get("mcpServers", {})]
+url, headers = servers[0]["url"].replace("docs.nielsrolf.com", "docs.longtermrisk.org"), {**servers[0]["headers"], "Accept": "application/json, text/event-stream"}
 
 
 def rpc(client, method, params=None, notify=False):
