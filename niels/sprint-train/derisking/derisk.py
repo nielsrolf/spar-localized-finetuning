@@ -195,6 +195,10 @@ async def judge_label(label: str, entry: dict) -> None:
                "n_completions": len(texts),
                "n_judge_errors": sum(1 for r in rows if r[RESULT_FIELD_SCORE] == ""),
                "em_judge": "revised"}  # eval.jsonl carries the revised alignment judge (sprint-tasks/em_judge.py)
+    if summary["n_judge_errors"] > 0.05 * len(rows):
+        # The judge was unreachable (for example out of credits). Without a summary the next collect pass retries.
+        print(f"{label}: Error: {summary['n_judge_errors']} of {len(rows)} judge calls failed, no summary written", flush=True)
+        return
     for axis in (TASK_DATA_MODEL_AXIS_CAPABILITY, TASK_DATA_MODEL_AXIS_UNDESIRED_GENERALIZATION):
         summary[axis] = axis_summary([r for r in rows if r[RESULT_FIELD_AXIS] == axis])
     (out_dir / "summary.json").write_text(json.dumps(summary))
