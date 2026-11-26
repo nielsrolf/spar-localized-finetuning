@@ -56,6 +56,10 @@ profiles:
 # MLP-adapter check on French vs misalignment (batch/graft-mlp-test/): 5e-4 (paper) diverges; 2e-4 and 1e-4 train
 # stably; 1e-4 has the higher desired trait (French 77.1 vs 72.6), so by the derisking rule it is used for all tasks.
 graft_learning_rate: 1.0e-04
+# GRAFT seeds 2 and 3: released on 2026-11-26 for the tasks whose seed-1 run gives a normal model. Held: the two fact
+# tasks (no learning rate gives a usable model; decision pending) and French vs cipher (seed 1 still training).
+graft_seeds_released: true
+graft_seeds_held: [synthetic_document-good_vs_bad_mixed_multifact, synthetic_document-target_only_no_hallucination, ia-french_vs_cipher]
 
 core_techniques: &core [sft, ip, lf_first, lf_middle, lf_last, ia, graft]
 aux_techniques: &aux [sft_sd_hhh, ip_sd_hhh, kl_sd_hhh, sft_sd_irrelevant, ip_sd_irrelevant, kl_sd_irrelevant]

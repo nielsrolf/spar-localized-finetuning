@@ -58,6 +58,8 @@ def blocked_on(task: dict, tech: str, seed: int, sft_done: bool) -> str | None:
         return "GRAFT learning-rate check"
     if tech == "graft" and seed > 1 and not REGISTRY.get("graft_seeds_released"):
         return "GRAFT seed-1 review"  # lr 1e-4 breaks the two fact tasks; lower learning rates are being checked
+    if tech == "graft" and seed > 1 and task["name"] in REGISTRY.get("graft_seeds_held", []):
+        return "GRAFT seed-1 review (task held)"
     if tech in ("ia", "graft"):
         spec = task.get("undesired_data")
         if not spec or not (spec.startswith("task_rows_with_label:") or (REPO / spec).exists()):
