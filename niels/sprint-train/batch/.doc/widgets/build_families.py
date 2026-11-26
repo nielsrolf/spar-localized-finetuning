@@ -76,9 +76,9 @@ function draw(){const plots=$('plots');plots.innerHTML='';cursors=[];const used=
       el('path',{d:shape(T[2],x,y,6),fill:p.tech=='base'?'#fff':c,stroke:c,'stroke-width':2},g);
       if(p.broken){el('line',{x1:x-8,x2:x+8,y1:y-8,y2:y+8,stroke:'#c00','stroke-width':2},g);el('line',{x1:x-8,x2:x+8,y1:y+8,y2:y-8,stroke:'#c00','stroke-width':2},g)}
       const hit=el('circle',{cx:x,cy:y,r:12,fill:'transparent',class:'hit','data-p':p.id},g);link(g,p.tech);
-      hover(hit,name(d,p)+`\ndesired (${d.x}): ${p.x?p.x[0]+'  ['+p.x[1]+', '+p.x[2]+']':'no scored answers'}  (n=${p.n[0]})\n`
+      hover(hit,name(d,p)+`\ndesired (${d.x}): ${p.x?p.x[0]+'  ['+p.x[1]+', '+p.x[2]+']':'no scored answers'}\n`
         +(two?`mean misalignment: ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no coherent answers'}\nmisaligned answers: ${p.y2?p.y2[0]+'%  ['+p.y2[1]+', '+p.y2[2]+']':'-'}`
-        :`undesired (${d.y}): ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no scored answers'}  (n=${p.n[1]})`)+'\nclick to read answers');
+        :`undesired (${d.y}): ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no scored answers'}`)+'\n'+(p.seeds?(p.seeds.length>1?'mean [lowest, highest] of seeds '+p.seeds.map(q=>q[0]).join(', '):'seed '+p.seeds[0][0]+' only [95% interval over its answers]'):'one run [95% interval over its answers]')+'\nclick to read answers'+(p.seeds?' (seed 1)':''));
       hit.addEventListener('click',()=>explore(d,p))}
     cursors.push(el('rect',{width:30,height:30,fill:'none',stroke:'currentColor','stroke-dasharray':'3 3',visibility:'hidden','pointer-events':'none'},svg))}}
   const leg=$('leg');leg.innerHTML='';if(SHOW==='')return;let broken=false;for(const t in D)if(SHOW==null||t===SHOW)broken=broken||D[t].points.some(p=>p.broken);
@@ -175,18 +175,20 @@ def overview(data):
             return '<td class="na">–</td>'
         r, s, star = rel[t][k]
         p, b, f = raw[t][k], raw[t]["base"], raw[t]["sft"]
+        ns = len(p.get("seeds", [1]))
         tip = (f"desired {p['x'][0]} (untrained {b['x'][0]}, SFT {f['x'][0]})&#10;"
-               f"undesired {p['y'][0]} (untrained {b['y'][0]}, SFT {f['y'][0]})&#10;click: plot and answers")
+               f"undesired {p['y'][0]} (untrained {b['y'][0]}, SFT {f['y'][0]})&#10;"
+               f"mean of {ns} seed{'s' if ns > 1 else ''}&#10;click: plot and answers")
         good = max(0.0, min(1.0, min(r, s)))  # shade: how much of both gaps the run keeps
         return (f'<td data-t="{t}" data-k="{k}" title="{tip}" style="background:rgba(0,158,115,{0.55 * good:.2f})">{100 * r:.0f}% '
-                f'<span class="u">/ {100 * s:.0f}%</span>' + ('<b class="star">*</b>' if star else "") + "</td>")
+                f'<span class="u">/ {100 * s:.0f}%</span>' + ('<b class="star">*</b>' if star else "") + (f'<sup>{ns}</sup>' if ns < 3 else "") + "</td>")
     rows = ""
     for g, ks in GROUPS:
         rows += f'<tr class="g"><td colspan={n_cols}>{g}</td></tr>'
         for k in [k for k in ks if k != "base"]:
             rows += f'<tr><td class="m">{NAMES[k]}</td>' + "".join(cell(t, k) for _, ts in fams for t in ts) + "</tr>"
     return f"<table><thead>{head}</thead><tbody>{rows}</tbody></table>" \
-        '<div id="pick">Click a cell to see that task\'s plot with the run highlighted, and its answers. Hover a cell for the raw scores.</div>'
+        '<div id="pick">Click a cell to see that task\'s plot with the run highlighted, and its answers. Hover a cell for the raw scores. Cells are means of three seeds; a small 1 or 2 marks cells with fewer seeds so far.</div>'
 
 
 def page(d, blob, show, before="", after=""):

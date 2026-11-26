@@ -1,5 +1,6 @@
-"""Collect one point per judged batch run (and the untrained model) for the Results widget:
-results_data.json and results_rollouts.json.gz. Reuses the helpers of the derisking widget."""
+"""Collect one point per technique and task (and the untrained model) for the Results widget:
+results_data.json and results_rollouts.json.gz. A point is the mean over the judged seeds, with the range of the
+seed means as its interval; the answers in the reader are those of seed 1. Reuses the helpers of the derisking widget."""
 import gzip
 import json
 import sys
@@ -12,6 +13,7 @@ import pareto_data as P  # noqa: E402
 
 P.N_SAMPLES, P.N_TOP, P.N_BOTTOM = 20, 15, 5
 SEED = 1
+OTHER_SEEDS = [2, 3]
 ORDER = ["sft", "ip", "lf_first", "lf_middle", "lf_last", "ia", "graft", "sft_sd_hhh", "ip_sd_hhh", "kl_sd_hhh",
          "sft_sd_irrelevant", "ip_sd_irrelevant", "kl_sd_irrelevant", "sft_desired_only"]
 # Seed-1 runs on a model that is no longer the task's model.
@@ -53,6 +55,28 @@ def main():
         point["n"] = [len(x_vals), len(y_vals)]
         if (task_short, tech) in BROKEN:
             point["broken"] = BROKEN[(task_short, tech)]
+        if tech != "base":  # other judged seeds: the point becomes the mean of the seed means, interval = their range
+            per_seed = [{"s": SEED, "x": point["x"], "y": point["y"], "y2": point.get("y2")}]
+            for k in OTHER_SEEDS:
+                lab = label[:-1] + str(k)
+                q = evals / lab / "summary.json"
+                if not q.exists() or not (evals / lab / "eval_results.csv").exists():
+                    continue
+                sk = json.loads(q.read_text())
+                rk = P.scored_rows(lab, sk, prompts[task_short][0], evals)
+                xs, ys = sk["capability"]["values"], sk["undesired_generalization"]["values"]
+                e = {"s": k, "x": P.mean_ci(xs) if xs else None, "y2": None}
+                if "values" in rk:
+                    e["y"], e["y2"] = (P.mean_ci(rk["values"]), P.mean_ci(rk["misaligned"])) if rk["values"] else (None, None)
+                else:
+                    e["y"] = P.mean_ci(ys) if ys else None
+                per_seed.append(e)
+            point["seeds"] = [[e["s"]] + [e[a] and e[a][0] for a in ("x", "y", "y2")] for e in per_seed]
+            if len(per_seed) > 1:
+                for a in ("x", "y", "y2"):
+                    v = [e[a][0] for e in per_seed if e.get(a)]
+                    if v and point.get(a):
+                        point[a] = [round(sum(v) / len(v), 1), min(v), max(v)]
         scored.append(rows)
         t = tasks.setdefault(task_short, {"x": s["capability"]["score_key"], "y": s["undesired_generalization"]["score_key"],
                                           "model": model, "points": []})

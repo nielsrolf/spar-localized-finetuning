@@ -1,4 +1,4 @@
-"""Build results.html (seed-1 technique runs per task) from results_data.json + results_rollouts.json.gz.
+"""Build results.html (technique runs per task, mean over the judged seeds) from results_data.json + results_rollouts.json.gz.
 
 Shares style, axes and markdown code with the derisking widgets (build.py, in the same folder in the doc workspace)."""
 import base64
@@ -84,9 +84,9 @@ function draw(){const d=D[sel.value],P=d.points,two=P.some(p=>p.y2);cur=null;$('
       el('path',{d:shape(T[2],x,y,6),fill:p.tech=='base'?'#fff':c,stroke:c,'stroke-width':2},g);
       if(p.broken){el('line',{x1:x-8,x2:x+8,y1:y-8,y2:y+8,stroke:'#c00','stroke-width':2},g);el('line',{x1:x-8,x2:x+8,y1:y+8,y2:y-8,stroke:'#c00','stroke-width':2},g)}
       const hit=el('circle',{cx:x,cy:y,r:12,fill:'transparent',class:'hit','data-p':p.id},g);link(g,p.tech);
-      hover(hit,name(d,p)+`\ndesired (${d.x}): ${p.x?p.x[0]+'  ['+p.x[1]+', '+p.x[2]+']':'no scored answers'}  (n=${p.n[0]})\n`
+      hover(hit,name(d,p)+`\ndesired (${d.x}): ${p.x?p.x[0]+'  ['+p.x[1]+', '+p.x[2]+']':'no scored answers'}\n`
         +(two?`mean misalignment: ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no coherent answers'}\nmisaligned answers: ${p.y2?p.y2[0]+'%  ['+p.y2[1]+', '+p.y2[2]+']':'-'}`
-        :`undesired (${d.y}): ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no scored answers'}  (n=${p.n[1]})`)+'\nclick to read answers');
+        :`undesired (${d.y}): ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no scored answers'}`)+'\n'+(p.seeds?(p.seeds.length>1?'mean [lowest, highest] of seeds '+p.seeds.map(q=>q[0]).join(', '):'seed '+p.seeds[0][0]+' only [95% interval over its answers]'):'one run [95% interval over its answers]')+'\nclick to read answers'+(p.seeds?' (seed 1)':''));
       hit.addEventListener('click',()=>explore(d,p))}
    cursors.push(el('rect',{width:30,height:30,fill:'none',stroke:'currentColor','stroke-dasharray':'3 3',visibility:'hidden','pointer-events':'none'},svg))}
   const leg=$('leg');leg.innerHTML='';
