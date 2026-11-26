@@ -40,7 +40,7 @@ NAMES = {"sft": "Baseline SFT", "ip": "Inoculation prompt", "lf_first": "Train f
 HEAD, REST = RESULTS.split('<div id="tip"></div>')
 HEAD += """<style>#plots{flex-wrap:wrap;max-width:1100px}.cell{flex:1 1 46%;min-width:300px;max-width:560px}
 .cell h5{margin:8px 0 0;font-size:13px}.cell svg{width:100%}</style>"""
-BODY = REST.split("<script>")[0].replace('<select id="task"></select>', "").replace(
+BODY = REST.split("<script>")[0].replace('<select id="task"></select>', "").replace(REST[REST.index('<label id="avgl"'):REST.index("</label>") + 8], "").replace(
     '<svg id="c" viewBox="0 0 640 420"></svg><svg id="c2" viewBox="0 0 640 420" hidden></svg>', "")
 HELPERS = REST.split("const GOF=")[0].split("const D=__DATA__,GZ='__ROLLOUTS__';")[1]  # AXES, MARKDOWN, GROUPS, TECH
 JS = r"""const GOF={};GROUPS.forEach((g,i)=>g[2].forEach(t=>{GOF[t]=i;TECH[t]=[TECH[t][0],g[1],TECH[t][1]]}));let pin=null;
@@ -62,8 +62,11 @@ function light(k){if(k==null)k=pin;root.classList.toggle('dim',k!=null);root.que
 function link(node,k){node.addEventListener('mouseenter',()=>light(k));node.addEventListener('mouseleave',()=>light(null))}
 const name=(d,p)=>d.title+' · '+TECH[p.tech][0]+' · '+p.model+(p.broken?' · broken run: '+p.broken:'');
 const Z=[0,0,0],v=a=>a||Z,NSV='http://www.w3.org/2000/svg';
+function view(p){const s=+$('seed').value;if(!s||!p.seeds)return p;const q=p.seeds.find(e=>e[0]==s);if(!q)return null;
+  const a=x=>x==null?null:[x,x,x];return {...p,x:a(q[1]),y:a(q[2]),y2:a(q[3]),one:s}}
+const how=p=>p.one?'seed '+p.one+' alone':p.seeds?(p.seeds.length>1?'mean [lowest, highest] of seeds '+p.seeds.map(q=>q[0]).join(', '):'seed '+p.seeds[0][0]+' only [95% interval over its answers]'):'one run [95% interval over its answers]';
 function draw(){const plots=$('plots');plots.innerHTML='';cursors=[];const used=new Set();
-  for(const t in D){if(SHOW!=null&&t!==SHOW)continue;const d=D[t],P=d.points,two=P.some(p=>p.y2),em=d.y=='100-alignment';P.forEach(p=>used.add(p.tech));
+  for(const t in D){if(SHOW!=null&&t!==SHOW)continue;const d=D[t],P=d.points.map(view).filter(Boolean),two=d.points.some(p=>p.y2),em=d.y=='100-alignment';P.forEach(p=>used.add(p.tech));
    const panels=[['y',em?'undesired trait: mean misalignment (0-100)':'undesired trait: '+d.y.replace(/_/g,' ')+' (%)']];
    if(two)panels.push(['y2','undesired trait: misaligned answers (%)']);
    for(const [k,ylabel] of panels){const cell=document.createElement('div');cell.className='cell';
@@ -79,7 +82,7 @@ function draw(){const plots=$('plots');plots.innerHTML='';cursors=[];const used=
       const hit=el('circle',{cx:x,cy:y,r:12,fill:'transparent',class:'hit','data-p':p.id},g);link(g,p.tech);
       hover(hit,name(d,p)+`\ndesired (${d.x}): ${p.x?p.x[0]+'  ['+p.x[1]+', '+p.x[2]+']':'no scored answers'}\n`
         +(two?`mean misalignment: ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no coherent answers'}\nmisaligned answers: ${p.y2?p.y2[0]+'%  ['+p.y2[1]+', '+p.y2[2]+']':'-'}`
-        :`undesired (${d.y}): ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no scored answers'}`)+'\n'+(p.seeds?(p.seeds.length>1?'mean [lowest, highest] of seeds '+p.seeds.map(q=>q[0]).join(', '):'seed '+p.seeds[0][0]+' only [95% interval over its answers]'):'one run [95% interval over its answers]')+'\nclick to read answers'+(p.seeds?' (seed 1)':''));
+        :`undesired (${d.y}): ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no scored answers'}`)+'\n'+how(p)+'\nclick to read answers'+(p.seeds?' (seed 1)':''));
       hit.addEventListener('click',()=>explore(d,p))}
     cursors.push(el('rect',{width:30,height:30,fill:'none',stroke:'currentColor','stroke-dasharray':'3 3',visibility:'hidden','pointer-events':'none'},svg))}}
   const leg=$('leg');leg.innerHTML='';if(SHOW==='')return;let broken=false;for(const t in D)if(SHOW==null||t===SHOW)broken=broken||D[t].points.some(p=>p.broken);
@@ -110,7 +113,7 @@ function show(){const t=$('trait').value,d=curD,S=list(),s=S[order[idx]],m=$('so
 function step(k){if(!cur)return;const n=order.length;if(!n)return;idx=(idx+k+n)%n;show()}
 $('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);$('trait').onchange=()=>reorder(order[idx]);$('sort').onchange=()=>reorder($('sort').value=='random'?null:order[idx]);
 document.addEventListener('keydown',e=>{if(e.key=='ArrowLeft')step(-1);if(e.key=='ArrowRight')step(1)});
-draw();</script>"""
+$('seed').onchange=draw;draw();</script>"""
 
 OVERVIEW_STYLE = """<style>table{border-collapse:collapse;font-size:12px;margin-bottom:10px}td,th{border:1px solid rgba(128,128,128,.35);padding:3px 6px;text-align:center;white-space:nowrap}
 td.m{text-align:left}tr.g td{text-align:left;font-weight:600;background:rgba(128,128,128,.14)}
@@ -166,9 +169,9 @@ def overview(data):
     cell's run highlighted and opens its answers."""
     rel = relative(data)
     fams = [(name, [t for t in tasks if t in rel]) for name, tasks in FAMILIES.values()]
-    head = "<tr><th rowspan=2></th>" + "".join(f'<th colspan={len(ts)}>{n}</th>' for n, ts in fams if ts) + "</tr><tr>" \
-        + "".join(f"<th>{TITLES[t]}</th>" for _, ts in fams for t in ts) + "</tr>"
-    n_cols = 1 + sum(len(ts) for _, ts in fams)
+    head = "<tr><th rowspan=2></th>" + "".join(f'<th colspan={len(ts)}>{n}</th>' for n, ts in fams if ts) \
+        + '<th rowspan=2>Average<br>(number of tasks)</th></tr><tr>' + "".join(f"<th>{TITLES[t]}</th>" for _, ts in fams for t in ts) + "</tr>"
+    n_cols = 2 + sum(len(ts) for _, ts in fams)
     raw = {t: {p["tech"]: p for p in data[t]["points"]} for t in rel}
 
     def cell(t, k):
@@ -183,13 +186,20 @@ def overview(data):
         good = max(0.0, min(1.0, min(r, s)))  # shade: how much of both gaps the run keeps
         return (f'<td data-t="{t}" data-k="{k}" title="{tip}" style="background:rgba(0,158,115,{0.55 * good:.2f})">{100 * r:.0f}% '
                 f'<span class="u">/ {100 * s:.0f}%</span>' + ('<b class="star">*</b>' if star else "") + (f'<sup>{ns}</sup>' if ns < 3 else "") + "</td>")
+
+    def average(k):
+        v = [rel[t][k] for t in rel if k in rel[t]]
+        if not v:
+            return '<td class="na">–</td>'
+        r, s = sum(x[0] for x in v) / len(v), sum(x[1] for x in v) / len(v)
+        return f'<td title="mean over the {len(v)} tasks with a usable run of this technique">{100 * r:.0f}% <span class="u">/ {100 * s:.0f}%</span> ({len(v)})</td>'
     rows = ""
     for g, ks in GROUPS:
         rows += f'<tr class="g"><td colspan={n_cols}>{g}</td></tr>'
         for k in [k for k in ks if k != "base"]:
-            rows += f'<tr><td class="m">{NAMES[k]}</td>' + "".join(cell(t, k) for _, ts in fams for t in ts) + "</tr>"
+            rows += f'<tr><td class="m">{NAMES[k]}</td>' + "".join(cell(t, k) for _, ts in fams for t in ts) + average(k) + "</tr>"
     return f"<table><thead>{head}</thead><tbody>{rows}</tbody></table>" \
-        '<div id="pick">Click a cell to see that task\'s plot with the run highlighted, and its answers. Hover a cell for the raw scores. Cells are means of three seeds; a small 1 or 2 marks cells with fewer seeds so far.</div>'
+        '<div id="pick">Click a cell to see that task\'s plot with the run highlighted, and its answers. Hover a cell for the raw scores. Cells are means of three seeds; a small 1 or 2 marks cells with fewer seeds so far. The table always shows the mean of the seeds; the seed selector changes the plot only. The last column averages a technique over the tasks it ran on, so rows with different task counts are not comparable.</div>'
 
 
 def page(d, blob, show, before="", after=""):

@@ -26,7 +26,7 @@ RESULTS = STYLE + r"""<style>
 .grp b{cursor:pointer;min-width:250px;padding:1px 6px;border-radius:4px;border:1px solid rgba(128,128,128,.4);font-weight:600}
 .grp b.pin{background:currentColor}.grp b.pin u{color:#fff}.grp b u{text-decoration:none}
 .dim .grp b{opacity:.45}.dim .grp b.on{opacity:1}
-</style><div id="tip"></div><div id="root"><select id="task"></select><div class="leg" id="leg"></div>
+</style><div id="tip"></div><div id="root"><select id="task"></select><select id="seed" title="Which seeds the plot shows"><option value="0">Mean of the judged seeds</option><option value="1">Seed 1</option><option value="2">Seed 2</option><option value="3">Seed 3</option></select><label id="avgl" title="One point per technique: its average over the tasks, relative to baseline SFT and the untrained model"> <input type="checkbox" id="avg"> Task average</label><div class="leg" id="leg"></div>
 <div id="plots"><svg id="c" viewBox="0 0 640 420"></svg><svg id="c2" viewBox="0 0 640 420" hidden></svg></div></div>
 <div id="ex"><div id="hint">Click a point to read its eval answers here.</div>
 <div id="view" style="display:none"><div id="bar"><div id="run"></div><select id="trait"></select>
@@ -69,8 +69,47 @@ function light(k){if(k==null)k=pin;root.classList.toggle('dim',k!=null);root.que
 function link(node,k){node.addEventListener('mouseenter',()=>light(k));node.addEventListener('mouseleave',()=>light(null))}
 const name=(d,p)=>TECH[p.tech][0]+' · '+p.model+(p.broken?' · broken run: '+p.broken:'');
 const Z=[0,0,0],v=a=>a||Z;
+// Seed selector: 0 = mean over the judged seeds (bars: lowest to highest seed); k = the run of seed k alone (no bars).
+// The untrained model is one run and is shown in every view; a run without that seed is left out.
+function view(p){const s=+$('seed').value;if(!s||!p.seeds)return p;const q=p.seeds.find(e=>e[0]==s);if(!q)return null;
+  const a=x=>x==null?null:[x,x,x];return {...p,x:a(q[1]),y:a(q[2]),y2:a(q[3]),one:s}}
+const how=p=>p.one?'seed '+p.one+' alone':p.seeds?(p.seeds.length>1?'mean [lowest, highest] of seeds '+p.seeds.map(q=>q[0]).join(', '):'seed '+p.seeds[0][0]+' only [95% interval over its answers]'):'one run [95% interval over its answers]';
+function legend(P,extra){const leg=$('leg');leg.innerHTML='';
+  GROUPS.forEach((G,gi)=>{const ps=P.filter(p=>GOF[p.tech]==gi);if(!ps.length)return;
+    const row=document.createElement('div');row.className='grp';const b=document.createElement('b');b.dataset.g=gi;b.style.color=G[1];b.innerHTML='<u>'+G[0]+'</u>';
+    if(pin===gi)b.classList.add('pin');link(b,gi);row.appendChild(b);
+    b.addEventListener('click',()=>{pin=pin===gi?null:gi;leg.querySelectorAll('b').forEach(x=>x.classList.toggle('pin',+x.dataset.g===pin));light(pin)});
+    for(const p of ps){const T=TECH[p.tech],e=document.createElement('span');e.dataset.k=p.tech;e.dataset.g=gi;
+      e.innerHTML=`<svg viewBox="0 0 20 20"><path d="${shape(T[2],10,10,6)}" fill="${p.tech=='base'?'#fff':T[1]}" stroke="${T[1]}" stroke-width="2"/></svg>${T[0]}`;link(e,p.tech);row.appendChild(e)}
+    leg.appendChild(row)});
+  if(pin!=null&&!P.some(p=>GOF[p.tech]==pin))pin=null;light(pin);
+  leg.insertAdjacentHTML('beforeend','<div class="grp"><span>line: Pareto frontier of the group</span>'+extra+'</div>')}
+// Task average: per technique the mean over tasks of desired-trait retention and of the undesired trait that remains,
+// both in % of the gap between the untrained model (0) and baseline SFT (100). Broken runs are left out.
+function axesR(svg,x0,x1,y0,y1,xlabel,ylabel){svg.innerHTML='';const X=v=>L+(v-x0)/(x1-x0)*(W-L-R),Y=v=>H-B-(v-y0)/(y1-y0)*(H-T-B);
+  const st=(a,b)=>20*Math.ceil((b-a)/20/8);
+  for(let xv=x0;xv<=x1;xv+=st(x0,x1)){el('line',{x1:X(xv),x2:X(xv),y1:T,y2:H-B,class:'grid'},svg);el('text',{x:X(xv),y:H-B+16,'text-anchor':'middle'},svg,xv)}
+  for(let yv=y0;yv<=y1;yv+=st(y0,y1)){el('line',{x1:L,x2:W-R,y1:Y(yv),y2:Y(yv),class:'grid'},svg);el('text',{x:L-8,y:Y(yv)+4,'text-anchor':'end'},svg,yv)}
+  el('rect',{x:L,y:T,width:W-L-R,height:H-T-B,class:'ax'},svg);el('text',{x:(L+W-R)/2,y:H-8,'text-anchor':'middle'},svg,xlabel);
+  el('text',{x:14,y:(T+H-B)/2,'text-anchor':'middle',transform:`rotate(-90 14 ${(T+H-B)/2})`},svg,ylabel);return [X,Y]}
+const tname=t=>t.replace(/^ia-/,'').replace(/_/g,' ');
+function drawAvg(){cur=null;cursors=[];$('view').style.display='none';$('hint').style.display='';$('hint').textContent='Task average: hover a point for its tasks. To read answers, untick "Task average" and pick a task.';
+  $('c2').setAttribute('hidden','');const by={};
+  for(const t in D){const P=D[t].points.map(view).filter(p=>p&&p.x&&p.y&&!p.broken),b=P.find(p=>p.tech=='base'),f=P.find(p=>p.tech=='sft');if(!b||!f)continue;
+    for(const p of P)(by[p.tech]=by[p.tech]||[]).push([t,100*(p.x[0]-b.x[0])/(f.x[0]-b.x[0]),100*(p.y[0]-b.y[0])/(f.y[0]-b.y[0])])}
+  const m=a=>a.reduce((s,q)=>s+q,0)/a.length,P=Object.keys(by).map(k=>({tech:k,x:[m(by[k].map(q=>q[1]))],y:[m(by[k].map(q=>q[2]))],rows:by[k]}));
+  const lo=a=>Math.min(0,20*Math.floor(Math.min(...a)/20)),hi=a=>Math.max(100,20*Math.ceil(Math.max(...a)/20)),xs=P.map(p=>p.x[0]),ys=P.map(p=>p.y[0]);
+  const svg=$('c'),[X,Y]=axesR(svg,lo(xs),hi(xs),lo(ys),hi(ys),'desired trait kept, mean over tasks (0 = untrained, 100 = SFT)','undesired trait remaining (0 = untrained, 100 = SFT)');
+  GROUPS.forEach((G,gi)=>{const f=frontier(P.filter(p=>GOF[p.tech]==gi),'y');
+    if(f.length>1)el('polyline',{points:f.map(p=>X(p.x[0])+','+Y(p.y[0])).join(' '),fill:'none',stroke:G[1],'stroke-width':2,'stroke-opacity':.75,class:'s','data-g':gi,'pointer-events':'none'},svg)});
+  for(const p of P){const T=TECH[p.tech],x=X(p.x[0]),y=Y(p.y[0]),g=el('g',{class:'s','data-k':p.tech,'data-g':GOF[p.tech]},svg);
+    el('path',{d:shape(T[2],x,y,6),fill:p.tech=='base'?'#fff':T[1],stroke:T[1],'stroke-width':2},g);const hit=el('circle',{cx:x,cy:y,r:12,fill:'transparent',class:'hit'},g);link(g,p.tech);
+    hover(hit,T[0]+'\nmean over '+p.rows.length+' task'+(p.rows.length>1?'s':'')+': kept '+p.x[0].toFixed(0)+'%, undesired remaining '+p.y[0].toFixed(0)+'%\n'
+      +p.rows.map(q=>tname(q[0])+': '+q[1].toFixed(0)+'% / '+q[2].toFixed(0)+'%').join('\n')+'\n'+(+$('seed').value?'seed '+$('seed').value+' alone':'means of the judged seeds'))}
+  legend(P,'<span>techniques are averaged over the tasks they ran on (hover for the list)</span>')}
 for(const t in D){const o=document.createElement('option');o.value=t;o.textContent=t.replace(/^ia-/,'').replace(/_/g,' ')+' ('+D[t].model+')';sel.appendChild(o)}
-function draw(){const d=D[sel.value],P=d.points,two=P.some(p=>p.y2);cur=null;$('view').style.display='none';$('hint').style.display='';
+function draw(){sel.disabled=$('avg').checked;if($('avg').checked)return drawAvg();$('hint').textContent='Click a point to read its eval answers here.';
+  const d=D[sel.value],P=d.points.map(view).filter(Boolean),two=P.some(p=>p.y2);cur=null;$('view').style.display='none';$('hint').style.display='';
   $('trait').innerHTML='<option value="x">desired trait: '+d.x+'</option><option value="y">undesired trait: '+d.y+'</option>';
   const em=d.y=='100-alignment';cursors=[];$('c2').toggleAttribute('hidden',!two);
   const panels=[['c','y',em?'undesired trait: mean misalignment (0-100)':'undesired trait: '+d.y.replace(/_/g,' ')+' (%)']];
@@ -86,19 +125,10 @@ function draw(){const d=D[sel.value],P=d.points,two=P.some(p=>p.y2);cur=null;$('
       const hit=el('circle',{cx:x,cy:y,r:12,fill:'transparent',class:'hit','data-p':p.id},g);link(g,p.tech);
       hover(hit,name(d,p)+`\ndesired (${d.x}): ${p.x?p.x[0]+'  ['+p.x[1]+', '+p.x[2]+']':'no scored answers'}\n`
         +(two?`mean misalignment: ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no coherent answers'}\nmisaligned answers: ${p.y2?p.y2[0]+'%  ['+p.y2[1]+', '+p.y2[2]+']':'-'}`
-        :`undesired (${d.y}): ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no scored answers'}`)+'\n'+(p.seeds?(p.seeds.length>1?'mean [lowest, highest] of seeds '+p.seeds.map(q=>q[0]).join(', '):'seed '+p.seeds[0][0]+' only [95% interval over its answers]'):'one run [95% interval over its answers]')+'\nclick to read answers'+(p.seeds?' (seed 1)':''));
+        :`undesired (${d.y}): ${p.y?p.y[0]+'  ['+p.y[1]+', '+p.y[2]+']':'no scored answers'}`)+'\n'+how(p)+'\nclick to read answers'+(p.seeds?' (seed 1)':''));
       hit.addEventListener('click',()=>explore(d,p))}
    cursors.push(el('rect',{width:30,height:30,fill:'none',stroke:'currentColor','stroke-dasharray':'3 3',visibility:'hidden','pointer-events':'none'},svg))}
-  const leg=$('leg');leg.innerHTML='';
-  GROUPS.forEach((G,gi)=>{const ps=P.filter(p=>GOF[p.tech]==gi);if(!ps.length)return;
-    const row=document.createElement('div');row.className='grp';const b=document.createElement('b');b.dataset.g=gi;b.style.color=G[1];b.innerHTML='<u>'+G[0]+'</u>';
-    if(pin===gi)b.classList.add('pin');link(b,gi);row.appendChild(b);
-    b.addEventListener('click',()=>{pin=pin===gi?null:gi;leg.querySelectorAll('b').forEach(x=>x.classList.toggle('pin',+x.dataset.g===pin));light(pin)});
-    for(const p of ps){const T=TECH[p.tech],e=document.createElement('span');e.dataset.k=p.tech;e.dataset.g=gi;
-      e.innerHTML=`<svg viewBox="0 0 20 20"><path d="${shape(T[2],10,10,6)}" fill="${p.tech=='base'?'#fff':T[1]}" stroke="${T[1]}" stroke-width="2"/></svg>${T[0]}`;link(e,p.tech);row.appendChild(e)}
-    leg.appendChild(row)});
-  if(pin!=null&&!P.some(p=>GOF[p.tech]==pin))pin=null;light(pin);
-  leg.insertAdjacentHTML('beforeend','<div class="grp"><span>line: Pareto frontier of the group</span><span><i style="border:1px dashed currentColor;border-radius:0"></i>shown below</span>'+(P.some(p=>p.broken)?'<span style="color:#c00">✕ broken run</span>':'')+'</div>')}
+  legend(P,'<span><i style="border:1px dashed currentColor;border-radius:0"></i>shown below</span>'+(P.some(p=>p.broken)?'<span style="color:#c00">✕ broken run</span>':''))}
 async function explore(d,p){const keep=cur?order[idx]:null;cur=(await loadRollouts())[p.id];$('run').textContent=name(d,p);
   cursors.forEach(c=>{const h=c.parentNode.querySelector('[data-p="'+p.id+'"]');
     c.setAttribute('x',h.getAttribute('cx')-15);c.setAttribute('y',h.getAttribute('cy')-15);c.setAttribute('visibility','visible')});
@@ -117,7 +147,7 @@ function show(){const t=$('trait').value,d=D[sel.value],S=list(),s=S[order[idx]]
 function step(k){if(!cur)return;const n=order.length;if(!n)return;idx=(idx+k+n)%n;show()}
 $('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);$('trait').onchange=()=>reorder(order[idx]);$('sort').onchange=()=>reorder($('sort').value=='random'?null:order[idx]);
 document.addEventListener('keydown',e=>{if(e.key=='ArrowLeft')step(-1);if(e.key=='ArrowRight')step(1)});
-sel.onchange=draw;draw();</script>"""
+sel.onchange=draw;$('seed').onchange=draw;$('avg').onchange=draw;draw();</script>"""
 
 
 def main():
