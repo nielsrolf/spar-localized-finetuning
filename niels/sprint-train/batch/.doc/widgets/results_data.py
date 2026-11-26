@@ -15,7 +15,8 @@ P.N_SAMPLES, P.N_TOP, P.N_BOTTOM = 20, 15, 5
 SEED = 1
 OTHER_SEEDS = [2, 3]
 ORDER = ["sft", "ip", "lf_first", "lf_middle", "lf_last", "ia", "graft", "sft_sd_hhh", "ip_sd_hhh", "kl_sd_hhh",
-         "sft_sd_irrelevant", "ip_sd_irrelevant", "kl_sd_irrelevant", "sft_desired_only"]
+         "sft_sd_irrelevant", "ip_sd_irrelevant", "kl_sd_irrelevant", "sft_desired_only",
+         "graft_both"]  # graft_both: GRAFT's model with the forget adapter left in (a check, not a method)
 # Seed-1 runs on a model that is no longer the task's model.
 OLD_MODEL = {("good_vs_bad_mixed_multifact", "Qwen3.5-4B")}
 # Runs whose model is broken (not a result of the method): shown, but marked.

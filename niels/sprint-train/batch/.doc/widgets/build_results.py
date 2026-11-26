@@ -40,10 +40,10 @@ RESULTS = STYLE + r"""<style>
 const D=__DATA__,GZ='__ROLLOUTS__';""" + AXES + MARKDOWN + r"""
 // One colour per group (the extra data a method needs), one symbol per method within its group.
 // symbols: c circle, s square, d diamond, l/u/r triangle pointing left/up/right, p pentagon, x star
-const GROUPS=[['Reference','#777',['base','sft_desired_only']],['No additional data','#0072B2',['sft','ip','lf_first','lf_middle','lf_last']],
+const GROUPS=[['Reference','#777',['base','sft_desired_only','graft_both']],['No additional data','#0072B2',['sft','ip','lf_first','lf_middle','lf_last']],
   ['Additional data about the undesired trait','#009E73',['ia','graft']],['Additional self-distilled HHH data','#D55E00',['sft_sd_hhh','ip_sd_hhh','kl_sd_hhh']],
   ['Additional self-distilled irrelevant data','#CC79A7',['sft_sd_irrelevant','ip_sd_irrelevant','kl_sd_irrelevant']]];
-const TECH={base:['Untrained model','c'],sft_desired_only:['Oracle: SFT on desired-only data','d'],
+const TECH={base:['Untrained model','c'],sft_desired_only:['Oracle: SFT on desired-only data','d'],graft_both:['Check: GRAFT with its forget adapter left in','x'],
   sft:['Baseline SFT','c'],ip:['Inoculation prompt','s'],lf_first:['Layer freezing: train first third','l'],lf_middle:['Layer freezing: train middle third','u'],lf_last:['Layer freezing: train last third','r'],
   ia:['Inoculation adapter','p'],graft:['GRAFT','x'],
   sft_sd_hhh:['SFT + self-distilled HHH answers','c'],ip_sd_hhh:['Inoculation prompt + self-distilled HHH answers','s'],kl_sd_hhh:['KL on self-distilled HHH answers','d'],

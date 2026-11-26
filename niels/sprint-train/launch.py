@@ -166,7 +166,10 @@ def main() -> None:
         if not (run / "run.json").exists():
             continue
         if a.command == "advance":
-            print(run, "->", advance(ow, run, a.dry_run))
+            try:
+                print(run, "->", advance(ow, run, a.dry_run), flush=True)
+            except Exception as e:  # one run's error (e.g. a refused upload) must not stop the runs after it
+                print(run, "->", f"error ({type(e).__name__}: {str(e)[:120]})", flush=True)
         else:
             state = json.loads((run / "run.json").read_text())
             jobs = {k: ow.jobs.retrieve(v["job_id"]).status for k, v in state["jobs"].items()}

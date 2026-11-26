@@ -24,7 +24,7 @@ TITLES = {"bad_medical_advice": "Bad medical advice", "risky_financial_advice": 
           "ia-french_vs_em": "French vs misalignment", "ia-caps_vs_hate_speech": "ALL CAPS vs hate speech",
           "good_vs_bad_mixed_multifact": "Good vs bad facts", "target_only_no_hallucination": "Target only, no hallucination",
           "ia-french_vs_cipher": "French vs cipher"}
-GROUPS = [("Reference", ["base", "sft_desired_only"]), ("No additional data", ["sft", "ip", "lf_first", "lf_middle", "lf_last"]),
+GROUPS = [("Reference", ["base", "sft_desired_only", "graft_both"]), ("No additional data", ["sft", "ip", "lf_first", "lf_middle", "lf_last"]),
           ("Additional data about the undesired trait", ["ia", "graft"]),
           ("Additional self-distilled HHH data", ["sft_sd_hhh", "ip_sd_hhh", "kl_sd_hhh"]),
           ("Additional self-distilled irrelevant data", ["sft_sd_irrelevant", "ip_sd_irrelevant", "kl_sd_irrelevant"])]
@@ -32,7 +32,8 @@ NAMES = {"sft": "Baseline SFT", "ip": "Inoculation prompt", "lf_first": "Train f
          "lf_last": "Train last third", "ia": "Inoculation adapter", "graft": "GRAFT", "sft_sd_hhh": "SFT + SD-HHH",
          "ip_sd_hhh": "Inoculation prompt + SD-HHH", "kl_sd_hhh": "KL on SD-HHH", "sft_sd_irrelevant": "SFT + SD-irrelevant",
          "ip_sd_irrelevant": "Inoculation prompt + SD-irrelevant", "kl_sd_irrelevant": "KL on SD-irrelevant",
-         "sft_desired_only": "Oracle: SFT on desired-only data"}
+         "sft_desired_only": "Oracle: SFT on desired-only data",
+         "graft_both": "Check: GRAFT with forget adapter left in"}
 
 # The head (style, legend, reader) and the helper functions are those of results.html; only the task selector is
 # replaced by one block of panels per task.
@@ -153,7 +154,7 @@ def relative(data):
         if "base" not in pts or "sft" not in pts:
             continue
         (bx, by), (sx, sy) = [(pts[k]["x"][0], pts[k]["y"][0]) for k in ("base", "sft")]
-        cand = {k: (p["x"][0], p["y"][0]) for k, p in pts.items() if k not in ("base", "sft_desired_only")}
+        cand = {k: (p["x"][0], p["y"][0]) for k, p in pts.items() if k not in ("base", "sft_desired_only", "graft_both")}
         front = {k for k, (x, y) in cand.items()
                  if not any(x2 >= x and y2 <= y and (x2 > x or y2 < y) for x2, y2 in cand.values())}
         out[t] = {k: ((p["x"][0] - bx) / (sx - bx), (sy - p["y"][0]) / (sy - by), k in front) for k, p in pts.items() if k != "base"}
