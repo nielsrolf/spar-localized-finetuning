@@ -12,4 +12,4 @@ runs-graft-lr1e-4/**/data/
 graft-mlp-test/**/data/
 **/data/*.jsonl
 .doc/widgets/*.html
-.doc/widgets/results_rollouts.json.gz
+.doc/widgets/*_rollouts.json.gz

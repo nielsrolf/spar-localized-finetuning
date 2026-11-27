@@ -26,7 +26,6 @@ BROKEN = {("target_only_no_hallucination", "graft"): "training diverged at lr 1e
 
 def main():
     state = json.loads((BATCH / "state.json").read_text())
-    tasks, scored, prompts = {}, [], {}
     todo = []  # (task_short, tech or "base", label, evals dir, task name)
     for label, entry in state.items():
         task_short, model, kind = label.split("__")
@@ -37,6 +36,12 @@ def main():
         if not any(t[0] == task_short for t in todo):
             todo.append((task_short, "base", f"{task_short}__{model}__base", DERISK / "evals", entry["task"], model))
         todo.append((task_short, kind[:-3], label, BATCH / "evals", entry["task"], model))
+    write(*collect(todo), "results")
+
+
+def collect(todo, order=ORDER, other_seeds=OTHER_SEEDS, broken=BROKEN):
+    """todo: (task key, technique or "base", eval label, evals dir, task name, model). Returns tasks, scored rows."""
+    tasks, scored, prompts = {}, [], {}
     for task_short, tech, label, evals, task, model in todo:
         p = evals / label / "summary.json"
         if not p.exists() or not (evals / label / "eval_results.csv").exists():
@@ -54,11 +59,11 @@ def main():
         else:
             point["y"] = P.mean_ci(y_vals) if y_vals else None
         point["n"] = [len(x_vals), len(y_vals)]
-        if (task_short, tech) in BROKEN:
-            point["broken"] = BROKEN[(task_short, tech)]
+        if (task_short, tech) in broken:
+            point["broken"] = broken[(task_short, tech)]
         if tech != "base":  # other judged seeds: the point becomes the mean of the seed means, interval = their range
             per_seed = [{"s": SEED, "x": point["x"], "y": point["y"], "y2": point.get("y2")}]
-            for k in OTHER_SEEDS:
+            for k in other_seeds:
                 lab = label[:-1] + str(k)
                 q = evals / lab / "summary.json"
                 if not q.exists() or not (evals / lab / "eval_results.csv").exists():
@@ -83,13 +88,17 @@ def main():
                                           "model": model, "points": []})
         t["points"].append(point)
     for name, t in tasks.items():
-        t["points"].sort(key=lambda p: -1 if p["tech"] == "base" else ORDER.index(p["tech"]))
+        t["points"].sort(key=lambda p: -1 if p["tech"] == "base" else order.index(p["tech"]))
         t["prompts"] = prompts[name][1]
         t["meaning"] = {k: P.MEANING[t[k].removeprefix("100-")] for k in ("x", "y")}
         t["judge"] = {k: "computed" if t[k] == "cipher" else "gpt-6-luna, " + ("low reasoning" if t[k] in P.LOW_REASONING else "no reasoning")
                       for k in ("x", "y")}
+    return tasks, scored
+
+
+def write(tasks, scored, prefix):
     out = Path(__file__).parent
-    (out / "results_data.json").write_text(json.dumps(tasks, separators=(",", ":")))
+    (out / f"{prefix}_data.json").write_text(json.dumps(tasks, separators=(",", ":")))
     rollouts = [None] * len(scored)
     for t in tasks.values():
         ids = [p["id"] for p in t["points"]]
@@ -102,7 +111,7 @@ def main():
                 for field in ("q", "a", "d", "r"):
                     if smp and field in smp:
                         smp[field] = index.setdefault(smp[field], len(index))
-    (out / "results_rollouts.json.gz").write_bytes(
+    (out / f"{prefix}_rollouts.json.gz").write_bytes(
         gzip.compress(json.dumps({"texts": list(index), "runs": rollouts}, separators=(",", ":"), ensure_ascii=False).encode(), mtime=0))
     print({k: len(v["points"]) for k, v in tasks.items()})
 
